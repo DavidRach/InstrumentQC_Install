@@ -1,0 +1,1 @@
+A website with detailed-walk through explaining how to set up an InstrumentQC dashboard for your Cytek Aurora Daily QC data, for an example, see the University of Maryland, Baltimore's [original version](https://umgccfcss.github.io/InstrumentQC/)
