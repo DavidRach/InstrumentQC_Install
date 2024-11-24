@@ -12,6 +12,7 @@ website:
       href: Installation.qmd
     - text: "Next Steps"
       href: Continuation.qmd
+    right:
     - icon: github
       href: https://github.com/DavidRach/InstrumentQC_Install
       aria-label: GitHub
