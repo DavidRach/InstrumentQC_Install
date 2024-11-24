@@ -1,27 +1,63 @@
-The data for the dashboard is processed using R. Similarly, the dashboard website itself is built with Quarto and published as a GitHub pages.
+# End of Installation
+Once your GitHub account is setup, navigate to our page and you will fork the project to your own account. This will provide a copy that you can edit. It also helps us track usage and see how you progress. 
 
-You will first need to make sure that R, RStudio, Rtools, Quarto and Git are installed on every computer you will be collecting QC data from. Accept the default configurations when setting these softwares up. If you do not have admin privileges to install these software programs, reach out to your IT person.
+# Rstudio and GitHub
+Open up Rstudio for the first time, and set to use the default R installation. 
 
-If you don't already have one setup, you will need to create a GitHub account. The free tier should be fine.
+The first order of business is making sure we have Rstudio set up to communicate with GitHub through git. We will first install the devtools package. Once this is done, navigate to terminal and set the following for user email and username to match that of your GitHub account. 
 
-Once this is done, sign in and fork the project to your own account. This will copy the folder to your GitHub account where you can start making changes.
+Navigate back to your GitHub account, go to dev options, and navigate to Tokens. You will create a personal access token with no expiration date, and for repo grant the following options that minimal needed to send and receive data for the project folder. 
 
-Before getting started, you will need to set up a Github Token access between your individual computers and your GitHub account. To do so, navigate to...
+Once this is done, copy this code and save in a txt file. You will run the command in Rstudio and enter the token, and hit enter. You will also go ahead and save as an Renviron variable with additional details explaining why to be provided later. 
 
-To ensure you can process the data and generate the plots, you will need to install the Luciernaga package and it's dependencies, as well as a couple tidyverse packages. These can be done as follows...
+With this done, you should now be ready to bring in a copy to work locally. 
 
-# Setting up the Dashboard
+Go to new project, via version control, and copy the url to your repo's copy of the folder. Go ahead and click download. Please note where you are saving it to, as this will be needed when setting up file.paths in the next section. Ideally if your computer is local, place under Documents. If on a One-Drive system, set up locally under C: in a new folder. 
 
-Having all the pieces, let's begin with the dashboard structure.
+Once this is done, open the file and verify that you can open edit the contents. 
 
-Each of the website/dashboards pages is represented by it's own .qmd file. If you only have one instrument, you would eliminate the uneccessary .qmd files until only the necessary ones are present.
+The next steps are to install required R packages needed to execute the code. Most of these are available through either Bioconductor or CRAN repositories. The one exception is our R package Luciernaga that host some of the dashboard functions, that is currently only available via GitHub. To install, follow the following workflow. 
 
-Once this is done, you can adjust the code to match number of parameters present.
+Finally, verify connection is working by saving your changes by commiting, write a commit message, and push to your repository. Navigate to the website and confirm the update has moved. 
 
-# Automating the Dashboard
+# Setting up Locally
 
-Once you have customized the .qmd files for your respective instruments, and you have successfully rendered the dashboard and deployed to the GitHub pages, you are at the stage that if so desired you can automate the process and send the data to your GitHub.
+Within the InstrumentQC data, there is a data folder with individual archive folders for each instrument. Modify the names accordingly for your own setting. Within the archived folder, delete the existing files that contain our institutions data. 
 
-To do this, we rely on two components. The TaskScheduler is part of your Windows system that schedules when to do updates, etc. We can use this to our advantage and set a particular time for when the files need to be processed and passed to GitHub.
+Next, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct. 
 
-The second part is the script. The script is customized for each instruments computer file structure, pointing to the location of the InstrumentQC folder, the folder containing the before and after QC Bead .fcs files, and the DailyQC .csv outputs folder. Once these file paths are specified, and task scheduler set, they will retrieve the data on a daily basis and send.
+Now, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed). 
+
+Once complete, you should see the processed data is now present within the Archive folder. 
+
+Open up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.
+
+Once done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being. 
+
+# Automating Transfer
+
+Now that the initial set up of InstrumentQC data folder with archive data, and the R script QMD file paths are sorted, its time to figure out how to produce new data. One way of doing this would be to do so manually. We provide examples of a staff.qmd file where once you set up the filepath to the Rscript, you only need to hit the Run Current Code chunk to automatically process any new data. 
+
+An alternative is to go for an automated approach. This relies on the Windows Task Scheduler, that sets when updates are run. Our institution the QC is generally done on our instruments by 10:30 AM, so we set the task scheduler to go for that time. Likewise, if manually been done before this point, it produces a flag profile that skips processing the data again. This flag file gets eliminated later in the day, and an update is pulled in at 6 AM to reduce processing time during peak hours. 
+
+Regardless of approach, ultimately you end up with new processed data. These changes are tracked by Git as part of version control. These in turn can be pushed to GitHub which provides the processed data to where the main computer or github action needed to render the dashboard can have access to it. We will also when setting up taskscheduler set them to two minutes apart to avoid having issues with the pull push versions when transferring. 
+
+# Building the Dashboard 
+
+Now that we have the individual instruments setup and transferring the data to GitHub, let's talk dashboard website structure. The plots we can see locally in the .qmd file get rolled out as their own interactive webpage. If your instrument has additional parameters, by delving into the code you can modify what gets included or excluded. It helps to have someone with R experience to help with this customization if you are unfamiliar. R is your playground, you can customize what gets included in a Quarto document for practically anytime if you invest the time. 
+
+The combination of each instruments .qmd file forms the websites main pages. The additional pages in our example are index.qmd that forms the home page, which also has the R code needed to access all the data across instruments archive data to provide the summary visual and the 6 month history. Make sure the file paths are updated here accordingly or it will fail out. 
+
+Additional .qmd files for help and data are present rendering mostly independently of each other. All the above individual pages are cobbled together into the overall website by means of the _yaml file. 
+
+To begin, you can start locally by navigating to terminal, and quarto render the project folder. This will generate the local version. You can then git commit all the generated html files and push to GitHub. 
+
+Next, navigate to GitHub, navigate to the repositories settings and set the page to be visualized from the main branch and the docs folder. Wait three minutes, and then navigate to the username.github.io/InstrumentQC style url to visualize your dashboard. Repeat edits to the code and pushes until you have it customized to how you want the visual apperance.
+
+# Github Actions
+
+Rendering locally takes computer time. Additionally, it means each instrument needs to bring in edited versions of the website locally every morning with their initial pull. Alternatively, we can set up a github-pages branch where the rendered website remains on the web and not on the local computer, and customize a Github Actions at the repository level that will spin up a Cloud instance to generate the website. This is free for public github repositories up to certain allowances that our website doesn't approach with a once daily frequency. The flip-side is it's more complicated technical and can take longer due to needing to install R and the R packages needed to run everything on the cloud instance each time. For those with R experience or who laugh in face of danger, read on. 
+
+
+
+
