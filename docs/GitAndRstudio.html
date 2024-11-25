@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>installation – InstrumentQC</title>
+<title>gitandrstudio – InstrumentQC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -92,11 +92,11 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Installation.html" aria-current="page"> 
+    <a class="nav-link" href="./Installation.html"> 
 <span class="menu-text">Installation</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./GitAndRstudio.html"> 
+    <a class="nav-link active" href="./GitAndRstudio.html" aria-current="page"> 
 <span class="menu-text">Setting up Git and Rstudio</span></a>
   </li>  
   <li class="nav-item">
@@ -121,133 +121,108 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#install-software" id="toc-install-software" class="nav-link active" data-scroll-target="#install-software">Install Software</a>
-  <ul class="collapse">
-  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r">R</a></li>
-  <li><a href="#rstudio" id="toc-rstudio" class="nav-link" data-scroll-target="#rstudio">Rstudio</a></li>
-  <li><a href="#rtools" id="toc-rtools" class="nav-link" data-scroll-target="#rtools">Rtools</a></li>
-  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto">Quarto</a></li>
-  <li><a href="#git" id="toc-git" class="nav-link" data-scroll-target="#git">Git</a></li>
-  </ul></li>
-  <li><a href="#setting-up-github-account" id="toc-setting-up-github-account" class="nav-link" data-scroll-target="#setting-up-github-account">Setting up GitHub Account</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
 
 
-<section id="install-software" class="level1">
-<h1>Install Software</h1>
-<p>You will first need to make sure that R, Rstudio, Rtools, Quarto and Git are installed on every instrument computer that you will be collecting daily QC data from. Follow along below for instructions for downloading each on a Windows computer.</p>
-<section id="r" class="level2">
-<h2 class="anchored" data-anchor-id="r">R</h2>
-<p><a href="https://www.r-project.org/">R</a> is a free software and programming language used by researchers and data scientist worldwide. To begin you will need to navigate to the main <a href="https://cran.rstudio.com/">website</a>. You will first select <u>Download R for Windows</u></p>
+<section id="forking-the-project" class="level1">
+<h1>Forking the project</h1>
+<p>Now that you have your GitHub account setup, it is time to use it. Our version of the dashboard is contained within the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. This is publicly available, and given the software repository is licensed under a free copyleft license, you are able to fork (ie. copy) the existing project and modify it.</p>
+<p>To do so, you will first navigate to the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. From here you will select <u>the fork the repository option</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/01_RInstall.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/01_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>You will be redirected to the next screen, where you should select <u>install R for the first time</u>:</p>
+<p>GitHub will then give you the option to rename the project or to keep the existing name. If you modify the name, there may be a couple additional lines of code you will need to modify later on, but that would be minor enough so don’t let that stop you if you hate the existing name.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/02_RInstall.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/02_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>And finally you will see the following screen, where you will select the current version of <u>Download R for Windows</u>:</p>
+<p>You now have your own copy of the repository that you can modify to generate a dashboard that is customized to your instruments. Please make a note of your forked repositories url as you will need it when setting up the project locally with Rstudio in a little bit.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/03_RInstall.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/03_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-<p>The next screen will ask where you want to save the installer. I generally place it on the desktop. Once downloaded, double click and proceed with the software installation, selecting the default options.</p>
 </section>
-<section id="rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="rstudio">Rstudio</h2>
-<p><a href="https://posit.co/download/rstudio-desktop/">Rstudio</a> is an integrated development environment (IDE), providing an interface with R that is friendlier to many users. We will use it in our context to set up project folders that will contain the code and data needed to process the QC data and export it to the dashboard.</p>
-<p>To download, we first navigate to the <a href="https://posit.co/download/rstudio-desktop/">website</a> and select <u>Download R Studio Desktop for Windows</u></p>
+<section id="rstudio-and-github" class="level1">
+<h1>Rstudio and GitHub</h1>
+<p>Open up Rstudio for the first time, and set to use the default R installation.</p>
+<p>The first order of business is making sure we have Rstudio set up to communicate with GitHub through git. We will first install the devtools package. Once this is done, navigate to terminal and set the following for user email and username to match that of your GitHub account.</p>
+<p>Navigate back to your GitHub account, click on your profile icon on the far upper right, and then <u>select settings</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/01_Rstudio.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/01_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>This will then proceed to show the pop-up asking where you want to save the installer. Save to the desktop, and then double click the installer. Follow the default installation prompts.</p>
-</section>
-<section id="rtools" class="level2">
-<h2 class="anchored" data-anchor-id="rtools">Rtools</h2>
-<p>R packages are made up of functions that carry out specific tasks. Some of the R packages that we will be using require compilation from source code, which requires installation of <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> to mediate this process.</p>
-<p>To begin, navigate to the <a href="https://cran.r-project.org/bin/windows/Rtools/">website</a> and select <u>the most recent version of Rtools</u></p>
+<p>From here, you will navigate to the lower left side and click on developer settings</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/01_Rtools.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/02_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="260"></p>
 </figure>
 </div>
-<p>Then, you will select <u>the regular Rtools installer</u></p>
+<p>Once you are on the next page, you will select <u>Tokens (classic) option</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/02_Rtools.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/03_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>This will then provide the pop-up asking where to save the installer. Place on the desktop, then after it has finished downloading, double click to run the installer. Select the default options.</p>
-</section>
-<section id="quarto" class="level2">
-<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
-<p>The dashboard (and this website you are currently reading) are built with <a href="https://quarto.org/">Quarto</a>. It facilitates making websites from various programming languages commonly used by data scientist who didn’t start off as computer programmers. In our context, we will use it to produce both the website and individual dashboard pages.</p>
-<p>To begin, after navigating to the <a href="https://quarto.org/">website</a> we will first select the <u>Get Started</u> tab</p>
+<p>From there, you will now proceed to click on <u>Generate new token and select the classic option</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/01_Quarto.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/04_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-<p>Then we will select <u>Download Quarto Cli</u> to download the most recent version for Windows.</p>
+<p>On the next screen, things get busy. Go ahead and place a note for the token with the instrument name so you know which match with each other. Set the expiration for no expiration or a long-period, and only click on the repo option to grant those accesses. Proceed down to the bottom of the screen and click on the green generate token button.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/02_Quarto.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/05_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>Finally, the pop-up asking where we want to save the installer will pop up. Save to the desktop, and after it finished downloading, double click and select the default options.</p>
-</section>
-<section id="git" class="level2">
-<h2 class="anchored" data-anchor-id="git">Git</h2>
-<p><a href="https://git-scm.com/">Git</a> is used for version control by many programmers. We will be using it in the context of the dashboard for managing the processed data, and forwarding it on to GitHub for use in the dashboard.</p>
-<p>To begin, we will first navigate to the <a href="https://git-scm.com/">website</a> and select the download from Windows option.</p>
+<p>The website will refresh and provide you a GitHub token and the option to copy it. Copy it and temporarily store it in a .txt file (notepad) as you will need it when setting up the connection between Github and Rstudio. You will not be able to see the code again from this screen, so stash wisely, and be cautious not to store this anywhere that others may find it.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/01_Git.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/06_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-<p>We will then proceed and select <u>install 64-bit Git for Windows Setup</u> option</p>
+<p>You will now navigate to Rstudio, where you will enter the code…. steps…. You will also go ahead and save as an Renviron variable with additional details explaining why to be provided later.</p>
+<p>With Rstudio and GitHub now communicating with each other, it is time to bring a copy of your forked InstrumentQC repository into Rstudio (and the local computer environment more broadly).</p>
+<p>To do this, after opening Rstudio, navigate to the upper left corner to the File tab and select <u>create a New Project</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/02_Git.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/01_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>Finally, the pop-up will appear asking where to save the installer. Select and save to the Desktop. After the installer has finished downloading, double click, and accept the default options. Be advised, Git has a lot of options, for now, just accept all defaults without wandering off on a “What is Vim?!?” rabbit-hole.</p>
-</section>
-</section>
-<section id="setting-up-github-account" class="level1">
-<h1>Setting up GitHub Account</h1>
-<p>Now that you have installed the software needed on the instrument computer, you will need to make sure to set up a <a href="https://github.com/">GitHub</a> account if you don’t already have one (or are setting up a new one for your core). The repository you set up using the GitHub account will be where each individual instrument computer sends the data to, and where the website will be stored/accessed.</p>
-<p>To begin, navigate to the <a href="https://github.com/">website</a>, provide an email and select Sign up for GitHub.</p>
+<p>From here, you will select the <u>Version Control</u> option</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/01_Github.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/02_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>Then you will need to create an account and set a password.</p>
+<p>You will next select to <u>use the Git option</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/02_Github.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/03_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>Proceed with the account creation, selecting the defaults (specifically the free versions).</p>
+<p>And now you will p<u>rovide the url to the forked repository,</u> ie. the version on your own GitHub. The Project directory will autopopulate.</p>
+<p>Before hitting Create Project, make note of where the project is set to be saved at by hitting browse.</p>
+<p>In general, for many windows computers, it will be under the document folder, which should be fine. Alternatively, if your workplace forces everyone to save things on OneDrive, the default folder may be somewhere in the cloud. Ideally, try to store it on the local computer to avoid complicating the file.path setup in the next section, so if in a OneDrive scenario, create a new folder under the local C: drive and save it within that folder.</p>
+<p>Once you know where you are saving the project to, hit Create Project.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/04_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>With all that done, you now have the project and all it’s associated code available locally.</p>
+<p>Once this is done, open the file and verify that you can open edit the contents.</p>
+<p>The next steps are to install required R packages needed to execute the code. Most of these are available through either Bioconductor or CRAN repositories. The one exception is our R package Luciernaga that host some of the dashboard functions, that is currently only available via GitHub. To install, follow the following workflow.</p>
+<p>Finally, verify connection is working by saving your changes by commiting, write a commit message, and push to your repository. Navigate to the website and confirm the update has moved.</p>
 
 
 </section>
