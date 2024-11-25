@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>continuation – InstrumentQC</title>
+<title>filepaths – InstrumentQC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -100,11 +100,11 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Setting up Git and Rstudio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./filepaths.html"> 
+    <a class="nav-link active" href="./filepaths.html" aria-current="page"> 
 <span class="menu-text">Setting File Paths</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Continuation.html" aria-current="page"> 
+    <a class="nav-link" href="./Continuation.html"> 
 <span class="menu-text">Next Steps</span></a>
   </li>  
 </ul>
@@ -130,9 +130,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#automating-transfer" id="toc-automating-transfer" class="nav-link active" data-scroll-target="#automating-transfer">Automating Transfer</a></li>
-  <li><a href="#building-the-dashboard" id="toc-building-the-dashboard" class="nav-link" data-scroll-target="#building-the-dashboard">Building the Dashboard</a></li>
-  <li><a href="#github-actions" id="toc-github-actions" class="nav-link" data-scroll-target="#github-actions">Github Actions</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link active" data-scroll-target="#r-packages">R Packages</a></li>
+  <li><a href="#setting-up-locally" id="toc-setting-up-locally" class="nav-link" data-scroll-target="#setting-up-locally">Setting up Locally</a></li>
   </ul>
 </nav>
     </div>
@@ -142,23 +141,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="automating-transfer" class="level1">
-<h1>Automating Transfer</h1>
-<p>Now that the initial set up of InstrumentQC data folder with archive data, and the R script QMD file paths are sorted, its time to figure out how to produce new data. One way of doing this would be to do so manually. We provide examples of a staff.qmd file where once you set up the filepath to the Rscript, you only need to hit the Run Current Code chunk to automatically process any new data.</p>
-<p>An alternative is to go for an automated approach. This relies on the Windows Task Scheduler, that sets when updates are run. Our institution the QC is generally done on our instruments by 10:30 AM, so we set the task scheduler to go for that time. Likewise, if manually been done before this point, it produces a flag profile that skips processing the data again. This flag file gets eliminated later in the day, and an update is pulled in at 6 AM to reduce processing time during peak hours.</p>
-<p>Regardless of approach, ultimately you end up with new processed data. These changes are tracked by Git as part of version control. These in turn can be pushed to GitHub which provides the processed data to where the main computer or github action needed to render the dashboard can have access to it. We will also when setting up taskscheduler set them to two minutes apart to avoid having issues with the pull push versions when transferring.</p>
+<p>In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and our GitHub repository to communicate with each other and pass the updated versions of the files between. This next segment focuses on individual local computers, first in getting the R packages needed for data processing and handling installed, and then setting the file paths up so that R knows in which folders to look for your Daily QC report .csv and fcs files.</p>
+<section id="r-packages" class="level1">
+<h1>R Packages</h1>
+<p>The next steps are to install required R packages needed to execute the code. Most of these are available through either Bioconductor or CRAN repositories. The one exception is our R package Luciernaga that host some of the dashboard functions, that is currently only available via GitHub. To install, follow the following workflow.</p>
 </section>
-<section id="building-the-dashboard" class="level1">
-<h1>Building the Dashboard</h1>
-<p>Now that we have the individual instruments setup and transferring the data to GitHub, let’s talk dashboard website structure. The plots we can see locally in the .qmd file get rolled out as their own interactive webpage. If your instrument has additional parameters, by delving into the code you can modify what gets included or excluded. It helps to have someone with R experience to help with this customization if you are unfamiliar. R is your playground, you can customize what gets included in a Quarto document for practically anytime if you invest the time.</p>
-<p>The combination of each instruments .qmd file forms the websites main pages. The additional pages in our example are index.qmd that forms the home page, which also has the R code needed to access all the data across instruments archive data to provide the summary visual and the 6 month history. Make sure the file paths are updated here accordingly or it will fail out.</p>
-<p>Additional .qmd files for help and data are present rendering mostly independently of each other. All the above individual pages are cobbled together into the overall website by means of the _yaml file.</p>
-<p>To begin, you can start locally by navigating to terminal, and quarto render the project folder. This will generate the local version. You can then git commit all the generated html files and push to GitHub.</p>
-<p>Next, navigate to GitHub, navigate to the repositories settings and set the page to be visualized from the main branch and the docs folder. Wait three minutes, and then navigate to the username.github.io/InstrumentQC style url to visualize your dashboard. Repeat edits to the code and pushes until you have it customized to how you want the visual apperance.</p>
-</section>
-<section id="github-actions" class="level1">
-<h1>Github Actions</h1>
-<p>Rendering locally takes computer time. Additionally, it means each instrument needs to bring in edited versions of the website locally every morning with their initial pull. Alternatively, we can set up a github-pages branch where the rendered website remains on the web and not on the local computer, and customize a Github Actions at the repository level that will spin up a Cloud instance to generate the website. This is free for public github repositories up to certain allowances that our website doesn’t approach with a once daily frequency. The flip-side is it’s more complicated technical and can take longer due to needing to install R and the R packages needed to run everything on the cloud instance each time. For those with R experience or who laugh in face of danger, read on.</p>
+<section id="setting-up-locally" class="level1">
+<h1>Setting up Locally</h1>
+<p>Within the InstrumentQC data, there is a data folder with individual archive folders for each instrument. Modify the names accordingly for your own setting. Within the archived folder, delete the existing files that contain our institutions data.</p>
+<p>Next, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.</p>
+<p>Now, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed).</p>
+<p>Once complete, you should see the processed data is now present within the Archive folder.</p>
+<p>Open up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.</p>
+<p>Once done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being.</p>
 
 
 </section>

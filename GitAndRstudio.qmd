@@ -1,26 +1,62 @@
+---
+toc: true
+---
+
 # Forking the project
 
-Now that you have your GitHub account setup, it is time to use it. Our version of the dashboard is contained within the [InstrumentQC](https://github.com/UMGCCFCSS/InstrumentQC) repository. This is publicly available, and given the software repository is licensed under a free copyleft license, you are able to fork (ie. copy) the existing project and modify it.
+Once your GitHub account is set up, it's time to use it. Our core's version of the dashboard is contained within the [InstrumentQC](https://github.com/UMGCCFCSS/InstrumentQC) repository. This is publicly available, and since the software repository is licensed under a free copyleft license, you are able to fork (ie. copy) the existing project and modify it.
 
 To do so, you will first navigate to the [InstrumentQC](https://github.com/UMGCCFCSS/InstrumentQC) repository. From here you will select [the fork the repository option]{.underline}
 
 ![](images/01_Fork.png){fig-align="center" width="600"}
 
-GitHub will then give you the option to rename the project or to keep the existing name. If you modify the name, there may be a couple additional lines of code you will need to modify later on, but that would be minor enough so don't let that stop you if you hate the existing name.
+GitHub will then give you the option to rename the project or to keep the existing name. If you modify the name, there may be a couple additional lines of code you will need to also adjust in the future, but this will be minor enough of a concern so don't let that stop you if you hate the existing name.
 
 ![](images/02_Fork.png){fig-align="center" width="600"}
 
-You now have your own copy of the repository that you can modify to generate a dashboard that is customized to your instruments. Please make a note of your forked repositories url as you will need it when setting up the project locally with Rstudio in a little bit.
+With that done, you now have your own copy of the repository. Since it is forked, you can now modify and customize the dashboard so that is customized to your instruments and tracks their QC data. Before proceeding, please make a note about your forked repositories url as you will need it later when when bringing in the project to the local computer environment with Rstudio in a little bit. 
 
 ![](images/03_Fork.png){fig-align="center"}
 
-# Rstudio and GitHub
+# Linking Rstudio and GitHub
 
+## Setup
+
+The next big task is to set up Rstudio, making sure that Git is set up properly and that you can send the version changes to the repository files to GitHub without any issues. 
+
+Go ahead and open up Rstudio. If it is your first time doing so, select the default R installation from the first pop-up window. 
 Open up Rstudio for the first time, and set to use the default R installation.
 
-The first order of business is making sure we have Rstudio set up to communicate with GitHub through git. We will first install the devtools package. Once this is done, navigate to terminal and set the following for user email and username to match that of your GitHub account.
+We first need to make sure Rstudio can communicate with GitHub through Git. To do this we will first install the R package devtools.  To do so, copy the following lines of code invidivually into the console window and hit enter to run the commands:
 
-Navigate back to your GitHub account, click on your profile icon on the far upper right, and then [select settings]{.underline}
+```{r}
+#| eval: FALSE
+install.packages("devtools")
+install.packages("BiocManager")
+
+library(devtools)
+library(BiocManager)
+```
+
+For coding-beginners, please note, if any errors pop up during the installation of devtools, read the red troubleshooting explanations shown, and install any missing package dependencies by swapping in the package name between the quotation marks similar to what was done in the code chunk above to install the devtools package. 
+
+Once devtools is installed, and you have called it via library, we can now continue.
+
+Adjacent to your console tab on the lower left, there is another tab called terminal. Go ahead and click it, and then using your mouse copy-paste the following lines of code individually, editing in your GitHub UserName, and email linked to your GitHub account:
+
+```{bash}
+#| eval: false
+git config --global user.email "JohnDoe@gmail.com"
+
+git config --global user.name "John Doe"
+```
+
+
+## GitHub Token 
+
+With this done, it is now time to get a GitHub Token that will be used for authorization for your local computer to send/receive files from your GitHub repository. 
+
+To do this, open a browser, and navigate back to your GitHub account, click on your profile icon on the far upper right, and then [select settings]{.underline}
 
 ![](images/01_GitToken.png){fig-align="center" width="600"}
 
@@ -44,11 +80,38 @@ The website will refresh and provide you a GitHub token and the option to copy i
 
 ![](images/06_GitToken.png){fig-align="center"}
 
-You will now navigate to Rstudio, where you will enter the code.... steps.... You will also go ahead and save as an Renviron variable with additional details explaining why to be provided later.
+## Rstudio
 
-With Rstudio and GitHub now communicating with each other, it is time to bring a copy of your forked InstrumentQC repository into Rstudio (and the local computer environment more broadly).
+Now that you have your token, go back to Rstudio, and enter the following lines of code into your console:
 
-To do this, after opening Rstudio, navigate to the upper left corner to the File tab and select [create a New Project]{.underline}
+```{r}
+#| eval: false
+gitcreds::gitcreds_set()
+```
+
+A pop-up window will appear. Follow the instructions and when prompted, provide it the Github Token code that you generated. Next hit enter. You should be all set to now pull/push (ie. receive/send) files to GitHub from your local computer. 
+
+While we are here, let's address the other segment where we will need the GitHub access token later. Go ahead and enter the following line of code:
+
+```{r}
+#| eval: false
+usethis::edit_r_environ()
+```
+
+This will open an .Renviron file that will be blank. Enter the following line of code, swapping in your specific token in its entirety between the quotation marks.
+
+```{r}
+#| eval: false
+GITHUB_PAT <- "GitHubTokenGoesHere"
+```
+
+Once this is done, save and close out of Rstudio. Open it again to make sure the changes are saved. 
+
+# New Project
+
+Having completed the above, you should now have Git setup to allow Rstudio to communicate with your GitHub account. This should allow you to bring in the copy of the forked InstrumentQC repository to your local computer, and as you modify it, track and save the changes to your GitHub repository where you can access them remotely. 
+
+To do this, upon opening Rstudio, navigate to the upper left corner to the File tab and select [create a New Project]{.underline}
 
 ![](images/01_NewProject.png){fig-align="center" width="600"}
 
@@ -60,7 +123,7 @@ You will next select to [use the Git option]{.underline}
 
 ![](images/03_NewProject.png){fig-align="center" width="600"}
 
-And now you will p[rovide the url to the forked repository,]{.underline} ie. the version on your own GitHub. The Project directory will autopopulate.
+And now you will [provide the url to the forked repository,]{.underline} (ie. the version on your own GitHub). The Project directory should autopopulate.
 
 Before hitting Create Project, make note of where the project is set to be saved at by hitting browse.
 
@@ -72,8 +135,12 @@ Once you know where you are saving the project to, hit Create Project.
 
 With all that done, you now have the project and all it's associated code available locally.
 
-Once this is done, open the file and verify that you can open edit the contents.
+# Making Changes
 
-The next steps are to install required R packages needed to execute the code. Most of these are available through either Bioconductor or CRAN repositories. The one exception is our R package Luciernaga that host some of the dashboard functions, that is currently only available via GitHub. To install, follow the following workflow.
+To continue, either use the Ctrl + O shortcut to view inside the repository folder, or alternatively, navigate to the upper-left of R studio screen, click file, and Open File. Select the Examples_staff.qmd file and open it. 
 
-Finally, verify connection is working by saving your changes by commiting, write a commit message, and push to your repository. Navigate to the website and confirm the update has moved.
+We want to make sure you can make changes to the file, and that these changes once saved can be committed and pushed to GitHub. Between the first line of text and the code block, add a couple spaces, and then save the file. 
+
+Navigate to the upper right-side of your Rstudio window and click on Git. Under Staged tab, click the white box next to Examples_staff.qmd. Then hit the Commit button. A new window will appear. Write a brief commit message ("Testing that GitHub is setup correctly") and hit commit. Then click the green push up arrow. If you get a commit message, the system is set up correctly. Go back to GitHub in your browser, and check the commits, to see that the version control edits have been received and are available remotely. 
+
+And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier. 

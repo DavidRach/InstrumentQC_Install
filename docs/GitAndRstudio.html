@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -70,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -100,6 +134,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Setting up Git and Rstudio</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./filepaths.html"> 
+<span class="menu-text">Setting File Paths</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./Continuation.html"> 
 <span class="menu-text">Next Steps</span></a>
   </li>  
@@ -121,7 +159,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#forking-the-project" id="toc-forking-the-project" class="nav-link active" data-scroll-target="#forking-the-project">Forking the project</a></li>
+  <li><a href="#linking-rstudio-and-github" id="toc-linking-rstudio-and-github" class="nav-link" data-scroll-target="#linking-rstudio-and-github">Linking Rstudio and GitHub</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#github-token" id="toc-github-token" class="nav-link" data-scroll-target="#github-token">GitHub Token</a></li>
+  <li><a href="#rstudio" id="toc-rstudio" class="nav-link" data-scroll-target="#rstudio">Rstudio</a></li>
+  </ul></li>
+  <li><a href="#new-project" id="toc-new-project" class="nav-link" data-scroll-target="#new-project">New Project</a></li>
+  <li><a href="#making-changes" id="toc-making-changes" class="nav-link" data-scroll-target="#making-changes">Making Changes</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -130,31 +184,53 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="forking-the-project" class="level1">
 <h1>Forking the project</h1>
-<p>Now that you have your GitHub account setup, it is time to use it. Our version of the dashboard is contained within the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. This is publicly available, and given the software repository is licensed under a free copyleft license, you are able to fork (ie. copy) the existing project and modify it.</p>
+<p>Once your GitHub account is set up, it’s time to use it. Our core’s version of the dashboard is contained within the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. This is publicly available, and since the software repository is licensed under a free copyleft license, you are able to fork (ie. copy) the existing project and modify it.</p>
 <p>To do so, you will first navigate to the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. From here you will select <u>the fork the repository option</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/01_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>GitHub will then give you the option to rename the project or to keep the existing name. If you modify the name, there may be a couple additional lines of code you will need to modify later on, but that would be minor enough so don’t let that stop you if you hate the existing name.</p>
+<p>GitHub will then give you the option to rename the project or to keep the existing name. If you modify the name, there may be a couple additional lines of code you will need to also adjust in the future, but this will be minor enough of a concern so don’t let that stop you if you hate the existing name.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/02_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>You now have your own copy of the repository that you can modify to generate a dashboard that is customized to your instruments. Please make a note of your forked repositories url as you will need it when setting up the project locally with Rstudio in a little bit.</p>
+<p>With that done, you now have your own copy of the repository. Since it is forked, you can now modify and customize the dashboard so that is customized to your instruments and tracks their QC data. Before proceeding, please make a note about your forked repositories url as you will need it later when when bringing in the project to the local computer environment with Rstudio in a little bit.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/03_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </section>
-<section id="rstudio-and-github" class="level1">
-<h1>Rstudio and GitHub</h1>
-<p>Open up Rstudio for the first time, and set to use the default R installation.</p>
-<p>The first order of business is making sure we have Rstudio set up to communicate with GitHub through git. We will first install the devtools package. Once this is done, navigate to terminal and set the following for user email and username to match that of your GitHub account.</p>
-<p>Navigate back to your GitHub account, click on your profile icon on the far upper right, and then <u>select settings</u></p>
+<section id="linking-rstudio-and-github" class="level1">
+<h1>Linking Rstudio and GitHub</h1>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>The next big task is to set up Rstudio, making sure that Git is set up properly and that you can send the version changes to the repository files to GitHub without any issues.</p>
+<p>Go ahead and open up Rstudio. If it is your first time doing so, select the default R installation from the first pop-up window. Open up Rstudio for the first time, and set to use the default R installation.</p>
+<p>We first need to make sure Rstudio can communicate with GitHub through Git. To do this we will first install the R package devtools. To do so, copy the following lines of code invidivually into the console window and hit enter to run the commands:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocManager)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For coding-beginners, please note, if any errors pop up during the installation of devtools, read the red troubleshooting explanations shown, and install any missing package dependencies by swapping in the package name between the quotation marks similar to what was done in the code chunk above to install the devtools package.</p>
+<p>Once devtools is installed, and you have called it via library, we can now continue.</p>
+<p>Adjacent to your console tab on the lower left, there is another tab called terminal. Go ahead and click it, and then using your mouse copy-paste the following lines of code individually, editing in your GitHub UserName, and email linked to your GitHub account:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"JohnDoe@gmail.com"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"John Doe"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="github-token" class="level2">
+<h2 class="anchored" data-anchor-id="github-token">GitHub Token</h2>
+<p>With this done, it is now time to get a GitHub Token that will be used for authorization for your local computer to send/receive files from your GitHub repository.</p>
+<p>To do this, open a browser, and navigate back to your GitHub account, click on your profile icon on the far upper right, and then <u>select settings</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/01_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
@@ -190,9 +266,29 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/06_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-<p>You will now navigate to Rstudio, where you will enter the code…. steps…. You will also go ahead and save as an Renviron variable with additional details explaining why to be provided later.</p>
-<p>With Rstudio and GitHub now communicating with each other, it is time to bring a copy of your forked InstrumentQC repository into Rstudio (and the local computer environment more broadly).</p>
-<p>To do this, after opening Rstudio, navigate to the upper left corner to the File tab and select <u>create a New Project</u></p>
+</section>
+<section id="rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio">Rstudio</h2>
+<p>Now that you have your token, go back to Rstudio, and enter the following lines of code into your console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A pop-up window will appear. Follow the instructions and when prompted, provide it the Github Token code that you generated. Next hit enter. You should be all set to now pull/push (ie. receive/send) files to GitHub from your local computer.</p>
+<p>While we are here, let’s address the other segment where we will need the GitHub access token later. Go ahead and enter the following line of code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will open an .Renviron file that will be blank. Enter the following line of code, swapping in your specific token in its entirety between the quotation marks.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>GITHUB_PAT <span class="ot">&lt;-</span> <span class="st">"GitHubTokenGoesHere"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once this is done, save and close out of Rstudio. Open it again to make sure the changes are saved.</p>
+</section>
+</section>
+<section id="new-project" class="level1">
+<h1>New Project</h1>
+<p>Having completed the above, you should now have Git setup to allow Rstudio to communicate with your GitHub account. This should allow you to bring in the copy of the forked InstrumentQC repository to your local computer, and as you modify it, track and save the changes to your GitHub repository where you can access them remotely.</p>
+<p>To do this, upon opening Rstudio, navigate to the upper left corner to the File tab and select <u>create a New Project</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/01_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
@@ -210,7 +306,7 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/03_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>And now you will p<u>rovide the url to the forked repository,</u> ie. the version on your own GitHub. The Project directory will autopopulate.</p>
+<p>And now you will <u>provide the url to the forked repository,</u> (ie. the version on your own GitHub). The Project directory should autopopulate.</p>
 <p>Before hitting Create Project, make note of where the project is set to be saved at by hitting browse.</p>
 <p>In general, for many windows computers, it will be under the document folder, which should be fine. Alternatively, if your workplace forces everyone to save things on OneDrive, the default folder may be somewhere in the cloud. Ideally, try to store it on the local computer to avoid complicating the file.path setup in the next section, so if in a OneDrive scenario, create a new folder under the local C: drive and save it within that folder.</p>
 <p>Once you know where you are saving the project to, hit Create Project.</p>
@@ -220,9 +316,13 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>With all that done, you now have the project and all it’s associated code available locally.</p>
-<p>Once this is done, open the file and verify that you can open edit the contents.</p>
-<p>The next steps are to install required R packages needed to execute the code. Most of these are available through either Bioconductor or CRAN repositories. The one exception is our R package Luciernaga that host some of the dashboard functions, that is currently only available via GitHub. To install, follow the following workflow.</p>
-<p>Finally, verify connection is working by saving your changes by commiting, write a commit message, and push to your repository. Navigate to the website and confirm the update has moved.</p>
+</section>
+<section id="making-changes" class="level1">
+<h1>Making Changes</h1>
+<p>To continue, either use the Ctrl + O shortcut to view inside the repository folder, or alternatively, navigate to the upper-left of R studio screen, click file, and Open File. Select the Examples_staff.qmd file and open it.</p>
+<p>We want to make sure you can make changes to the file, and that these changes once saved can be committed and pushed to GitHub. Between the first line of text and the code block, add a couple spaces, and then save the file.</p>
+<p>Navigate to the upper right-side of your Rstudio window and click on Git. Under Staged tab, click the white box next to Examples_staff.qmd. Then hit the Commit button. A new window will appear. Write a brief commit message (“Testing that GitHub is setup correctly”) and hit commit. Then click the green push up arrow. If you get a commit message, the system is set up correctly. Go back to GitHub in your browser, and check the commits, to see that the version control edits have been received and are available remotely.</p>
+<p>And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier.</p>
 
 
 </section>

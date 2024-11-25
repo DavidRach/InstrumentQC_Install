@@ -12,6 +12,8 @@ website:
       href: Installation.qmd
     - text: "Setting up Git and Rstudio"
       href: GitAndRstudio.qmd
+    - text: "Setting File Paths"
+      href: filepaths.qmd
     - text: "Next Steps"
       href: Continuation.qmd
     right:
