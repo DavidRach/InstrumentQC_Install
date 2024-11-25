@@ -20,9 +20,31 @@ Open up Rstudio for the first time, and set to use the default R installation.
 
 The first order of business is making sure we have Rstudio set up to communicate with GitHub through git. We will first install the devtools package. Once this is done, navigate to terminal and set the following for user email and username to match that of your GitHub account.
 
-Navigate back to your GitHub account, go to dev options, and navigate to Tokens. You will create a personal access token with no expiration date, and for repo grant the following options that minimal needed to send and receive data for the project folder.
+Navigate back to your GitHub account, click on your profile icon on the far upper right, and then [select settings]{.underline}
 
-Once this is done, copy this code and save in a txt file. You will run the command in Rstudio and enter the token, and hit enter. You will also go ahead and save as an Renviron variable with additional details explaining why to be provided later.
+![](images/01_GitToken.png){fig-align="center" width="600"}
+
+From here, you will navigate to the lower left side and click on developer settings
+
+![](images/02_GitToken.png){fig-align="center" width="260"}
+
+Once you are on the next page, you will select [Tokens (classic) option]{.underline}
+
+![](images/03_GitToken.png){fig-align="center" width="600"}
+
+From there, you will now proceed to click on [Generate new token and select the classic option]{.underline}
+
+![](images/04_GitToken.png){fig-align="center"}
+
+On the next screen, things get busy. Go ahead and place a note for the token with the instrument name so you know which match with each other. Set the expiration for no expiration or a long-period, and only click on the repo option to grant those accesses. Proceed down to the bottom of the screen and click on the green generate token button.
+
+![](images/05_GitToken.png){fig-align="center" width="600"}
+
+The website will refresh and provide you a GitHub token and the option to copy it. Copy it and temporarily store it in a .txt file (notepad) as you will need it when setting up the connection between Github and Rstudio. You will not be able to see the code again from this screen, so stash wisely, and be cautious not to store this anywhere that others may find it.
+
+![](images/06_GitToken.png){fig-align="center"}
+
+You will now navigate to Rstudio, where you will enter the code.... steps.... You will also go ahead and save as an Renviron variable with additional details explaining why to be provided later.
 
 With Rstudio and GitHub now communicating with each other, it is time to bring a copy of your forked InstrumentQC repository into Rstudio (and the local computer environment more broadly).
 
