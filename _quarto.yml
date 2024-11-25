@@ -10,6 +10,8 @@ website:
       href: index.qmd
     - text: "Installation"
       href: Installation.qmd
+    - text: "Setting up Git and Rstudio"
+      href: GitAndRstudio.qmd
     - text: "Next Steps"
       href: Continuation.qmd
     right:
