@@ -7,9 +7,17 @@ In the previous sections, we installed the required software, and set up the Git
 
 The next steps are to install required R packages needed to execute the code. Most of these are available through either Bioconductor or CRAN repositories. The one exception is our R package Luciernaga that host some of the dashboard functions, that is currently only available via GitHub. To install, follow the following workflow.
 
-# Setting up Locally
+# File Paths
 
-Within the InstrumentQC data, there is a data folder with individual archive folders for each instrument. Modify the names accordingly for your own setting. Within the archived folder, delete the existing files that contain our institutions data.
+The following steps will need to be customized for your own individual computer. A file path is the location on your computer where a folder is located. Since installation of SpectroFlo, and the location of the subsequent .fcs files and QC reports can differ, you will need to make sure to provide the correct file paths to R by updating the file.path locations for each instrument computer in their respective R script and .qmd files.
+
+## InstrumentQC
+
+Let's start with the easiest file.path, we need to find the location you saved the InstrumentQC project to when you downloaded it from Github via Rstudio (recall the browse button to see where it was saved).
+
+Within the InstrumentQC folder, the first level contains the individual R scripts and .qmd files for each instrument, as well as additional files needed for the automation, and dashboard assembly. Below this level, there is a data folder containing folders for the individual instruments. Below this level, are folders containing the archive data folders where processed data is stored after processing and updated with new data daily. 
+
+On first install, modify the names of the folders for your individual instruments, and navigate into the archive folders for the renamed instruments and delete the forked version of the data. These archive data files will be replaced by those of your own instrument after the initial processing. 
 
 Next, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.
 
