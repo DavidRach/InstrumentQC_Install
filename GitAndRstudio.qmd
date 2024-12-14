@@ -42,7 +42,11 @@ For coding-beginners, please note, if any errors pop up during the installation 
 
 Once devtools is installed, and you have called it via library, we can now continue.
 
-Adjacent to your console tab on the lower left, there is another tab called terminal. Go ahead and click it, and then using your mouse copy-paste the following lines of code individually, editing in your GitHub UserName, and email linked to your GitHub account:
+Adjacent to your console tab on the lower left, there is another tab called terminal. Go ahead and click it.
+
+![](images/01_Terminal.png){fig-align="center" width="600"}
+
+Now that you have switched from the console to the terminal, copy-paste using your mouse/right-click the following lines of code individually, editing in your GitHub UserName, and email linked to your GitHub account:
 
 ```{bash}
 #| eval: false
@@ -91,14 +95,14 @@ gitcreds::gitcreds_set()
 
 A pop-up window will appear. Follow the instructions and when prompted, provide it the Github Token code that you generated. Next hit enter. You should be all set to now pull/push (ie. receive/send) files to GitHub from your local computer. 
 
-While we are here, let's address the other segment where we will need the GitHub access token later. Go ahead and enter the following line of code:
+While we are here, let's address the last thing we will need to do with the GitHub access token for. Go ahead and enter the following line of code in the console:
 
 ```{r}
 #| eval: false
 usethis::edit_r_environ()
 ```
 
-This will open an .Renviron file that will be blank. Enter the following line of code, swapping in your specific token in its entirety between the quotation marks.
+This will open an .Renviron file that will likely be blank. Enter the following line of code, swapping in your specific token in its entirety between the quotation marks.
 
 ```{r}
 #| eval: false
@@ -139,8 +143,19 @@ With all that done, you now have the project and all it's associated code availa
 
 To continue, either use the Ctrl + O shortcut to view inside the repository folder, or alternatively, navigate to the upper-left of R studio screen, click file, and Open File. Select the Examples_staff.qmd file and open it. 
 
-We want to make sure you can make changes to the file, and that these changes once saved can be committed and pushed to GitHub. Between the first line of text and the code block, add a couple spaces, and then save the file. 
+![](images/01_Modifications.png){fig-align="center" width="600"}
+We want to make sure you can make changes to the file, and that these changes once saved can be committed and pushed to GitHub. Between the first line of text and the code block, add a couple spaces, and then save the file (step 1). 
 
-Navigate to the upper right-side of your Rstudio window and click on Git. Under Staged tab, click the white box next to Examples_staff.qmd. Then hit the Commit button. A new window will appear. Write a brief commit message ("Testing that GitHub is setup correctly") and hit commit. Then click the green push up arrow. If you get a commit message, the system is set up correctly. Go back to GitHub in your browser, and check the commits, to see that the version control edits have been received and are available remotely. 
+Navigate to the upper right-side of your Rstudio window and click on Git. Under Staged tab, click the white box next to Examples_staff.qmd (step 2). Then hit the Commit button (step 3). 
+
+![](images/02_Modifications.png){fig-align="center" width="600"}
+
+A new window will appear. Write a brief commit message ("Testing that GitHub is setup correctly") (step 4) and hit commit (step 5). If you get a successful commit message, proceed and click the green push up-arrow (step 6). 
+
+![](images/03_Modifications.png){fig-align="center" width="600"}
+
+
+
+If you get a commit message, the system is set up correctly. Go back to GitHub in your browser, and check the commits, to see that the version control edits have been received and are available remotely. 
 
 And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier. 
