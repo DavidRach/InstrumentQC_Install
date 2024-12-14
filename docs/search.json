@@ -79,16 +79,58 @@
   {
     "objectID": "filepaths.html",
     "href": "filepaths.html",
-    "title": "R Packages",
+    "title": "Introduction",
     "section": "",
-    "text": "In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and our GitHub repository to communicate with each other and pass the updated versions of the files between. This next segment focuses on individual local computers, first in getting the R packages needed for data processing and handling installed, and then setting the file paths up so that R knows in which folders to look for your Daily QC report .csv and fcs files."
+    "text": "In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate with each other to pass along the updated files stored locally to your remote repository.\nThe following portion focuses on the next steps occurring on the individual local computers. We will need to first install the R packages that will be needed for data processing and handling. Then we will update the file.paths within the .R and .qmd files so that R knows in which folders on your local computer to look for your Daily QC report .csv and fcs files. This editing of the file.path is necessary, as the current file paths within those files is set to find the locations as seen on the UMGCC flow core computers, not yours."
+  },
+  {
+    "objectID": "filepaths.html#cran",
+    "href": "filepaths.html#cran",
+    "title": "Introduction",
+    "section": "CRAN",
+    "text": "CRAN\nWe will start by first installing some of the R packages we will need that are found on the CRAN repository. To do so, we will first run the following code chunk:\n\ninstall.packages(\"dplyr\")\ninstall.packages(\"ggplot2\")\ninstall.packages(\"devtools\")\ninstall.packages(\"BiocManager\")\n\nWhen installing a package, we surround the package name in quotation marks. Forgetting these is a common source of error for begginers in R. For the above, we installed: the R package dplyr, which is useful for rearranging data columns and rows; the R package ggplot2 used for many data visualizations. And finally we installed BiocManager, which is the installation manager for packages stored in the Bioconductor repositories. We will use some of the functions within in the next section."
+  },
+  {
+    "objectID": "filepaths.html#bioconductor",
+    "href": "filepaths.html#bioconductor",
+    "title": "Introduction",
+    "section": "Bioconductor",
+    "text": "Bioconductor\nBioconductor is a repository of R packages specialized for bioinformatics. The majority of Cytometry R packages can be found here. We will begin by installing a few of them by executing the following R code below:\n\nlibrary(BiocManager)\n\nNotice, to be able to install the Bioconductor packages, we first need to load the BiocManager package into active use through the library call. Unlike the install.packages() function where we surround the R package name in quotation marks, this is not required for the library() function.\nNow that BiocManager is active, we can install packages from BiocManager by following the code chunk below:\n\ninstall(\"flowCore\")\ninstall(\"flowWorkspace\")\ninstall(\"ggcyto\")\n\nThe above packages being installed were flowCore and flowWorkspace, that provide the base infrastructure needed for working with .fcs files in R, and ggcyto, which is used for visualizing the data.\nAnd finally, we will install one package from GitHub using devtools. This package is our R package Luciernaga, where the functions to process the Daily QC data files and assemble the dashboard are stored. We are in the process of submitting it to Bioconductor, but until then, it is available for now via GitHub.\n\nlibrary(devtools)\ninstall_github(\"https://github.com/DavidRach/Luciernaga\", dependencies = TRUE)"
+  },
+  {
+    "objectID": "filepaths.html#troubleshooting",
+    "href": "filepaths.html#troubleshooting",
+    "title": "Introduction",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nWhen an R package is being installed, you will see messages being displayed in the consolde below as it is setup on your computer. When installation fails, there will be troubleshooting messages displayed. Typically, an R package will fail to install due to a missing dependency, ie, another R package needs to be installed first before it can be installed. By reading the failed to message note carefully, we can identify the missing package name. From there, by searching online, we can identify whether it is a CRAN or a Bioconductor package, and then use the correct installation code shown above to install that package. Once this is done, we can attempt to install the R package that had failed to install."
+  },
+  {
+    "objectID": "filepaths.html#summary",
+    "href": "filepaths.html#summary",
+    "title": "Introduction",
+    "section": "Summary",
+    "text": "Summary\nWith the steps above executed, you now should have the main R packages needed to run the R code needed to process the instrument QC data and assemble the Quarto dashboard. Congratulations on making progress!"
+  },
+  {
+    "objectID": "filepaths.html#overall-layout",
+    "href": "filepaths.html#overall-layout",
+    "title": "Introduction",
+    "section": "Overall Layout",
+    "text": "Overall Layout\nIn the previous section when you created in Rstudio the New Project via Git, you saved the New Project folder to a specific location (we suggested Documents). If you navigate to your Documents folder and double click on the project, you will see something that resembles this layout:\n The .qmd files are primarily either used in the creation of the dashboard, or for manual exectuion of the processing of the data (to be discussed later). Then there are .R files that are actual scripts that process the data, either when manually told to or as scheduled by the TaskScheduler. Then you have several subfolders (data, docs, images). For this section, we will focus on data, as it is where new QC files get copied to, processed and stored, and subsequently used in assembly of the dashboard website."
   },
   {
     "objectID": "filepaths.html#instrumentqc",
     "href": "filepaths.html#instrumentqc",
-    "title": "R Packages",
+    "title": "Introduction",
     "section": "InstrumentQC",
     "text": "InstrumentQC\nLet’s start with the easiest file.path, we need to find the location you saved the InstrumentQC project to when you downloaded it from Github via Rstudio (recall the browse button to see where it was saved).\nWithin the InstrumentQC folder, the first level contains the individual R scripts and .qmd files for each instrument, as well as additional files needed for the automation, and dashboard assembly. Below this level, there is a data folder containing folders for the individual instruments. Below this level, are folders containing the archive data folders where processed data is stored after processing and updated with new data daily.\nOn first install, modify the names of the folders for your individual instruments, and navigate into the archive folders for the renamed instruments and delete the forked version of the data. These archive data files will be replaced by those of your own instrument after the initial processing.\nNext, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.\nNow, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed).\nOnce complete, you should see the processed data is now present within the Archive folder.\nOpen up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.\nOnce done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being."
+  },
+  {
+    "objectID": "filepaths.html#bead-files",
+    "href": "filepaths.html#bead-files",
+    "title": "Introduction",
+    "section": "Bead Files",
+    "text": "Bead Files\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n ## Local"
   },
   {
     "objectID": "index.html",

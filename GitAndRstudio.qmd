@@ -144,6 +144,7 @@ With all that done, you now have the project and all it's associated code availa
 To continue, either use the Ctrl + O shortcut to view inside the repository folder, or alternatively, navigate to the upper-left of R studio screen, click file, and Open File. Select the Examples_staff.qmd file and open it. 
 
 ![](images/01_Modifications.png){fig-align="center" width="600"}
+
 We want to make sure you can make changes to the file, and that these changes once saved can be committed and pushed to GitHub. Between the first line of text and the code block, add a couple spaces, and then save the file (step 1). 
 
 Navigate to the upper right-side of your Rstudio window and click on Git. Under Staged tab, click the white box next to Examples_staff.qmd (step 2). Then hit the Commit button (step 3). 
@@ -165,4 +166,5 @@ Your system should now be set up correctly. To verify, open your browser and nav
 If the version control chages were successfully pushed, you should find your most recent commits and your commit message shown at the top of the page, looking something similar to this. 
 
 ![](images/06_Modifications.png){fig-align="center" width="600"}
+
 And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier. 
