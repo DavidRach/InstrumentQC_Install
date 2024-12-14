@@ -154,8 +154,15 @@ A new window will appear. Write a brief commit message ("Testing that GitHub is 
 
 ![](images/03_Modifications.png){fig-align="center" width="600"}
 
+If the push to GitHub was successful, you should see a screen that looks similar to this one:
 
+![](images/04_Modifications.png){fig-align="center" width="600"}
 
-If you get a commit message, the system is set up correctly. Go back to GitHub in your browser, and check the commits, to see that the version control edits have been received and are available remotely. 
+Your system should now be set up correctly. To verify, open your browser and navigate back to your Github repository. You will then click on your commits. 
 
+![](images/05_Modifications.png){fig-align="center" width="600"}
+
+If the version control chages were successfully pushed, you should find your most recent commits and your commit message shown at the top of the page, looking something similar to this. 
+
+![](images/06_Modifications.png){fig-align="center" width="600"}
 And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier. 

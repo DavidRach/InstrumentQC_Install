@@ -220,7 +220,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>For coding-beginners, please note, if any errors pop up during the installation of devtools, read the red troubleshooting explanations shown, and install any missing package dependencies by swapping in the package name between the quotation marks similar to what was done in the code chunk above to install the devtools package.</p>
 <p>Once devtools is installed, and you have called it via library, we can now continue.</p>
-<p>Adjacent to your console tab on the lower left, there is another tab called terminal. Go ahead and click it, and then using your mouse copy-paste the following lines of code individually, editing in your GitHub UserName, and email linked to your GitHub account:</p>
+<p>Adjacent to your console tab on the lower left, there is another tab called terminal. Go ahead and click it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/01_Terminal.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>Now that you have switched from the console to the terminal, copy-paste using your mouse/right-click the following lines of code individually, editing in your GitHub UserName, and email linked to your GitHub account:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"JohnDoe@gmail.com"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -274,11 +280,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A pop-up window will appear. Follow the instructions and when prompted, provide it the Github Token code that you generated. Next hit enter. You should be all set to now pull/push (ie. receive/send) files to GitHub from your local computer.</p>
-<p>While we are here, let’s address the other segment where we will need the GitHub access token later. Go ahead and enter the following line of code:</p>
+<p>While we are here, let’s address the last thing we will need to do with the GitHub access token for. Go ahead and enter the following line of code in the console:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This will open an .Renviron file that will be blank. Enter the following line of code, swapping in your specific token in its entirety between the quotation marks.</p>
+<p>This will open an .Renviron file that will likely be blank. Enter the following line of code, swapping in your specific token in its entirety between the quotation marks.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>GITHUB_PAT <span class="ot">&lt;-</span> <span class="st">"GitHubTokenGoesHere"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -320,9 +326,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="making-changes" class="level1">
 <h1>Making Changes</h1>
 <p>To continue, either use the Ctrl + O shortcut to view inside the repository folder, or alternatively, navigate to the upper-left of R studio screen, click file, and Open File. Select the Examples_staff.qmd file and open it.</p>
-<p>We want to make sure you can make changes to the file, and that these changes once saved can be committed and pushed to GitHub. Between the first line of text and the code block, add a couple spaces, and then save the file.</p>
-<p>Navigate to the upper right-side of your Rstudio window and click on Git. Under Staged tab, click the white box next to Examples_staff.qmd. Then hit the Commit button. A new window will appear. Write a brief commit message (“Testing that GitHub is setup correctly”) and hit commit. Then click the green push up arrow. If you get a commit message, the system is set up correctly. Go back to GitHub in your browser, and check the commits, to see that the version control edits have been received and are available remotely.</p>
-<p>And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier.</p>
+<p><img src="images/01_Modifications.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> We want to make sure you can make changes to the file, and that these changes once saved can be committed and pushed to GitHub. Between the first line of text and the code block, add a couple spaces, and then save the file (step 1).</p>
+<p>Navigate to the upper right-side of your Rstudio window and click on Git. Under Staged tab, click the white box next to Examples_staff.qmd (step 2). Then hit the Commit button (step 3).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/02_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>A new window will appear. Write a brief commit message (“Testing that GitHub is setup correctly”) (step 4) and hit commit (step 5). If you get a successful commit message, proceed and click the green push up-arrow (step 6).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/03_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>If the push to GitHub was successful, you should see a screen that looks similar to this one:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/04_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>Your system should now be set up correctly. To verify, open your browser and navigate back to your Github repository. You will then click on your commits.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/05_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>If the version control chages were successfully pushed, you should find your most recent commits and your commit message shown at the top of the page, looking something similar to this.</p>
+<p><img src="images/06_Modifications.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier.</p>
 
 
 </section>
