@@ -25,3 +25,4 @@ Next, navigate to GitHub, navigate to the repositories settings and set the page
 # Github Actions
 
 Rendering locally takes computer time. Additionally, it means each instrument needs to bring in edited versions of the website locally every morning with their initial pull. Alternatively, we can set up a github-pages branch where the rendered website remains on the web and not on the local computer, and customize a Github Actions at the repository level that will spin up a Cloud instance to generate the website. This is free for public github repositories up to certain allowances that our website doesn't approach with a once daily frequency. The flip-side is it's more complicated technical and can take longer due to needing to install R and the R packages needed to run everything on the cloud instance each time. For those with R experience or who laugh in face of danger, read on.
+

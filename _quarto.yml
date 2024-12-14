@@ -4,18 +4,23 @@ project:
 website:
   title: "InstrumentQC"
   site-path: "/InstrumentQC_Install/"
+  page-navigation: true
   navbar:
     left:
     - text: "Home"
       href: index.qmd
-    - text: "Installation"
-      href: Installation.qmd
-    - text: "Setting up Git and Rstudio"
-      href: GitAndRstudio.qmd
-    - text: "Setting File Paths"
-      href: filepaths.qmd
-    - text: "Next Steps"
-      href: Continuation.qmd
+    - text: "Articles"
+      menu: 
+      - text: "Installation"
+        href: Installation.qmd
+      - text: "Setting up Git and Rstudio"
+        href: GitAndRstudio.qmd
+      - text: "Setting File Paths"
+        href: filepaths.qmd
+      - text: "Dashboard Components"
+        href: InstrumentLayout.qmd
+      - text: "Automation"
+        href: Automation.qmd
     right:
     - icon: github
       href: https://github.com/DavidRach/InstrumentQC_Install
