@@ -11,9 +11,7 @@ library(BiocStyle)
 
 
 # Introduction
-In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository. The following portion focuses on the following steps which will occur for the individual local computers. 
-
-We will first install the R packages needed for data processing and handling. After that, we will update the file.paths within the individual .R scripts and .qmd files. They are currently set to find folders based on their locations for the UMGCC flow core computers, not yours, therefore we will update the file paths to find folders on your local computer that contain the QC .fcs files and for Cytek instruments the DailyQC report .csv; since 
+Previously, we installed the required software, and set up the Git permissions on individual local computers needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository. We will next install the R packages needed for data processing and handling of the QC data generated daily. 
 
 # R Packages
 
