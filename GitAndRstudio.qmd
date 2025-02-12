@@ -187,6 +187,6 @@ And if this is the case, congratulations! You have set up the software and conne
 
 # Next Steps
 
-You have now successfully setup an individual computer with Rstudio and Git. If you are trying to get set-up for multiple instruments on multiple computers, you will need to repear this process for each of them individually starting from the Setup section.
+You have now successfully setup an individual computer with Rstudio and Git. If you are trying to get set-up for multiple instruments on multiple computers, you will need to repear this process for each of them individually starting from the [Setup](GitAndRstudio.qmd#setup) section.
 
 For our facility, we name each new GitHub token based on the cytometer the respective computer is connected with to make tracking easier. 
