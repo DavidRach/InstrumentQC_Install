@@ -132,11 +132,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-articles">    
         <li>
     <a class="dropdown-item" href="./Installation.html">
- <span class="dropdown-text">Installation</span></a>
+ <span class="dropdown-text">Installing Software</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./GitAndRstudio.html">
  <span class="dropdown-text">Setting up Git and Rstudio</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./rpackages.html">
+ <span class="dropdown-text">Installing R packages</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./filepaths.html">
@@ -176,13 +180,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a>
-  <ul class="collapse">
-  <li><a href="#cran" id="toc-cran" class="nav-link" data-scroll-target="#cran">CRAN</a></li>
-  <li><a href="#bioconductor" id="toc-bioconductor" class="nav-link" data-scroll-target="#bioconductor">Bioconductor</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
-  </ul></li>
   <li><a href="#file-paths" id="toc-file-paths" class="nav-link" data-scroll-target="#file-paths">File Paths</a>
   <ul class="collapse">
   <li><a href="#overall-project-layout" id="toc-overall-project-layout" class="nav-link" data-scroll-target="#overall-project-layout">Overall Project Layout</a></li>
@@ -204,52 +201,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate with each other to pass along the updated files stored locally to your remote repository.</p>
-<p>The following portion focuses on the next steps occurring on the individual local computers. We will need to first install the R packages that will be needed for data processing and handling. Then we will update the file.paths within the .R and .qmd files so that R knows in which folders on your local computer to look for your Daily QC report .csv and fcs files. This editing of the file.path is necessary, as the current file paths within those files is set to find the locations as seen on the UMGCC flow core computers, not yours.</p>
-</section>
-<section id="r-packages" class="level1">
-<h1>R Packages</h1>
-<p>R is a programming language, originally focused primarily on statistical analysis. Through the work of many individuals over the years, its versatility has expanded to other areas, mainly thanks to creation of additional R packages that once installed (and loaded via the library call) expand the functionality allowing you to do countless things not present in the original (base). We had an example of this in the last section when installed the devtools package to allow us to set up communication between RStudio and GitHub.</p>
-<p>These R packages are typically stored and available through either the 1) CRAN, or 2) Bioconductor repositories. Additional R packages (especially those still under development) are only available via 3) GitHub. Knowing in which repository a package can be found is important, as the code you will type for installation will vary for each.</p>
-<section id="cran" class="level2">
-<h2 class="anchored" data-anchor-id="cran">CRAN</h2>
-<p>We will start by first installing some of the R packages we will need that are found on the CRAN repository. To do so, we will first run the following code chunk:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>When installing a package, we surround the package name in quotation marks. Forgetting these is a common source of error for begginers in R. For the above, we installed: the R package dplyr, which is useful for rearranging data columns and rows; the R package ggplot2 used for many data visualizations. And finally we installed BiocManager, which is the installation manager for packages stored in the Bioconductor repositories. We will use some of the functions within in the next section.</p>
-</section>
-<section id="bioconductor" class="level2">
-<h2 class="anchored" data-anchor-id="bioconductor">Bioconductor</h2>
-<p>Bioconductor is a repository of R packages specialized for bioinformatics. The majority of Cytometry R packages can be found here. We will begin by installing a few of them by executing the following R code below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocManager)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Notice, to be able to install the Bioconductor packages, we first need to load the BiocManager package into active use through the library call. Unlike the install.packages() function where we surround the R package name in quotation marks, this is not required for the library() function.</p>
-<p>Now that BiocManager is active, we can install packages from BiocManager by following the code chunk below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>(<span class="st">"flowCore"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>(<span class="st">"flowWorkspace"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>(<span class="st">"ggcyto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The above packages being installed were flowCore and flowWorkspace, that provide the base infrastructure needed for working with .fcs files in R, and ggcyto, which is used for visualizing the data.</p>
-<p>And finally, we will install one package from GitHub using devtools. This package is our R package Luciernaga, where the functions to process the Daily QC data files and assemble the dashboard are stored. We are in the process of submitting it to Bioconductor, but until then, it is available for now via GitHub.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">"https://github.com/DavidRach/Luciernaga"</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="troubleshooting" class="level2">
-<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<p>When an R package is being installed, you will see messages being displayed in the consolde below as it is setup on your computer. When installation fails, there will be troubleshooting messages displayed. Typically, an R package will fail to install due to a missing dependency, ie, another R package needs to be installed first before it can be installed. By reading the failed to message note carefully, we can identify the missing package name. From there, by searching online, we can identify whether it is a CRAN or a Bioconductor package, and then use the correct installation code shown above to install that package. Once this is done, we can attempt to install the R package that had failed to install.</p>
-</section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>With the steps above executed, you now should have the main R packages needed to run the R code needed to process the instrument QC data and assemble the Quarto dashboard. Congratulations on making progress!</p>
-</section>
+<p>In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository. The following portion focuses on the following steps which will occur for the individual local computers.</p>
+<p>Having installed the required R packages, we will now update the file.paths within the individual .R scripts and .qmd files. They are currently set to find folders based on their locations for the UMGCC flow core computers, not yours, therefore we will update the file paths to find folders on your local computer that contain the QC .fcs files and for Cytek instruments the DailyQC report .csv; since</p>
 </section>
 <section id="file-paths" class="level1">
 <h1>File Paths</h1>
@@ -293,8 +246,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You can notice there are two SpectroFlo associated folders present here, Cytekbio and Cytekbioexport. When we retrieve a file.path, we would right click the &gt; symbol. Then we would select the copy address as text option</p>
 <p><img src="images/02_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> When we paste, we get something like this: <code>C:\Cytekbio</code>. The &nbsp;designates a hierarchy of folders descending down to the target folder or file. When working in R, we can reference this by taking the individual folder names and linking them with the file.path function. For this example, it would look something like the following for <code>C:\Cytekbio</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>PathToTheFolderOfInterest <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"CytekbioExport"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>PathToTheFolderOfInterest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>PathToTheFolderOfInterest <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"CytekbioExport"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>PathToTheFolderOfInterest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "C:/CytekbioExport"</code></pre>
 </div>
@@ -302,8 +255,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>One of the reasons file.path only needs the folder names is <code>\</code> vs <code>/</code> will vary depending on what operating system your computer is running on (Windows, Mac or Linux). Additionally, R requires Windows paths that when we right-click copy are shown as <code>\</code> be switched to <code>/</code>. Using file.path is easier in the long run than needing to remember which is permitted and which one is not.</p>
 <p>Additionally, extra elements can be appended to the file.path by simply including the existing path variable, and then adding the next folder in between ““. For example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>NextFolderDown <span class="ot">&lt;-</span> <span class="fu">file.path</span>(PathToTheFolderOfInterest, <span class="st">"Experiments"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>NextFolderDown</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>NextFolderDown <span class="ot">&lt;-</span> <span class="fu">file.path</span>(PathToTheFolderOfInterest, <span class="st">"Experiments"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>NextFolderDown</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "C:/CytekbioExport/Experiments"</code></pre>
 </div>
@@ -314,8 +267,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="daily-qc-files" class="level2">
 <h2 class="anchored" data-anchor-id="daily-qc-files">Daily QC Files</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SetupFolderPath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(NextFolderDown, <span class="st">"Setup"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>SetupFolderPath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>SetupFolderPath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(NextFolderDown, <span class="st">"Setup"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>SetupFolderPath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "C:/CytekbioExport/Experiments/Setup"</code></pre>
 </div>
@@ -333,8 +286,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="bead-fcs-files-system">Bead FCS Files (System)</h2>
 <p>If we are relying on the .fcs files acquired during the process of DailyQC, we would navigate from this folder down one additional level.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(SetupFolderPath, <span class="st">"DailyQC"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(SetupFolderPath, <span class="st">"DailyQC"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "C:/CytekbioExport/Experiments/Setup/DailyQC"</code></pre>
 </div>
@@ -358,8 +311,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Because this can take up quite a bit of memory space in context of a core facility, for our particular SpectroFlo setup, these folders are found under an external hard-drive.</p>
 <p>We would consequently start exploring the folders (and setting up a file.path) like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>External <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"D:"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>External</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>External <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"D:"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>External</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "D:"</code></pre>
 </div>
@@ -370,8 +323,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>FCSFiles <span class="ot">&lt;-</span> <span class="fu">file.path</span>(External, <span class="st">"Aurora 5 FCS_Files"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>FCSFiles</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>FCSFiles <span class="ot">&lt;-</span> <span class="fu">file.path</span>(External, <span class="st">"Aurora 5 FCS_Files"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>FCSFiles</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "D:/Aurora 5 FCS_Files"</code></pre>
 </div>
@@ -382,8 +335,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Experiments <span class="ot">&lt;-</span> <span class="fu">file.path</span>(FCSFiles, <span class="st">"Experiments"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Experiments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Experiments <span class="ot">&lt;-</span> <span class="fu">file.path</span>(FCSFiles, <span class="st">"Experiments"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Experiments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "D:/Aurora 5 FCS_Files/Experiments"</code></pre>
 </div>
@@ -394,17 +347,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Admin <span class="ot">&lt;-</span> <span class="fu">file.path</span>(Experiments, <span class="st">"Admin"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Admin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Admin <span class="ot">&lt;-</span> <span class="fu">file.path</span>(Experiments, <span class="st">"Admin"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Admin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "D:/Aurora 5 FCS_Files/Experiments/Admin"</code></pre>
 </div>
 </div>
 <p><img src="images/04_BeadsFile.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> And finally, the important thing is to note the structure that each experiment file name takes. In our case for this instrument, the folders are set to QC_2024-11. When we are having the Rscript find the new QC files for the given day, it calls the function System.time to return the date and time. These are broken into month and day.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-02-12 09:01:26 EST"</code></pre>
+<pre><code>[1] "2025-02-12 09:52:26 EST"</code></pre>
 </div>
 </div>
 <p>Consequently, at the level of this folder, it would look for a folder named “QC_2024-” with the corresponding month provided by Sys.time call. R recognizes character strings exactly in this case, so if you had a name mismatch (ex. “QC 2024-” or “QC_2024_”) it would fail to find the correct folder and search the contents within. So this is an area to be aware of and adjust the code accordingly for how you structure the name.</p>

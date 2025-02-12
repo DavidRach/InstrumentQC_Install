@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>installation – InstrumentQC</title>
+<title>rpackages – InstrumentQC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -145,15 +179,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#install-software" id="toc-install-software" class="nav-link active" data-scroll-target="#install-software">Install Software</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a>
   <ul class="collapse">
-  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r">R</a></li>
-  <li><a href="#rstudio" id="toc-rstudio" class="nav-link" data-scroll-target="#rstudio">Rstudio</a></li>
-  <li><a href="#rtools" id="toc-rtools" class="nav-link" data-scroll-target="#rtools">Rtools</a></li>
-  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto">Quarto</a></li>
-  <li><a href="#git" id="toc-git" class="nav-link" data-scroll-target="#git">Git</a></li>
+  <li><a href="#cran" id="toc-cran" class="nav-link" data-scroll-target="#cran">CRAN</a></li>
+  <li><a href="#bioconductor" id="toc-bioconductor" class="nav-link" data-scroll-target="#bioconductor">Bioconductor</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul></li>
-  <li><a href="#setting-up-github-account" id="toc-setting-up-github-account" class="nav-link" data-scroll-target="#setting-up-github-account">Setting up GitHub Account</a></li>
   </ul>
 </nav>
     </div>
@@ -163,112 +196,65 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="install-software" class="level1">
-<h1>Install Software</h1>
-<p>You will first need to make sure that R, Rstudio, Rtools, Quarto and Git are installed on every instrument computer that you will be collecting daily QC data from. Follow along below for instructions for downloading each on a Windows computer.</p>
-<section id="r" class="level2">
-<h2 class="anchored" data-anchor-id="r">R</h2>
-<p><a href="https://www.r-project.org/">R</a> is a free software and programming language used by researchers and data scientist worldwide. To begin you will need to navigate to the main <a href="https://cran.rstudio.com/">website</a>. You will first select <u>Download R for Windows</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_RInstall.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>You will be redirected to the next screen, where you should select <u>install R for the first time</u>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_RInstall.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>And finally you will see the following screen, where you will select the current version of <u>Download R for Windows</u>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/03_RInstall.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>The next screen will ask where you want to save the installer. I generally place it on the desktop. Once downloaded, double click and proceed with the software installation, selecting the default options.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository. The following portion focuses on the following steps which will occur for the individual local computers.</p>
+<p>We will first install the R packages needed for data processing and handling. After that, we will update the file.paths within the individual .R scripts and .qmd files. They are currently set to find folders based on their locations for the UMGCC flow core computers, not yours, therefore we will update the file paths to find folders on your local computer that contain the QC .fcs files and for Cytek instruments the DailyQC report .csv; since</p>
 </section>
-<section id="rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="rstudio">Rstudio</h2>
-<p><a href="https://posit.co/download/rstudio-desktop/">Rstudio</a> is an integrated development environment (IDE), providing an interface with R that is friendlier to many users. We will use it in our context to set up project folders that will contain the code and data needed to process the QC data and export it to the dashboard.</p>
-<p>To download, we first navigate to the <a href="https://posit.co/download/rstudio-desktop/">website</a> and select <u>Download R Studio Desktop for Windows</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Rstudio.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
+<section id="r-packages" class="level1">
+<h1>R Packages</h1>
+<p>R is a programming language originally focused on statistical analyses. Through the contributions of many individuals over the years in creating additional R packages, its versatility has expanded to other areas. These R packages consist of additional code (ie. functions) that once installed (and loaded via the library call) allow you to do countless things not originally present in the original (base) code. An example of this was in the last section when we installed the <em><a href="https://CRAN.R-project.org/package=devtools">devtools</a></em> package that allowed us to set up communication between RStudio and GitHub.</p>
+<p>R packages are publicly available typically through either the 1) CRAN, or 2) Bioconductor repositories. Additional R packages (typically those under development) may only be available via 3) GitHub. Knowing which repository a package can be found in is important part of the installation process, as the code used to install from different repositories will differ slightly.</p>
+<section id="cran" class="level2">
+<h2 class="anchored" data-anchor-id="cran">CRAN</h2>
+<p>We will start by first installing some of the R packages we will need that are found on the CRAN repository.</p>
+<p>To do so, we will first run the following code chunk:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This will then proceed to show the pop-up asking where you want to save the installer. Save to the desktop, and then double click the installer. Follow the default installation prompts.</p>
+<p>When installing a package, we surround the package name in quotation marks. Forgetting to add the quotation marks is a common source of an error message when first getting started in R that we all have done at some point.</p>
+<p>For the above, we installed the following R packages: <em><a href="https://CRAN.R-project.org/package=dplyr">dplyr</a></em>, which allows rearranging of data’s rows and columns; <em><a href="https://CRAN.R-project.org/package=ggplot2">ggplot2</a></em> used in creating the visualization plots. And finally we installed <em><a href="https://CRAN.R-project.org/package=BiocManager">BiocManager</a></em>, which is the R package that serves as the manager for installation of packages located in Bioconductor repositories. We will use it’s functions within the next section.</p>
 </section>
-<section id="rtools" class="level2">
-<h2 class="anchored" data-anchor-id="rtools">Rtools</h2>
-<p>R packages are made up of functions that carry out specific tasks. Some of the R packages that we will be using require compilation from source code, which requires installation of <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> to mediate this process.</p>
-<p>To begin, navigate to the <a href="https://cran.r-project.org/bin/windows/Rtools/">website</a> and select <u>the most recent version of Rtools</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Rtools.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
+<section id="bioconductor" class="level2">
+<h2 class="anchored" data-anchor-id="bioconductor">Bioconductor</h2>
+<p>Bioconductor is a repository for R packages that specialize in bioinformatics. The majority of Cytometry R packages can be found here. To be able to install Bioconductor packages, we first need to load the BiocManager package at the start of a session through the library call.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocManager)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Then, you will select <u>the regular Rtools installer</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_Rtools.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
+<p>Note, unlike with install.packages() function where we surround the name of the R package name in quotation marks, when loading a package with the library() function quotation marks are not needed.</p>
+<p>Now that BiocManager is active, we can use it to install packages from Bioconductor with the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>(<span class="st">"flowCore"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>(<span class="st">"flowWorkspace"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>(<span class="st">"ggcyto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This will then provide the pop-up asking where to save the installer. Place on the desktop, then after it has finished downloading, double click to run the installer. Select the default options.</p>
+<p>We installed <em><a href="https://bioconductor.org/packages/3.19/flowCore">flowCore</a></em> and <em><a href="https://bioconductor.org/packages/3.19/flowWorkspace">flowWorkspace</a></em>, which provide the core infrastructure needed to work with .fcs files in R. The <em><a href="https://bioconductor.org/packages/3.19/ggcyto">ggcyto</a></em> package is used to visualize the .fcs data.</p>
+<p>And finally, we need to install one package from GitHub using <em><a href="https://CRAN.R-project.org/package=devtools">devtools</a></em>. This is our R package, <a href="https://github.com/DavidRach/Luciernaga">Luciernaga</a>, where I have added functions that are needed to process the QC files and assemble the dashboard. We are in the process of submitting the package to Bioconductor, but until then, it is available via GitHub.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">"https://github.com/DavidRach/Luciernaga"</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note, Luciernaga contains a config.win file needed for a communicating with Python function that throws an error on some of our campus computers causing the IT firewall to trigger. Since it is not needed for building the website, if you encounter this error, install the following “branch” of the package that doesn’t contain that function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">"https://github.com/DavidRach/Luciernaga"</span>, <span class="at">ref=</span><span class="st">"NoPythonConfig"</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="quarto" class="level2">
-<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
-<p>The dashboard (and this website you are currently reading) are built with <a href="https://quarto.org/">Quarto</a>. It facilitates making websites from various programming languages commonly used by data scientist who didn’t start off as computer programmers. In our context, we will use it to produce both the website and individual dashboard pages.</p>
-<p>To begin, after navigating to the <a href="https://quarto.org/">website</a> we will first select the <u>Get Started</u> tab</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Quarto.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>Then we will select <u>Download Quarto Cli</u> to download the most recent version for Windows.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_Quarto.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>Finally, the pop-up asking where we want to save the installer will pop up. Save to the desktop, and after it finished downloading, double click and select the default options.</p>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p>For coding-beginners, please note, during the installation of an R package, if you are missing required dependencies, you will be asked whether you want to install the missing packages. Select yes for these. When there are newer versions of an R package, it will ask if you want to update to the newer version, which in general is a good idea but not required if you are short on time.</p>
+<p>During the installation process, if an error is encountered, you will get an error message and a red troubleshooting explanation describing the issue. Read this carefully, and search online for the missing dependency, identifying whether it is a CRAN or a Bioconductor package. Then use the corresponding installation setup as seen above to install the missing package and hopefully fix the issue. Once this is done, we can attempt to install the R package that had failed to install.</p>
 </section>
-<section id="git" class="level2">
-<h2 class="anchored" data-anchor-id="git">Git</h2>
-<p><a href="https://git-scm.com/">Git</a> is used for version control by many programmers. We will be using it in the context of the dashboard for managing the processed data, and forwarding it on to GitHub for use in the dashboard.</p>
-<p>To begin, we will first navigate to the <a href="https://git-scm.com/">website</a> and select the download from Windows option.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Git.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>We will then proceed and select <u>install 64-bit Git for Windows Setup</u> option</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_Git.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>Finally, the pop-up will appear asking where to save the installer. Select and save to the Desktop. After the installer has finished downloading, double click, and accept the default options. Be advised, Git has a lot of options, for now, just accept all defaults without wandering off on a “What is Vim?!?” rabbit-hole.</p>
-</section>
-</section>
-<section id="setting-up-github-account" class="level1">
-<h1>Setting up GitHub Account</h1>
-<p>Now that you have installed the software needed on the instrument computer, you will need to make sure to set up a <a href="https://github.com/">GitHub</a> account if you don’t already have one (or are setting up a new one for your core). The repository you set up using the GitHub account will be where each individual instrument computer sends the data to, and where the website will be stored/accessed.</p>
-<p>To begin, navigate to the <a href="https://github.com/">website</a>, provide an email and select Sign up for GitHub.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Github.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>Then you will need to create an account and set a password.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_Github.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>Proceed with the account creation, selecting the defaults (specifically the free versions).</p>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Having completed the steps above, you should now have the main R packages needed to run the R code to process the instument QC data and assemble the Quarto dashboard. Congratulations on making progress!</p>
+<p>If you are installing on multiple computers and encounter dependency packages that throw errors, that you then need to type in to install, please <a href="https://github.com/DavidRach/InstrumentQC_Install/issues">open an issue</a> and let me know so that I can update the list above accordingly.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

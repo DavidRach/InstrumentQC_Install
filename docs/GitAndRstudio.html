@@ -132,11 +132,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-articles">    
         <li>
     <a class="dropdown-item" href="./Installation.html">
- <span class="dropdown-text">Installation</span></a>
+ <span class="dropdown-text">Installing Software</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./GitAndRstudio.html">
  <span class="dropdown-text">Setting up Git and Rstudio</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./rpackages.html">
+ <span class="dropdown-text">Installing R packages</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./filepaths.html">
@@ -184,6 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#new-project" id="toc-new-project" class="nav-link" data-scroll-target="#new-project">New Project</a></li>
   <li><a href="#making-changes" id="toc-making-changes" class="nav-link" data-scroll-target="#making-changes">Making Changes</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
   </ul>
 </nav>
     </div>
@@ -195,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="forking-the-project" class="level1">
 <h1>Forking the project</h1>
-<p>Now that your GitHub account is set up, it’s time to put it to use. Our core’s version of the website is contained within the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. This is publicly available, and since the software repository is licensed under a <a href="https://github.com/UMGCCFCSS/InstrumentQC/blob/main/LICENSE">free copyleft license</a>, you are able to fork (ie. copy) the existing project, modify it, and share (ie. distribute) it.</p>
+<p>Now that your GitHub account is set up, it’s time to put it to use. Our core’s version of the website is contained within the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. This is publicly available, and since the software repository is licensed under a free <a href="https://github.com/UMGCCFCSS/InstrumentQC/blob/main/LICENSE">copyleft license</a>, you are able to fork (ie. copy) the existing project, modify it, and share (ie. distribute) it.</p>
 <p>To get started, you will first navigate to the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. From here you will select <u>the fork the repository option</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -395,6 +400,11 @@ Attaching package: 'BiocManager'</code></pre>
 </figure>
 </div>
 <p>And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier.</p>
+</section>
+<section id="next-steps" class="level1">
+<h1>Next Steps</h1>
+<p>You have now successfully setup an individual computer with Rstudio and Git. If you are trying to get set-up for multiple instruments on multiple computers, you will need to repear this process for each of them individually starting from the Setup section.</p>
+<p>For our facility, we name each new GitHub token based on the cytometer the respective computer is connected with to make tracking easier.</p>
 
 
 </section>

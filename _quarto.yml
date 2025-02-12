@@ -11,10 +11,12 @@ website:
       href: index.qmd
     - text: "Articles"
       menu: 
-      - text: "Installation"
+      - text: "Installing Software"
         href: Installation.qmd
       - text: "Setting up Git and Rstudio"
         href: GitAndRstudio.qmd
+      - text: "Installing R packages"
+        href: rpackages.qmd
       - text: "Setting File Paths"
         href: filepaths.qmd
       - text: "Dashboard Components"

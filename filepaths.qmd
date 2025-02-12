@@ -1,70 +1,19 @@
 ---
 toc: true
 ---
+
+```{r}
+#| warning: false
+#| message: false
+#| include: false
+library(BiocStyle)
+```
+
+
 # Introduction
-In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate with each other to pass along the updated files stored locally to your remote repository.
+In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository. The following portion focuses on the following steps which will occur for the individual local computers. 
 
-The following portion focuses on the next steps occurring on the individual local computers. We will need to first install the R packages that will be needed for data processing and handling. Then we will update the file.paths within the .R and .qmd files so that R knows in which folders on your local computer to look for your Daily QC report .csv and fcs files. This editing of the file.path is necessary, as the current file paths within those files is set to find the locations as seen on the UMGCC flow core computers, not yours.
-
-# R Packages
-
-R is a programming language, originally focused primarily on statistical analysis. Through the work of many individuals over the years, its versatility has expanded to other areas, mainly thanks to creation of additional R packages that once installed (and loaded via the library call) expand the functionality allowing you to do countless things not present in the original (base). We had an example of this in the last section when installed the devtools package to allow us to set up communication between RStudio and GitHub. 
-
-These R packages are typically stored and available through either the 1) CRAN, or 2) Bioconductor repositories. Additional R packages (especially those still under development) are only available via 3) GitHub. Knowing in which repository a package can be found is important, as the code you will type for installation will vary for each. 
-
-## CRAN
-
-We will start by first installing some of the R packages we will need that are found on the CRAN repository. 
-To do so, we will first run the following code chunk:
-
-```{r}
-#| eval: FALSE
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages("devtools")
-install.packages("BiocManager")
-```
-
-When installing a package, we surround the package name in quotation marks. Forgetting these is a common source of error for begginers in R. For the above, we installed: the R package dplyr, which is useful for rearranging data columns and rows; the R package ggplot2 used for many data visualizations. And finally we installed BiocManager, which is the installation manager for packages stored in the Bioconductor repositories. We will use some of the functions within in the next section. 
-
-## Bioconductor
-
-Bioconductor is a repository of R packages specialized for bioinformatics. The majority of Cytometry R packages can be found here. We will begin by installing a few of them by executing the following R code below:
-
-```{r}
-#| eval: FALSE
-library(BiocManager)
-```
-
-Notice, to be able to install the Bioconductor packages, we first need to load the BiocManager package into active use through the library call. Unlike the install.packages() function where we surround the R package name in quotation marks, this is not required for the library() function. 
-
-Now that BiocManager is active, we can install packages from BiocManager by following the code chunk below:
-
-```{r}
-#| eval: FALSE
-install("flowCore")
-install("flowWorkspace")
-install("ggcyto")
-```
-
-The above packages being installed were flowCore and flowWorkspace, that provide the base infrastructure needed for working with .fcs files in R, and ggcyto, which is used for visualizing the data. 
-
-And finally, we will install one package from GitHub using devtools. This package is our R package Luciernaga, where the functions to process the Daily QC data files and assemble the dashboard are stored. We are in the process of submitting it to Bioconductor, but until then, it is available for now via GitHub. 
-
-```{r}
-#| eval: FALSE
-library(devtools)
-install_github("https://github.com/DavidRach/Luciernaga", dependencies = TRUE)
-```
-
-## Troubleshooting
-
-When an R package is being installed, you will see messages being displayed in the consolde below as it is setup on your computer. When installation fails, there will be troubleshooting messages displayed. Typically, an R package will fail to install due to a missing dependency, ie, another R package needs to be installed first before it can be installed. By reading the failed to message note carefully, we can identify the missing package name. From there, by searching online, we can identify whether it is a CRAN or a Bioconductor package, and then use the correct installation code shown above to install that package. Once this is done, we can attempt to install the R package that had failed to install. 
-
-## Summary
-
-With the steps above executed, you now should have the main R packages needed to run the R code needed to process the instrument QC data and assemble the Quarto dashboard. Congratulations on making progress!
-
+Having installed the required R packages, we will now update the file.paths within the individual .R scripts and .qmd files. They are currently set to find folders based on their locations for the UMGCC flow core computers, not yours, therefore we will update the file paths to find folders on your local computer that contain the QC .fcs files and for Cytek instruments the DailyQC report .csv; since 
 
 # File Paths
 

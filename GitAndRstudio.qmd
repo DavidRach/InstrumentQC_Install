@@ -11,7 +11,7 @@ library(BiocStyle)
 
 # Forking the project
 
-Now that your GitHub account is set up, it's time to put it to use. Our core's version of the website is contained within the [InstrumentQC](https://github.com/UMGCCFCSS/InstrumentQC) repository. This is publicly available, and since the software repository is licensed under a [free copyleft license](https://github.com/UMGCCFCSS/InstrumentQC/blob/main/LICENSE), you are able to fork (ie. copy) the existing project, modify it, and share (ie. distribute) it. 
+Now that your GitHub account is set up, it's time to put it to use. Our core's version of the website is contained within the [InstrumentQC](https://github.com/UMGCCFCSS/InstrumentQC) repository. This is publicly available, and since the software repository is licensed under a free [copyleft license](https://github.com/UMGCCFCSS/InstrumentQC/blob/main/LICENSE), you are able to fork (ie. copy) the existing project, modify it, and share (ie. distribute) it. 
 
 To get started, you will first navigate to the [InstrumentQC](https://github.com/UMGCCFCSS/InstrumentQC) repository. From here you will select [the fork the repository option]{.underline}
 
@@ -184,3 +184,9 @@ If the version control chages were successfully pushed, you should find your mos
 ![](images/06_Modifications.png){fig-align="center" width="600"}
 
 And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier. 
+
+# Next Steps
+
+You have now successfully setup an individual computer with Rstudio and Git. If you are trying to get set-up for multiple instruments on multiple computers, you will need to repear this process for each of them individually starting from the Setup section.
+
+For our facility, we name each new GitHub token based on the cytometer the respective computer is connected with to make tracking easier. 

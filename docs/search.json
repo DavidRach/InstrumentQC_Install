@@ -105,6 +105,41 @@
     "text": "Summary\nThe individual instrument .qmd file is setup to retrieve the instrument specific archive data and filter for a desired time range. Once this is done, the individual column names in the .csv are identified and split on the basis of characters in their names into smaller list (typically by laser). This process is then repeated for each measurement type (MFI, Gain, RCV). For the assembly of the actual dashboard itself, the ordering of the measurement type columns is denoted by the ## as encountered, with the tab-sets within each of these also displayed by the order encountered. By rearranging the order, modifications to the individual instrument dashboard pages can be customized.\nIf you have multiple instruments, you would modify each instruments .qmd file in a similar way to ensure the correct archive data folder is being referenced, and then customize which plots you want displayed when and where."
   },
   {
+    "objectID": "rpackages.html",
+    "href": "rpackages.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository. The following portion focuses on the following steps which will occur for the individual local computers.\nWe will first install the R packages needed for data processing and handling. After that, we will update the file.paths within the individual .R scripts and .qmd files. They are currently set to find folders based on their locations for the UMGCC flow core computers, not yours, therefore we will update the file paths to find folders on your local computer that contain the QC .fcs files and for Cytek instruments the DailyQC report .csv; since"
+  },
+  {
+    "objectID": "rpackages.html#cran",
+    "href": "rpackages.html#cran",
+    "title": "Introduction",
+    "section": "CRAN",
+    "text": "CRAN\nWe will start by first installing some of the R packages we will need that are found on the CRAN repository.\nTo do so, we will first run the following code chunk:\n\ninstall.packages(\"dplyr\")\ninstall.packages(\"ggplot2\")\ninstall.packages(\"devtools\")\ninstall.packages(\"BiocManager\")\n\nWhen installing a package, we surround the package name in quotation marks. Forgetting to add the quotation marks is a common source of an error message when first getting started in R that we all have done at some point.\nFor the above, we installed the following R packages: dplyr, which allows rearranging of data’s rows and columns; ggplot2 used in creating the visualization plots. And finally we installed BiocManager, which is the R package that serves as the manager for installation of packages located in Bioconductor repositories. We will use it’s functions within the next section."
+  },
+  {
+    "objectID": "rpackages.html#bioconductor",
+    "href": "rpackages.html#bioconductor",
+    "title": "Introduction",
+    "section": "Bioconductor",
+    "text": "Bioconductor\nBioconductor is a repository for R packages that specialize in bioinformatics. The majority of Cytometry R packages can be found here. To be able to install Bioconductor packages, we first need to load the BiocManager package at the start of a session through the library call.\n\nlibrary(BiocManager)\n\nNote, unlike with install.packages() function where we surround the name of the R package name in quotation marks, when loading a package with the library() function quotation marks are not needed.\nNow that BiocManager is active, we can use it to install packages from Bioconductor with the following code:\n\ninstall(\"flowCore\")\ninstall(\"flowWorkspace\")\ninstall(\"ggcyto\")\n\nWe installed flowCore and flowWorkspace, which provide the core infrastructure needed to work with .fcs files in R. The ggcyto package is used to visualize the .fcs data.\nAnd finally, we need to install one package from GitHub using devtools. This is our R package, Luciernaga, where I have added functions that are needed to process the QC files and assemble the dashboard. We are in the process of submitting the package to Bioconductor, but until then, it is available via GitHub.\n\nlibrary(devtools)\ninstall_github(\"https://github.com/DavidRach/Luciernaga\", dependencies = TRUE)\n\nNote, Luciernaga contains a config.win file needed for a communicating with Python function that throws an error on some of our campus computers causing the IT firewall to trigger. Since it is not needed for building the website, if you encounter this error, install the following “branch” of the package that doesn’t contain that function.\n\nlibrary(devtools)\ninstall_github(\"https://github.com/DavidRach/Luciernaga\", ref=\"NoPythonConfig\", dependencies = TRUE)"
+  },
+  {
+    "objectID": "rpackages.html#troubleshooting",
+    "href": "rpackages.html#troubleshooting",
+    "title": "Introduction",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nFor coding-beginners, please note, during the installation of an R package, if you are missing required dependencies, you will be asked whether you want to install the missing packages. Select yes for these. When there are newer versions of an R package, it will ask if you want to update to the newer version, which in general is a good idea but not required if you are short on time.\nDuring the installation process, if an error is encountered, you will get an error message and a red troubleshooting explanation describing the issue. Read this carefully, and search online for the missing dependency, identifying whether it is a CRAN or a Bioconductor package. Then use the corresponding installation setup as seen above to install the missing package and hopefully fix the issue. Once this is done, we can attempt to install the R package that had failed to install."
+  },
+  {
+    "objectID": "rpackages.html#summary",
+    "href": "rpackages.html#summary",
+    "title": "Introduction",
+    "section": "Summary",
+    "text": "Summary\nHaving completed the steps above, you should now have the main R packages needed to run the R code to process the instument QC data and assemble the Quarto dashboard. Congratulations on making progress!\nIf you are installing on multiple computers and encounter dependency packages that throw errors, that you then need to type in to install, please open an issue and let me know so that I can update the list above accordingly."
+  },
+  {
     "objectID": "Automation.html",
     "href": "Automation.html",
     "title": "Manual Transfer",
@@ -123,35 +158,7 @@
     "href": "filepaths.html",
     "title": "Introduction",
     "section": "",
-    "text": "In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate with each other to pass along the updated files stored locally to your remote repository.\nThe following portion focuses on the next steps occurring on the individual local computers. We will need to first install the R packages that will be needed for data processing and handling. Then we will update the file.paths within the .R and .qmd files so that R knows in which folders on your local computer to look for your Daily QC report .csv and fcs files. This editing of the file.path is necessary, as the current file paths within those files is set to find the locations as seen on the UMGCC flow core computers, not yours."
-  },
-  {
-    "objectID": "filepaths.html#cran",
-    "href": "filepaths.html#cran",
-    "title": "Introduction",
-    "section": "CRAN",
-    "text": "CRAN\nWe will start by first installing some of the R packages we will need that are found on the CRAN repository. To do so, we will first run the following code chunk:\n\ninstall.packages(\"dplyr\")\ninstall.packages(\"ggplot2\")\ninstall.packages(\"devtools\")\ninstall.packages(\"BiocManager\")\n\nWhen installing a package, we surround the package name in quotation marks. Forgetting these is a common source of error for begginers in R. For the above, we installed: the R package dplyr, which is useful for rearranging data columns and rows; the R package ggplot2 used for many data visualizations. And finally we installed BiocManager, which is the installation manager for packages stored in the Bioconductor repositories. We will use some of the functions within in the next section."
-  },
-  {
-    "objectID": "filepaths.html#bioconductor",
-    "href": "filepaths.html#bioconductor",
-    "title": "Introduction",
-    "section": "Bioconductor",
-    "text": "Bioconductor\nBioconductor is a repository of R packages specialized for bioinformatics. The majority of Cytometry R packages can be found here. We will begin by installing a few of them by executing the following R code below:\n\nlibrary(BiocManager)\n\nNotice, to be able to install the Bioconductor packages, we first need to load the BiocManager package into active use through the library call. Unlike the install.packages() function where we surround the R package name in quotation marks, this is not required for the library() function.\nNow that BiocManager is active, we can install packages from BiocManager by following the code chunk below:\n\ninstall(\"flowCore\")\ninstall(\"flowWorkspace\")\ninstall(\"ggcyto\")\n\nThe above packages being installed were flowCore and flowWorkspace, that provide the base infrastructure needed for working with .fcs files in R, and ggcyto, which is used for visualizing the data.\nAnd finally, we will install one package from GitHub using devtools. This package is our R package Luciernaga, where the functions to process the Daily QC data files and assemble the dashboard are stored. We are in the process of submitting it to Bioconductor, but until then, it is available for now via GitHub.\n\nlibrary(devtools)\ninstall_github(\"https://github.com/DavidRach/Luciernaga\", dependencies = TRUE)"
-  },
-  {
-    "objectID": "filepaths.html#troubleshooting",
-    "href": "filepaths.html#troubleshooting",
-    "title": "Introduction",
-    "section": "Troubleshooting",
-    "text": "Troubleshooting\nWhen an R package is being installed, you will see messages being displayed in the consolde below as it is setup on your computer. When installation fails, there will be troubleshooting messages displayed. Typically, an R package will fail to install due to a missing dependency, ie, another R package needs to be installed first before it can be installed. By reading the failed to message note carefully, we can identify the missing package name. From there, by searching online, we can identify whether it is a CRAN or a Bioconductor package, and then use the correct installation code shown above to install that package. Once this is done, we can attempt to install the R package that had failed to install."
-  },
-  {
-    "objectID": "filepaths.html#summary",
-    "href": "filepaths.html#summary",
-    "title": "Introduction",
-    "section": "Summary",
-    "text": "Summary\nWith the steps above executed, you now should have the main R packages needed to run the R code needed to process the instrument QC data and assemble the Quarto dashboard. Congratulations on making progress!"
+    "text": "In the previous sections, we installed the required software, and set up the Git permissions needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository. The following portion focuses on the following steps which will occur for the individual local computers.\nHaving installed the required R packages, we will now update the file.paths within the individual .R scripts and .qmd files. They are currently set to find folders based on their locations for the UMGCC flow core computers, not yours, therefore we will update the file paths to find folders on your local computer that contain the QC .fcs files and for Cytek instruments the DailyQC report .csv; since"
   },
   {
     "objectID": "filepaths.html#overall-project-layout",
@@ -193,6 +200,6 @@
     "href": "filepaths.html#bead-fcs-files-system-1",
     "title": "Introduction",
     "section": "Bead FCS Files (System)",
-    "text": "Bead FCS Files (System)\nAt our institution, we separately using the the same QC beads used for Daily QC a 3000 bead before and after .fcs sample to compare the changes in MFI after the QC has adjusted. Within SpectroFlo, these are acquired under the Admin account, organized within an experiment corresponding to the month. As a result, these are stored with the other .fcs files acquired by all users that exist within SpectroFlo folder while they wait to be exported as zipped folders.\nBecause this can take up quite a bit of memory space in context of a core facility, for our particular SpectroFlo setup, these folders are found under an external hard-drive.\nWe would consequently start exploring the folders (and setting up a file.path) like this:\n\nExternal &lt;- file.path(\"D:\")\nExternal\n\n[1] \"D:\"\n\n\n\n\n\n\n\n\nFCSFiles &lt;- file.path(External, \"Aurora 5 FCS_Files\")\nFCSFiles\n\n[1] \"D:/Aurora 5 FCS_Files\"\n\n\n\n\n\n\n\n\nExperiments &lt;- file.path(FCSFiles, \"Experiments\")\nExperiments\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments\"\n\n\n\n\n\n\n\n\nAdmin &lt;- file.path(Experiments, \"Admin\")\nAdmin\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments/Admin\"\n\n\n And finally, the important thing is to note the structure that each experiment file name takes. In our case for this instrument, the folders are set to QC_2024-11. When we are having the Rscript find the new QC files for the given day, it calls the function System.time to return the date and time. These are broken into month and day.\n\nSys.time()\n\n[1] \"2025-02-12 09:01:26 EST\"\n\n\nConsequently, at the level of this folder, it would look for a folder named “QC_2024-” with the corresponding month provided by Sys.time call. R recognizes character strings exactly in this case, so if you had a name mismatch (ex. “QC 2024-” or “QC_2024_”) it would fail to find the correct folder and search the contents within. So this is an area to be aware of and adjust the code accordingly for how you structure the name."
+    "text": "Bead FCS Files (System)\nAt our institution, we separately using the the same QC beads used for Daily QC a 3000 bead before and after .fcs sample to compare the changes in MFI after the QC has adjusted. Within SpectroFlo, these are acquired under the Admin account, organized within an experiment corresponding to the month. As a result, these are stored with the other .fcs files acquired by all users that exist within SpectroFlo folder while they wait to be exported as zipped folders.\nBecause this can take up quite a bit of memory space in context of a core facility, for our particular SpectroFlo setup, these folders are found under an external hard-drive.\nWe would consequently start exploring the folders (and setting up a file.path) like this:\n\nExternal &lt;- file.path(\"D:\")\nExternal\n\n[1] \"D:\"\n\n\n\n\n\n\n\n\nFCSFiles &lt;- file.path(External, \"Aurora 5 FCS_Files\")\nFCSFiles\n\n[1] \"D:/Aurora 5 FCS_Files\"\n\n\n\n\n\n\n\n\nExperiments &lt;- file.path(FCSFiles, \"Experiments\")\nExperiments\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments\"\n\n\n\n\n\n\n\n\nAdmin &lt;- file.path(Experiments, \"Admin\")\nAdmin\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments/Admin\"\n\n\n And finally, the important thing is to note the structure that each experiment file name takes. In our case for this instrument, the folders are set to QC_2024-11. When we are having the Rscript find the new QC files for the given day, it calls the function System.time to return the date and time. These are broken into month and day.\n\nSys.time()\n\n[1] \"2025-02-12 09:52:26 EST\"\n\n\nConsequently, at the level of this folder, it would look for a folder named “QC_2024-” with the corresponding month provided by Sys.time call. R recognizes character strings exactly in this case, so if you had a name mismatch (ex. “QC 2024-” or “QC_2024_”) it would fail to find the correct folder and search the contents within. So this is an area to be aware of and adjust the code accordingly for how you structure the name."
   }
 ]
