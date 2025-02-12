@@ -195,20 +195,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="forking-the-project" class="level1">
 <h1>Forking the project</h1>
-<p>Once your GitHub account is set up, it’s time to use it. Our core’s version of the dashboard is contained within the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. This is publicly available, and since the software repository is licensed under a free copyleft license, you are able to fork (ie. copy) the existing project and modify it.</p>
-<p>To do so, you will first navigate to the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. From here you will select <u>the fork the repository option</u></p>
+<p>Now that your GitHub account is set up, it’s time to put it to use. Our core’s version of the website is contained within the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. This is publicly available, and since the software repository is licensed under a <a href="https://github.com/UMGCCFCSS/InstrumentQC/blob/main/LICENSE">free copyleft license</a>, you are able to fork (ie. copy) the existing project, modify it, and share (ie. distribute) it.</p>
+<p>To get started, you will first navigate to the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. From here you will select <u>the fork the repository option</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/01_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>GitHub will then give you the option to rename the project or to keep the existing name. If you modify the name, there may be a couple additional lines of code you will need to also adjust in the future, but this will be minor enough of a concern so don’t let that stop you if you hate the existing name.</p>
+<p>GitHub will then give you the option to rename the project or to keep the existing name. If you modify the name, you will need to adjust a couple of lines in the future for the file.path arguments, but this will be a minor inconvenience so don’t let that stop you if you have thought of a better name.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/02_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>With that done, you now have your own copy of the repository. Since it is forked, you can now modify and customize the dashboard so that is customized to your instruments and tracks their QC data. Before proceeding, please make a note about your forked repositories url as you will need it later when when bringing in the project to the local computer environment with Rstudio in a little bit.</p>
+<p>With that done, you now have your own copy of the repository. Since it is forked, you can now modify and customize the dashboard for the tracking of QC data for your own. Please make a note of your forked repositories url before proceeding as you will need it when bringing the project into your local computer environment with Rstudio later.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/03_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
@@ -217,36 +217,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="linking-rstudio-and-github" class="level1">
 <h1>Linking Rstudio and GitHub</h1>
+<p>The next task is to get both Rstudio and Git setup and communicating with each other. This will allow for tracking version changes, and sending modified repository files to GitHub without any issues.</p>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<p>The next big task is to set up Rstudio, making sure that Git is set up properly and that you can send the version changes to the repository files to GitHub without any issues.</p>
-<p>Go ahead and open up Rstudio. If it is your first time doing so, select the default R installation from the first pop-up window. Open up Rstudio for the first time, and set to use the default R installation.</p>
-<p>We first need to make sure Rstudio can communicate with GitHub through Git. To do this we will first install the R package devtools. To do so, copy the following lines of code invidivually into the console window and hit enter to run the commands:</p>
+<p>Let’s start by opening Rstudio. If it is your first time opening it, you will get a pop-up window asking which version of R to use. Select the newest (or default) R installation.</p>
+<p>We want to make sure make sure Rstudio can communicate with GitHub through Git. To do this we will first install the R package <em><a href="https://CRAN.R-project.org/package=devtools">devtools</a></em>, followed by the <em><a href="https://CRAN.R-project.org/package=BiocManager">BiocManager</a></em> package. To do so, copy the following lines of code invidivually into the console window (generally on the bottom left of your screen) and hit enter to run the commands:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocManager)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>For coding-beginners, please note, if any errors pop up during the installation of devtools, read the red troubleshooting explanations shown, and install any missing package dependencies by swapping in the package name between the quotation marks similar to what was done in the code chunk above to install the devtools package.</p>
-<p>Once devtools is installed, and you have called it via library, we can now continue.</p>
+<p>For coding-beginners, please note, during the installation of an R package, if you are missing required dependencies, you will be asked whether you want to install the missing packages. Select yes for these. When there are newer versions of an R package, it will ask if you want to update to the newer version, which in general is a good idea but not required if you are short on time.</p>
+<p>During the installation process, if an error is encountered, you will get an error message and a red troubleshooting explanation describing the issue. Read this carefully, and install any missing package dependencies needed to fix the issue by swapping in the package name between the quotation marks similar to what was done in the code chunk above to install the devtools package.</p>
+<p>Once the R packages have succesfully installed, we need to activate them for that session by calling them with the library function before continuing.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: usethis</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocManager)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bioconductor version '3.19' is out-of-date; the current release version '3.20'
+  is available with R version '4.4'; see https://bioconductor.org/install</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'BiocManager'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:devtools':
+
+    install</code></pre>
+</div>
+</div>
 <p>Adjacent to your console tab on the lower left, there is another tab called terminal. Go ahead and click it.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/01_Terminal.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>Now that you have switched from the console to the terminal, copy-paste using your mouse/right-click the following lines of code individually, editing in your GitHub UserName, and email linked to your GitHub account:</p>
+<p>Now that you have switched from the console to the terminal,using your mouse copy then right-click-paste the following lines of code individually into the terminal, editing the text to include your GitHub username and then email linked used for that GitHub account.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"JohnDoe@gmail.com"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"John Doe"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"JohnDoe@gmail.com"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"John Doe"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="github-token" class="level2">
 <h2 class="anchored" data-anchor-id="github-token">GitHub Token</h2>
-<p>With this done, it is now time to get a GitHub Token that will be used for authorization for your local computer to send/receive files from your GitHub repository.</p>
+<p>With this done, it is now time to get an authorization GitHub Token that will allow your local computer to send/receive files from your the GitHub repository.</p>
 <p>To do this, open a browser, and navigate back to your GitHub account, click on your profile icon on the far upper right, and then <u>select settings</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -271,13 +289,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/04_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-<p>On the next screen, things get busy. Go ahead and place a note for the token with the instrument name so you know which match with each other. Set the expiration for no expiration or a long-period, and only click on the repo option to grant those accesses. Proceed down to the bottom of the screen and click on the green generate token button.</p>
+<p>On the next screen, things get busy. There are a few things we need to focus on. First write a note for the token containing the individual instrument name. Select for Expiration Date either the no-expiration date (to avoid needing to repeat this setup process in the near future). From here, you only need to click on the repo option to grant those associated accesses. Proceed all the way down to the bottom of the screen, and click on the green generate token button.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/05_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>The website will refresh and provide you a GitHub token and the option to copy it. Copy it and temporarily store it in a .txt file (notepad) as you will need it when setting up the connection between Github and Rstudio. You will not be able to see the code again from this screen, so stash wisely, and be cautious not to store this anywhere that others may find it.</p>
+<p>The website will refresh and provide you a GitHub token and the option to copy it. Copy it and temporarily store it in a .txt file (notepad) as you will need it when setting up the connection between Github and Rstudio. Please note, you will not be able to see the token code again after leaving this screen, so stash it wisely, otherwise you will need to regenerate another token. Also, make sure to be cautious and not post the token .txt file on the public internet, unless you enjoy emails from IT.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/06_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
@@ -288,23 +306,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="rstudio">Rstudio</h2>
 <p>Now that you have your token, go back to Rstudio, and enter the following lines of code into your console:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A pop-up window will appear. Follow the instructions and when prompted, provide it the Github Token code that you generated. Next hit enter. You should be all set to now pull/push (ie. receive/send) files to GitHub from your local computer.</p>
-<p>While we are here, let’s address the last thing we will need to do with the GitHub access token for. Go ahead and enter the following line of code in the console:</p>
+<p>While we are here, let’s address the last thing we will need the GitHub access token for. Go ahead and enter the following line of code in the console:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will open an .Renviron file that will likely be blank. Enter the following line of code, swapping in your specific token in its entirety between the quotation marks.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>GITHUB_PAT <span class="ot">&lt;-</span> <span class="st">"GitHubTokenGoesHere"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>GITHUB_PAT <span class="ot">&lt;-</span> <span class="st">"GitHubTokenGoesHere"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Once this is done, save and close out of Rstudio. Open it again to make sure the changes are saved.</p>
+<p>Once this is done, save the file and close-out/restart Rstudio.</p>
 </section>
 </section>
 <section id="new-project" class="level1">
 <h1>New Project</h1>
-<p>Having completed the above, you should now have Git setup to allow Rstudio to communicate with your GitHub account. This should allow you to bring in the copy of the forked InstrumentQC repository to your local computer, and as you modify it, track and save the changes to your GitHub repository where you can access them remotely.</p>
+<p>Having completed the above, you should now have Git setup to allow Rstudio to communicate with your GitHub account. This should allow you to bring in your copy of the forked InstrumentQC repository to your local computer, and as you start modifying it, track and save the changes to your GitHub repository where you can access them remotely.</p>
 <p>To do this, upon opening Rstudio, navigate to the upper left corner to the File tab and select <u>create a New Project</u></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -324,8 +342,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>And now you will <u>provide the url to the forked repository,</u> (ie. the version on your own GitHub). The Project directory should autopopulate.</p>
-<p>Before hitting Create Project, make note of where the project is set to be saved at by hitting browse.</p>
-<p>In general, for many windows computers, it will be under the document folder, which should be fine. Alternatively, if your workplace forces everyone to save things on OneDrive, the default folder may be somewhere in the cloud. Ideally, try to store it on the local computer to avoid complicating the file.path setup in the next section, so if in a OneDrive scenario, create a new folder under the local C: drive and save it within that folder.</p>
+<p>Before hitting Create Project, decide on where the project will be saved at by hitting browse.</p>
+<p>In general, for many Windows computers, the default is under the documents folder. Alternatively, you could place it in a different location. For some workspaces where everything is now on OneDrive, the default folder may be in the cloud. Ideally, you want to have the folder saved on your local computer, to avoid complicating the file.path setup and automating task scheduler setup later on. So if the default is saving to somewhere on OneDrive, create a new folder under the local C: drive and select that folder as your save location.</p>
 <p>Once you know where you are saving the project to, hit Create Project.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -336,20 +354,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="making-changes" class="level1">
 <h1>Making Changes</h1>
-<p>To continue, either use the Ctrl + O shortcut to view inside the repository folder, or alternatively, navigate to the upper-left of R studio screen, click file, and Open File. Select the Examples_staff.qmd file and open it.</p>
+<p>We want to make sure before proceeding that you can make changes to the file, and that after saving these changes, that they can be committed and passed (ie, pushed) to GitHub.</p>
+<p>Navigate to the upper right-side of your Rstudio window and click on Git. It will appear mostly empty at this point in time. Next, look inside the repository folder by either using the <strong>Ctrl + O</strong> shortcut or navigate to the upper-left of R studio screen, click File, and then Open File. Once you get to the navigation screen, select the Examples_staff.qmd file and open it.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/01_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>We want to make sure you can make changes to the file, and that these changes once saved can be committed and pushed to GitHub. Between the first line of text and the code block, add a couple spaces, and then save the file (step 1).</p>
-<p>Navigate to the upper right-side of your Rstudio window and click on Git. Under Staged tab, click the white box next to Examples_staff.qmd (step 2). Then hit the Commit button (step 3).</p>
+<p>Go ahead and add a couple white spaces between the first line of text and the code block, and then save the file (step 1). If you look under Git tab on your upper-right you will see that the “Examples_staff.qmd” file is now listed as having had changes made.</p>
+<p>You will next click the white box next to “Examples_staff.qmd” (underneath Staged) (step 2). This tells the computer what changes to specific files it will be keeping for tracking purposes.</p>
+<p>Next click the Commit button with the green checkmark (step 3).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/02_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>A new window will appear. Write a brief commit message (“Testing that GitHub is setup correctly”) (step 4) and hit commit (step 5). If you get a successful commit message, proceed and click the green push up-arrow (step 6).</p>
+<p>A new window will appear. On this screen you can see the changes made to individual files, with additions being in green, and deletions being in red.</p>
+<p>Write a brief commit message (“Testing that GitHub is setup correctly”) (step 4) and hit commit (step 5). If you get a successful commit message, proceed and click the green push up-arrow (step 6). This will start the process of transferring (ie. pushing) the tracked (staged &amp; commited) changes to GitHub.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/03_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
