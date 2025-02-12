@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>gitandrstudio – InstrumentQC</title>
+<title>repositoryelements – InstrumentQC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./rpackages.html" rel="next">
-<link href="./Installation.html" rel="prev">
+<link href="./InstrumentLayout.html" rel="next">
+<link href="./filepaths.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -145,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Installation.html">Getting Started</a></li><li class="breadcrumb-item"><a href="./GitAndRstudio.html">Setting up Git and Rstudio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./filepaths.html">Customization</a></li><li class="breadcrumb-item"><a href="./repositoryelements.html">Setting File Paths</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -182,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./GitAndRstudio.html" class="sidebar-item-text sidebar-link active">
+  <a href="./GitAndRstudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Setting up Git and Rstudio</span></a>
   </div>
 </li>
@@ -211,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repositoryelements.html" class="sidebar-item-text sidebar-link">
+  <a href="./repositoryelements.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Setting File Paths</span></a>
   </div>
 </li>
@@ -239,16 +205,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#forking-the-project" id="toc-forking-the-project" class="nav-link active" data-scroll-target="#forking-the-project">Forking the project</a></li>
-  <li><a href="#linking-rstudio-and-github" id="toc-linking-rstudio-and-github" class="nav-link" data-scroll-target="#linking-rstudio-and-github">Linking Rstudio and GitHub</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#repository-elements" id="toc-repository-elements" class="nav-link" data-scroll-target="#repository-elements">Repository elements</a>
   <ul class="collapse">
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
-  <li><a href="#github-token" id="toc-github-token" class="nav-link" data-scroll-target="#github-token">GitHub Token</a></li>
-  <li><a href="#rstudio" id="toc-rstudio" class="nav-link" data-scroll-target="#rstudio">Rstudio</a></li>
+  <li><a href="#qmd-files" id="toc-qmd-files" class="nav-link" data-scroll-target="#qmd-files">qmd files</a></li>
+  <li><a href="#r-files" id="toc-r-files" class="nav-link" data-scroll-target="#r-files">R files</a></li>
+  <li><a href="#individual-instrument-folders" id="toc-individual-instrument-folders" class="nav-link" data-scroll-target="#individual-instrument-folders">Individual Instrument Folders</a></li>
+  <li><a href="#further-considerations" id="toc-further-considerations" class="nav-link" data-scroll-target="#further-considerations">Further considerations</a></li>
   </ul></li>
-  <li><a href="#new-project" id="toc-new-project" class="nav-link" data-scroll-target="#new-project">New Project</a></li>
-  <li><a href="#making-changes" id="toc-making-changes" class="nav-link" data-scroll-target="#making-changes">Making Changes</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
   </ul>
 </nav>
     </div>
@@ -258,215 +222,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="forking-the-project" class="level1">
-<h1>Forking the project</h1>
-<p>Now that your GitHub account is set up, it’s time to put it to use. Our core’s version of the website is contained within the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. This is publicly available, and since the software repository is licensed under a free <a href="https://github.com/UMGCCFCSS/InstrumentQC/blob/main/LICENSE">copyleft license</a>, you are able to fork (ie. copy) the existing project, modify it, and share (ie. distribute) it.</p>
-<p>To get started, you will first navigate to the <a href="https://github.com/UMGCCFCSS/InstrumentQC">InstrumentQC</a> repository. From here you will select <u>the fork the repository option</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>GitHub will then give you the option to rename the project or to keep the existing name. If you modify the name, you will need to adjust a couple of lines in the future for the file.path arguments, but this will be a minor inconvenience so don’t let that stop you if you have thought of a better name.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>With that done, you now have your own copy of the repository. Since it is forked, you can now modify and customize the dashboard for the tracking of QC data for your own. Please make a note of your forked repositories url before proceeding as you will need it when bringing the project into your local computer environment with Rstudio later.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/03_Fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In the previous section, we installed the required software, set up the Git permissions for the individual local computers needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository, and made sure the required R packages were installed.</p>
+<p>In this section, we will now start to modify existing R code originally configured for the the UMGCC flow core computers and adapt it for your setup. This involves first understanding the individual components that are present within the InstrumentQC repository and their purpose. Afterwards, we will identify and change file.paths within the individual .R scripts and .qmd files to find the newly acquired QC .fcs files (and DailyQC report .csv files for Cytek instruments) in their respective folders on your local computers.</p>
 </section>
-<section id="linking-rstudio-and-github" class="level1">
-<h1>Linking Rstudio and GitHub</h1>
-<p>The next task is to get both Rstudio and Git setup and communicating with each other. This will allow for tracking version changes, and sending modified repository files to GitHub without any issues.</p>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<p>Let’s start by opening Rstudio. If it is your first time opening it, you will get a pop-up window asking which version of R to use. Select the newest (or default) R installation.</p>
-<p>We want to make sure make sure Rstudio can communicate with GitHub through Git. To do this we will first install the R package <em><a href="https://CRAN.R-project.org/package=devtools">devtools</a></em>, followed by the <em><a href="https://CRAN.R-project.org/package=BiocManager">BiocManager</a></em> package. To do so, copy the following lines of code invidivually into the console window (generally on the bottom left of your screen) and hit enter to run the commands:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>For coding-beginners, please note, during the installation of an R package, if you are missing required dependencies, you will be asked whether you want to install the missing packages. Select yes for these. When there are newer versions of an R package, it will ask if you want to update to the newer version, which in general is a good idea but not required if you are short on time.</p>
-<p>During the installation process, if an error is encountered, you will get an error message and a red troubleshooting explanation describing the issue. Read this carefully, and install any missing package dependencies needed to fix the issue by swapping in the package name between the quotation marks similar to what was done in the code chunk above to install the devtools package.</p>
-<p>Once the R packages have succesfully installed, we need to activate them for that session by calling them with the library function before continuing.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: usethis</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BiocManager)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Bioconductor version '3.19' is out-of-date; the current release version '3.20'
-  is available with R version '4.4'; see https://bioconductor.org/install</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'BiocManager'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:devtools':
-
-    install</code></pre>
-</div>
-</div>
-<p>Adjacent to your console tab on the lower left, there is another tab called terminal. Go ahead and click it.</p>
+<section id="repository-elements" class="level1">
+<h1>Repository elements</h1>
+<p>Before we start finding file.paths and modifying lines of code, let’s examine the files immediately visible when we first open the forked InstrumentQC repository folder. To do this navigate in FileExplorer to the location you saved the forked repository (we suggested Documents). When you find it, double click to open the folder, and arrange by name. When viewed alphabetically, we see something resembling the following</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/01_Terminal.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+<p><img src="images/01_Structure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>Now that you have switched from the console to the terminal,using your mouse copy then right-click-paste the following lines of code individually into the terminal, editing the text to include your GitHub username and then email linked used for that GitHub account.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"JohnDoe@gmail.com"</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"John Doe"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="qmd-files" class="level2">
+<h2 class="anchored" data-anchor-id="qmd-files">qmd files</h2>
+<p>Within the files currently visible, we have individual files that are named after invidual instruments (Aurora3L, Aurora4L, Aurora5L, AuroraCS, LSRII, Aria, Canto). Those that have a .qmd ending contain both text and code segments that together produce a website page. For example, when the Aurora5L.qmd document gets processed into .html, it forms the <a href="https://umgccfcss.github.io/InstrumentQC/Aurora5L.html">following</a> webpage. By contrast, when the LSRII.qmd document gets processed into .html, it forms its own <a href="https://umgccfcss.github.io/InstrumentQC/LSRII.html">webpage</a>.</p>
+<p>Each Instrument.qmd file, by combining and rearranging individual building code block elements within, allows for extensive modification to account for for the differences for the various instruments (number of lasers, detector configuration and parameters) that can be seen on their respective webpages. We will examine these .qmd files and their individual elements at greater depth in the <a href="./InstrumentLayout.html">Instrument Layout</a> section.</p>
 </section>
-<section id="github-token" class="level2">
-<h2 class="anchored" data-anchor-id="github-token">GitHub Token</h2>
-<p>With this done, it is now time to get an authorization GitHub Token that will allow your local computer to send/receive files from your the GitHub repository.</p>
-<p>To do this, open a browser, and navigate back to your GitHub account, click on your profile icon on the far upper right, and then <u>select settings</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>From here, you will navigate to the lower left side and click on developer settings</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="260"></p>
-</figure>
-</div>
-<p>Once you are on the next page, you will select <u>Tokens (classic) option</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/03_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>From there, you will now proceed to click on <u>Generate new token and select the classic option</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/04_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<p>On the next screen, things get busy. There are a few things we need to focus on. First write a note for the token containing the individual instrument name. Select for Expiration Date either the no-expiration date (to avoid needing to repeat this setup process in the near future). From here, you only need to click on the repo option to grant those associated accesses. Proceed all the way down to the bottom of the screen, and click on the green generate token button.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/05_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>The website will refresh and provide you a GitHub token and the option to copy it. Copy it and temporarily store it in a .txt file (notepad) as you will need it when setting up the connection between Github and Rstudio. Please note, you will not be able to see the token code again after leaving this screen, so stash it wisely, otherwise you will need to regenerate another token. Also, make sure to be cautious and not post the token .txt file on the public internet, unless you enjoy emails from IT.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/06_GitToken.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
+<section id="r-files" class="level2">
+<h2 class="anchored" data-anchor-id="r-files">R files</h2>
+<p>Continuing scrolling down, we can identify another repeating element set of files (TheScript_3L, TheScript_4L, TheScript_5L, TheScript_CS) that end in .R.</p>
+<p>These are .R files, and they contain only R code. In this context, they work as scripts, containing sets of instructions to find the correct storage folder, identify any new data, process it, and save it to individual instruments Archive data folder. Our first modification of file.paths will occur within these Script files.</p>
 </section>
-<section id="rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="rstudio">Rstudio</h2>
-<p>Now that you have your token, go back to Rstudio, and enter the following lines of code into your console:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>A pop-up window will appear. Follow the instructions and when prompted, provide it the Github Token code that you generated. Next hit enter. You should be all set to now pull/push (ie. receive/send) files to GitHub from your local computer.</p>
-<p>While we are here, let’s address the last thing we will need the GitHub access token for. Go ahead and enter the following line of code in the console:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>This will open an .Renviron file that will likely be blank. Enter the following line of code, swapping in your specific token in its entirety between the quotation marks.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>GITHUB_PAT <span class="ot">&lt;-</span> <span class="st">"GitHubTokenGoesHere"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Once this is done, save the file and close-out/restart Rstudio.</p>
+<section id="individual-instrument-folders" class="level2">
+<h2 class="anchored" data-anchor-id="individual-instrument-folders">Individual Instrument Folders</h2>
+<p>We will touch on the other files present within this initial view later on. Before moving to adjust the file paths, go ahead and double click on the data folder. Within this folder, you can see individual folders corresponding to the individual instruments, as well as some of the .pdf and .csv files. Go ahead and double click on the 5L folder.</p>
+<p>At this point, you see nothing but an Archive folder. If however, you were to look in the middle of the processing step, you would see a bunch of .csv and .fcs files also present, since this folder is where the individual computer copies all identified newly acquired files before they are processed. Once they are successfully processed, their data gets copied to the .csv files found within the Archive folder. Once this has been done successfully, the copies of the unprocessed data located in this folder get deleted, leaving only the Archive folder with the processed data present.</p>
 </section>
-</section>
-<section id="new-project" class="level1">
-<h1>New Project</h1>
-<p>Having completed the above, you should now have Git setup to allow Rstudio to communicate with your GitHub account. This should allow you to bring in your copy of the forked InstrumentQC repository to your local computer, and as you start modifying it, track and save the changes to your GitHub repository where you can access them remotely.</p>
-<p>To do this, upon opening Rstudio, navigate to the upper left corner to the File tab and select <u>create a New Project</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>From here, you will select the <u>Version Control</u> option</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>You will next select to <u>use the Git option</u></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/03_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>And now you will <u>provide the url to the forked repository,</u> (ie. the version on your own GitHub). The Project directory should autopopulate.</p>
-<p>Before hitting Create Project, decide on where the project will be saved at by hitting browse.</p>
-<p>In general, for many Windows computers, the default is under the documents folder. Alternatively, you could place it in a different location. For some workspaces where everything is now on OneDrive, the default folder may be in the cloud. Ideally, you want to have the folder saved on your local computer, to avoid complicating the file.path setup and automating task scheduler setup later on. So if the default is saving to somewhere on OneDrive, create a new folder under the local C: drive and select that folder as your save location.</p>
-<p>Once you know where you are saving the project to, hit Create Project.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/04_NewProject.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>With all that done, you now have the project and all it’s associated code available locally.</p>
-</section>
-<section id="making-changes" class="level1">
-<h1>Making Changes</h1>
-<p>We want to make sure before proceeding that you can make changes to the file, and that after saving these changes, that they can be committed and passed (ie, pushed) to GitHub.</p>
-<p>Navigate to the upper right-side of your Rstudio window and click on Git. It will appear mostly empty at this point in time. Next, look inside the repository folder by either using the <strong>Ctrl + O</strong> shortcut or navigate to the upper-left of R studio screen, click File, and then Open File. Once you get to the navigation screen, select the Examples_staff.qmd file and open it.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>Go ahead and add a couple white spaces between the first line of text and the code block, and then save the file (step 1). If you look under Git tab on your upper-right you will see that the “Examples_staff.qmd” file is now listed as having had changes made.</p>
-<p>You will next click the white box next to “Examples_staff.qmd” (underneath Staged) (step 2). This tells the computer what changes to specific files it will be keeping for tracking purposes.</p>
-<p>Next click the Commit button with the green checkmark (step 3).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/02_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>A new window will appear. On this screen you can see the changes made to individual files, with additions being in green, and deletions being in red.</p>
-<p>Write a brief commit message (“Testing that GitHub is setup correctly”) (step 4) and hit commit (step 5). If you get a successful commit message, proceed and click the green push up-arrow (step 6). This will start the process of transferring (ie. pushing) the tracked (staged &amp; commited) changes to GitHub.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/03_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>If the push to GitHub was successful, you should see a screen that looks similar to this one:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/04_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>Your system should now be set up correctly. To verify, open your browser and navigate back to your Github repository. You will then click on your commits.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/05_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>If the version control chages were successfully pushed, you should find your most recent commits and your commit message shown at the top of the page, looking something similar to this.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/06_Modifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>And if this is the case, congratulations! You have set up the software and connections that are necessary for your local instrument computer to talk with the GitHub repository. The next steps should be easier.</p>
-</section>
-<section id="next-steps" class="level1">
-<h1>Next Steps</h1>
-<p>You have now successfully setup an individual computer with Rstudio and Git. If you are trying to get set-up for multiple instruments on multiple computers, you will need to repear this process for each of them individually starting from the <a href="./GitAndRstudio.html#setup">Setup</a> section.</p>
-<p>For our facility, we name each new GitHub token based on the cytometer the respective computer is connected with to make tracking easier.</p>
+<section id="further-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="further-considerations">Further considerations</h2>
+<p>Now that you have an initial idea of the contents of the repository, you can start to prepare a to-do list for changes that you will need to carry out for adapting the existing project to your own instruments.</p>
+<p>If you have only a single cytometer, you will only need a single Instrument.R, Instrument.qmd and Instrument folder to process and store the data, and ultimately generate a single tab webpage.</p>
+<p>If you have 8 instruments, you would need to add those three elements for each one of them, modifying the names accordingly.</p>
+<p>And for each instrument, the file.path arguments will need to direct the computer to find the newly acquired QC data in the correct folder location on those computers, and then pass it to the corresponding Instrument folder so that it can be processed.</p>
+<p>If this sounds confusing, do not worry, we will go through these indivual elements in the process of adjusting the file.paths.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -892,13 +685,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./Installation.html" class="pagination-link" aria-label="Getting Started">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Getting Started</span>
+      <a href="./filepaths.html" class="pagination-link" aria-label="Customization">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Customization</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rpackages.html" class="pagination-link" aria-label="Installing R packages">
-        <span class="nav-page-text">Installing R packages</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./InstrumentLayout.html" class="pagination-link" aria-label="Building a Instrument Webpage">
+        <span class="nav-page-text">Building a Instrument Webpage</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

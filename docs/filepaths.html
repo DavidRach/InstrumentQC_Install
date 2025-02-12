@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./InstrumentLayout.html" rel="next">
+<link href="./repositoryelements.html" rel="next">
 <link href="./rpackages.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -206,13 +206,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./filepaths.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Pieces of a Bigger Picture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repositoryelements.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Setting File Paths</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./InstrumentLayout.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dashboard Components</span></a>
+ <span class="menu-text">Building a Instrument Webpage</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -233,15 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#repository-elements" id="toc-repository-elements" class="nav-link" data-scroll-target="#repository-elements">Repository elements</a>
-  <ul class="collapse">
-  <li><a href="#qmd-files" id="toc-qmd-files" class="nav-link" data-scroll-target="#qmd-files">qmd files</a></li>
-  <li><a href="#r-files" id="toc-r-files" class="nav-link" data-scroll-target="#r-files">R files</a></li>
-  <li><a href="#individual-instrument-folders" id="toc-individual-instrument-folders" class="nav-link" data-scroll-target="#individual-instrument-folders">Individual Instrument Folders</a></li>
-  <li><a href="#further-considerations" id="toc-further-considerations" class="nav-link" data-scroll-target="#further-considerations">Further considerations</a></li>
-  </ul></li>
-  <li><a href="#file-paths" id="toc-file-paths" class="nav-link" data-scroll-target="#file-paths">File Paths</a>
+  <li><a href="#file-paths" id="toc-file-paths" class="nav-link active" data-scroll-target="#file-paths">File Paths</a>
   <ul class="collapse">
   <li><a href="#identifying-file-path" id="toc-identifying-file-path" class="nav-link" data-scroll-target="#identifying-file-path">Identifying File Path</a></li>
   <li><a href="#local" id="toc-local" class="nav-link" data-scroll-target="#local">Local</a></li>
@@ -260,43 +258,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>In the previous section, we installed the required software, set up the Git permissions for the individual local computers needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository, and made sure the required R packages were installed.</p>
-<p>In this section, we will now start to modify existing R code originally configured for the the UMGCC flow core computers and adapt it for your setup. This involves first understanding the individual components that are present within the InstrumentQC repository and their purpose. Afterwards, we will identify and change file.paths within the individual .R scripts and .qmd files to find the newly acquired QC .fcs files (and DailyQC report .csv files for Cytek instruments) in their respective folders on your local computers.</p>
-</section>
-<section id="repository-elements" class="level1">
-<h1>Repository elements</h1>
-<p>Before we start finding file.paths and modifying lines of code, let’s examine the files immediately visible when we first open the forked InstrumentQC repository folder. To do this navigate in FileExplorer to the location you saved the forked repository (we suggested Documents). When you find it, double click to open the folder, and arrange by name. When viewed alphabetically, we see something resembling the following</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Structure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<section id="qmd-files" class="level2">
-<h2 class="anchored" data-anchor-id="qmd-files">qmd files</h2>
-<p>Within the files currently visible, we have individual files that are named after invidual instruments (Aurora3L, Aurora4L, Aurora5L, AuroraCS, LSRII, Aria, Canto). Those that have a .qmd ending contain both text and code segments that together produce a website page. For example, when the Aurora5L.qmd document gets processed into .html, it forms the <a href="https://umgccfcss.github.io/InstrumentQC/Aurora5L.html">following</a> webpage. By contrast, when the LSRII.qmd document gets processed into .html, it forms its own <a href="https://umgccfcss.github.io/InstrumentQC/LSRII.html">webpage</a>.</p>
-<p>Each Instrument.qmd file, by combining and rearranging individual building code block elements within, allows for extensive modification to account for for the differences for the various instruments (number of lasers, detector configuration and parameters) that can be seen on their respective webpages. We will examine these .qmd files and their individual elements at greater depth in the <a href="./InstrumentLayout.html">Instrument Layout</a> section.</p>
-</section>
-<section id="r-files" class="level2">
-<h2 class="anchored" data-anchor-id="r-files">R files</h2>
-<p>Continuing scrolling down, we can identify another repeating element set of files (TheScript_3L, TheScript_4L, TheScript_5L, TheScript_CS) that end in .R.</p>
-<p>These are .R files, and they contain only R code. In this context, they work as scripts, containing sets of instructions to find the correct storage folder, identify any new data, process it, and save it to individual instruments Archive data folder. Our first modification of file.paths will occur within these Script files.</p>
-</section>
-<section id="individual-instrument-folders" class="level2">
-<h2 class="anchored" data-anchor-id="individual-instrument-folders">Individual Instrument Folders</h2>
-<p>We will touch on the other files present within this initial view later on. Before moving to adjust the file paths, go ahead and double click on the data folder. Within this folder, you can see individual folders corresponding to the individual instruments, as well as some of the .pdf and .csv files. Go ahead and double click on the 5L folder.</p>
-<p>At this point, you see nothing but an Archive folder. If however, you were to look in the middle of the processing step, you would see a bunch of .csv and .fcs files also present, since this folder is where the individual computer copies all identified newly acquired files before they are processed. Once they are successfully processed, their data gets copied to the .csv files found within the Archive folder. Once this has been done successfully, the copies of the unprocessed data located in this folder get deleted, leaving only the Archive folder with the processed data present.</p>
-</section>
-<section id="further-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="further-considerations">Further considerations</h2>
-<p>Now that you have an initial idea of the contents of the repository, you can start to prepare a to-do list for changes that you will need to carry out for adapting the existing project to your own instruments.</p>
-<p>If you have only a single cytometer, you will only need a single Instrument.R, Instrument.qmd and Instrument folder to process and store the data, and ultimately generate a single tab webpage.</p>
-<p>If you have 8 instruments, you would need to add those three elements for each one of them, modifying the names accordingly.</p>
-<p>And for each instrument, the file.path arguments will need to direct the computer to find the newly acquired QC data in the correct folder location on those computers, and then pass it to the corresponding Instrument folder so that it can be processed.</p>
-<p>If this sounds confusing, do not worry, we will go through these indivual elements in the process of adjusting the file.paths.</p>
-</section>
-</section>
 <section id="file-paths" class="level1">
 <h1>File Paths</h1>
 <p>As mentioned in the introduction, within the .R and .qmd files are lines of code containing file.paths. These serve as addresses used by the software to find folders containing the necessary daily QC files on your individual computer. Since installation of SpectroFlo (and its associated files) will differ on your computer compared to ours, you will need to ensure to update these file paths so that your computer can retrieve the daily QC files from the correct folder when prompted to do so by the executed R scripts.</p>
@@ -449,7 +410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-02-12 14:16:39 EST"</code></pre>
+<pre><code>[1] "2025-02-12 14:24:52 EST"</code></pre>
 </div>
 </div>
 <p>Consequently, at the level of this folder, it would look for a folder named “QC_2024-” with the corresponding month provided by Sys.time call. R recognizes character strings exactly in this case, so if you had a name mismatch (ex. “QC 2024-” or “QC_2024_”) it would fail to find the correct folder and search the contents within. So this is an area to be aware of and adjust the code accordingly for how you structure the name.</p>
@@ -897,8 +858,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./InstrumentLayout.html" class="pagination-link" aria-label="Dashboard Components">
-        <span class="nav-page-text">Dashboard Components</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./repositoryelements.html" class="pagination-link" aria-label="Setting File Paths">
+        <span class="nav-page-text">Setting File Paths</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

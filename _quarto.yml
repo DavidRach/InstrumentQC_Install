@@ -29,9 +29,11 @@ website:
     - section: "Customization"
       href: filepaths.qmd
       contents:
-      - text: "Setting File Paths"
+      - text: "Pieces of a Bigger Picture"
         href: filepaths.qmd
-      - text: "Dashboard Components"
+      - text: "Setting File Paths"
+        href: repositoryelements.qmd
+      - text: "Building a Instrument Webpage"
         href: InstrumentLayout.qmd
       - text: "Automation"
         href: Automation.qmd
