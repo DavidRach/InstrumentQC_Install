@@ -1,0 +1,16 @@
+---
+toc: true
+---
+
+# Rendering the Dashboard
+
+Regardless whether you implemtent the manual, automated or hybrid approach, you will end up with the updated QC data from each instrument present on the GitHub repository. These changes are tracked by git as part of version control. We previously discussed the individual instrument pages designated by their .qmd files, but we need to discuss the home/summary index.qmd page that combines all the data sources. 
+
+Briefly, it shows the indicator blocks for the individual instruments (color-coded pass, caution, fail). The second column shows the results of the daily QC for the day (with tabsets for each instrument). And finally a six-month QC for all instruments is visible in the third column. 
+
+Additionally, the navbar and footer elements are specified within the _quarto.yaml file allowing for customization/rearranging/renaming as desired. In our dashboard there are additional tabs that reference Data to get the data as .csv or .pdf by the individual users, and a Help page for general information about the dashboard. 
+
+To assemble the dashboard with the updated data, one can either pull in the data to the local computer, and then render the project to assemble the website and individual dashboard pages into a single unit. All the changes to the files would then be committed, with the data passed to GitHub repository.
+
+On the GitHub repository side, one would customize the repostitory to use GitHub pages, set to display contents of the docs folder (containing the rendered html pages). Upon pushing the updates, GitHub would then process them and display them as a website. 
+

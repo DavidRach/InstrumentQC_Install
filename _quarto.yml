@@ -26,17 +26,27 @@ website:
         href: GitAndRstudio.qmd
       - text: "Installing R packages"
         href: rpackages.qmd
-    - section: "Customization"
+    - section: "File Paths and R Scripts"
       href: filepaths.qmd
       contents:
       - text: "Pieces of a Bigger Picture"
         href: filepaths.qmd
       - text: "Setting File Paths"
         href: repositoryelements.qmd
-      - text: "Building a Instrument Webpage"
-        href: InstrumentLayout.qmd
-      - text: "Automation"
+      - text: "Data Transfer"
         href: Automation.qmd
+    - section: "Building the Website"
+      href: InstrumentLayout.qmd
+      contents: 
+      - text: "Building an Instrument Webpage"
+        href: InstrumentLayout.qmd
+      - text: "Assembling the Pieces"
+        href: WebsiteCreation.qmd
+    - section: "Advanced Topics"
+      href: FutureDirections.qmd
+      contents:   
+      - text: "Future Directions"
+        href: FutureDirections.qmd
   page-footer:
     background: light
     right: Built with [Quarto](https://quarto.org/){target=_blank}
