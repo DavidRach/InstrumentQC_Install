@@ -30,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./InstrumentLayout.html" rel="prev">
+<link href="./InstrumentLayout.html" rel="next">
+<link href="./repositoryelements.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -110,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./filepaths.html">Customization</a></li><li class="breadcrumb-item"><a href="./Automation.html">Automation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./filepaths.html">File Paths and R Scripts</a></li><li class="breadcrumb-item"><a href="./Automation.html">Data Transfer</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -162,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./filepaths.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Customization</span></a>
+ <span class="menu-text">File Paths and R Scripts</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -182,14 +183,48 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./Automation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Data Transfer</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./InstrumentLayout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Building the Website</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./InstrumentLayout.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Building a Instrument Webpage</span></a>
+ <span class="menu-text">Building an Instrument Webpage</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Automation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Automation</span></a>
+  <a href="./WebsiteCreation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Assembling the Pieces</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./FutureDirections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./FutureDirections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Future Directions</span></a>
   </div>
 </li>
       </ul>
@@ -204,11 +239,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#manual-transfer" id="toc-manual-transfer" class="nav-link active" data-scroll-target="#manual-transfer">Manual Transfer</a></li>
-  <li><a href="#automating-transfer" id="toc-automating-transfer" class="nav-link" data-scroll-target="#automating-transfer">Automating Transfer</a></li>
-  <li><a href="#hybrid" id="toc-hybrid" class="nav-link" data-scroll-target="#hybrid">Hybrid</a></li>
-  <li><a href="#rendering-the-dashboard" id="toc-rendering-the-dashboard" class="nav-link" data-scroll-target="#rendering-the-dashboard">Rendering the Dashboard</a></li>
-  <li><a href="#future-directions---github-actions" id="toc-future-directions---github-actions" class="nav-link" data-scroll-target="#future-directions---github-actions">Future Directions - Github Actions</a></li>
+  <li><a href="#setting-up-manual-transfer" id="toc-setting-up-manual-transfer" class="nav-link active" data-scroll-target="#setting-up-manual-transfer">Setting up Manual Transfer</a></li>
+  <li><a href="#setting-up-automated-transfer" id="toc-setting-up-automated-transfer" class="nav-link" data-scroll-target="#setting-up-automated-transfer">Setting Up Automated Transfer</a></li>
+  <li><a href="#a-hybrid-approach" id="toc-a-hybrid-approach" class="nav-link" data-scroll-target="#a-hybrid-approach">A Hybrid Approach</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -218,39 +252,50 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>Once the file.paths to find the instruments archive data are found, and the individual instrument R script and .qmd file are updated to reflect these, it is possible to start rendering the individual instrument webpage on the local computer. But when you have multiple instruments contributing data to the dashboard home page and individual instrument pages, we need a way to ensure the data from each instrument gets transferred to GitHub to allow Quarto to render the update version. This can be done either manually, or in an automated fashion. We will explore both options</p>
-<section id="manual-transfer" class="level1">
-<h1>Manual Transfer</h1>
-<p>We will first navigate to the InstrumentQC folder and locate the Examples_staff.qmd file. We will duplicate it, creating a new copy that will simply be called staff.qmd. This name is set within the .gitignore file to be ignored, allowing local copies with different file paths to be present on each instrument computer without causing issues in the version control.</p>
-<p>Once we open the duplicated and renamed staff.qmd file, we find a single code chunk with several lines of code. This code chunk is meant to be executed by staff after morning QC has been carried out on the instrument by clicking the green play button showing “Run Current Chunk” on the upper-left side of the code-block. Once this is done, it will run the code, find the file.path to the .R script for that individual instrument, and run it. In the process, it executes the pull from the GitHub repository, processes the new data, and then pushes the updated data to the GitHub repository.</p>
-<p>Once the source command has finished executing, the option is present to introduce a Flag.csv file. This will prevent automated transfer if set-up from occuring later that day (more below).</p>
-<p>Manual sending the data has advantages as you are already at the instrument during the Instrument QC process, and the extra minute to run the current code-chunk shouldn’t add that much extra inconvenience. The drawbacks occur in that if you or others are not comfortable with Rstudio, you need to interact with it, and not forget to send the data before an user gets on the instrument.</p>
+<p>Previously, we identified and set the file.paths to the location where the .fcs (and .csv) files are stored after daily QC. We also identified the file.paths to the respective instrument and archive folders within your InstrumentQC folder. Afterwards, we modified the Instrument.R file to reflect these paths, and successfully copied over and processed the existing data into an Archive.csv file.</p>
+<p>We will now move on to discuss how to set up manual and automated options to facilitate this process as part of a daily routine.We will also discuss the steps involved in the export of the processed data to the GitHub repository for use in creating the website, and how to orchestrate this when you have multiple instruments sending QC data.</p>
+<section id="setting-up-manual-transfer" class="level1">
+<h1>Setting up Manual Transfer</h1>
+<p>Within your forked InstrumentQC folder, you can find an “Examples_staff.qmd” file. This is a .qmd file, that contains within the individual chunks code specific to each instrument that get used when setting up a staff.qmd file for use in manually transferring data from individual instruments.</p>
+<p>Start by first duplicating the “Examples_staff.qmd” and rename it as “staff.qmd”. This file name is ignored by Git (through its inclusion in the .gitignore file) allowing for slightly different versions of this file on each instrument to exist without the different file.paths causing version control issues.</p>
+<p>Now that you have the staff.qmd file, go ahead and open it. You will encounter a large code chunk containing several lines of code. On the upper-right hand side, you will see a green play button that says “Run Current Chunk”.</p>
+<p>When this is clicked, the code-block will run, provide the correct file paths and trigger Rscript you have modified to process the newly acquired QC data and sending it to GitHub.</p>
+<p>As long as your file.paths were correctly set up, the only thing staff needs to manually do in the morning to generate the processed data is the following steps:</p>
+<ul>
+<li>Open Rstudio.</li>
+<li>Make sure they are in the InstrumentQC project folder</li>
+<li>Open the staff.qmd file</li>
+<li>Hit the Run Code Chunk button</li>
+<li>And that’s it.</li>
+</ul>
+<p>This manual sending of data approach is useful if you have fewer instruments and are already present at the instrument at the time of QC, as the extra minute to hit “Run Code Chunk” doesn’t add that much an inconvenience. Drawbacks are if you forget, the website when rendered will not contain the data for that day, and you will need to go back to the instrument and send the data.</p>
 </section>
-<section id="automating-transfer" class="level1">
-<h1>Automating Transfer</h1>
-<p>The second option is to set up an automated transfer of the QC data from each instrument to the GitHub repository. This is possible by using the Windows Task Scheduler, which is the same system that schedules when your computer updates run, etc. The time at which the automated transfer is carried out can be designated by the user, and setup is carried out through use of the R package taskscheduleR.</p>
-<p>In context of our institution, QC on all instruments is generally done by 10:30 AM. Consequently, we scedule automated transfer of the QC data to begin at 10:30 AM. When it works, we get all the data transferred from all instruments without any extra effort at the designated time daily, making updating of the dashboard simple.</p>
-<p>Unfortunately, task scheduler opens a black terminal window pop up when it is actively running. This doesn’t affect anything on the cytometer acquisition, but it can startle anyone who doesn’t expect it. In our experience, when an user is on the instrument at the time, they will either panic and immediately close the black terminal window, or after not closing for 10 seconds get annoyed and close it down. At which point, no data will be automatically transferred to the GitHub repository for that day barring manual staff intervention. Emails to users and warning note on insturment computer help reduce the occasions this above scenario occurs, but user community awareness and buy in is still required. Alternately, schedule during non-operation hours, and have the dashboard data be delayed from real time.</p>
-<p>To begin, we will open the TaskSchedules.qmd file within InstrumentQC. You will first call library for the TaskScheduleR package. Then you will verify the file.path to the instrument R script is correctly updated. You will then modify the first chunk of code to desired task schedule name, and set the time. Then run that code chunk. Finally check using the command to verify the task. If you want to remove a scheduled task, run the third set commands including the previous task schedule name and if confirmation received, the previously scheduled task is now removed.</p>
+<section id="setting-up-automated-transfer" class="level1">
+<h1>Setting Up Automated Transfer</h1>
+<p>Another option is to set up an automated transfer of the QC data for each instrument to the GitHub repository at a specific time of the day. This is possible by utilizing the Windows Task Scheduler (the system that schedules your computer updates, etc.) via the TaskScheduleR R package. What this looks like in practice is at the designated time, a black terminal/console window will pop up on the computer screen for around a minute, run the code in the Instrument.R file, push the data to GitHub and then close the terminal window.</p>
+<p>One of the considerations with using this approach is deciding at what time of the day you want the automated script to run and process newly acquired QC data. For our institution, QC on all instruments is historically wrapped up most days by 10:30 AM, which is when we schedule the automated tasks to begin for the first instrument. This way, we ensure the websites and dashboards have the most recent data rather than the displayed data being delayed a day due to the automated script running after QC for the day was acquired.</p>
+<p>Some of the issues with the automated approach is the sudden appearance black terminal window pop up that pops up at the designated time to run the code.This doesn’t affect anything on the cytometer while acquiring, but it can startle an user who is not expecting it to appear. In our experience, when an user is on the instrument at the time the console window appears, they will either panic and immediately close the black terminal window, or after it appears to not be doing anything for 10 seconds get annoyed and close it down. This results in incomplete processing of the data, with the data not being sent to server, requiring staff intervention.</p>
+<p>In our context, since our goal is for the website data to be current (and therefore can’t just set the automated processing to occur during the middle of the night), we set automation for the small window between when morning QC is typically acquired and when users usually first book. We additional have trained/emailed/reminded users to not close the terminal but with mixed results.</p>
+<p>Currently, we are working on figuring out a way to provide computer privileges necessary to run Task Manager without opening the console window, or when the computer is logged out, but that remains a work in progress at the moment.</p>
+<p>To get started, open the “TaskSchedules.qmd” file for example code. Load the respective required packages with the library function, and navigate to an individual instruments block of code. Modify the file.paths to those you previously identified for your own instrument to find where the new QC data is stored, and the location of your forked InstrumentQC repository that contains the individual Instrument.R scripts.</p>
+<p>Next, looking at the code block, we can see there is setup code for three automated tassk: “QC_Instrument_Morning”, “FlagRemoval” and RepoPull. We will discuss each of these in turn, starting with setting the task schedule for QC_Instrument_Morning.</p>
+<p>We can see it’s using TaskManagerR’s taskscheduler_create function. Set the taskname to indicate the name of your instrument and that the task is QC related. Then for rscript provide the file.path to the Instrument.R script. Leave the start date as is, but adjust to the desired time for the automated processing to occur. Once you have modified these fields, hit enter to schedule the task.</p>
+<p>We can check to see if the task is scheduled by entering the taskscheduler_ls() function into our console and searching for the taskname we set. Additionally, you can give the same taskname to taskscheduler_delete() if you decide you don’t want to run that task at that time anymore.</p>
 </section>
-<section id="hybrid" class="level1">
-<h1>Hybrid</h1>
-<p>In our setting, we have automated QC set to run at 10:30, staggered by two minutes for each instruments to avoid discrepancy issues of version control when the scripts push pull data from the github repository. We also have a staff.qmd file so that manual sending of the data can occur if SRL finish QC early or an user-shutdown occurs. To avoid having both things happen, the staff.qmd file generates a Flag.csv after manual completion. Within the individual R script, the first condition checks for presence of this file, and if found doesn’t proceed with automated QC for the designated time.</p>
-<p>We then set another Task Schedule for later that same day to remove the Flag.csv file, allowing a reset of the process so that automated QC can proceed the next morning. To do this, we would go into Examples_Flag.qmd and copy the example into a new .R file we call FlagRemoval.R (also covered by the .gitignore file to avoid filepath conflicts across instruments). We then add a new taskschedule to run this R script later in the afternoon.</p>
-<p>Finally, in attempt to reduce the time spent by the automated processing of the data during the morning being interrupted by the user, we set a TaskSchedule to pull from the GitHub repository at 6 AM, which brings in the updates from the other instruments and dashboard website, reducing the time the black terminal screen is open during the scheduled 10:30 round.</p>
+<section id="a-hybrid-approach" class="level1">
+<h1>A Hybrid Approach</h1>
+<p>At UMGCC FCSS, we use both the automated and manual transfer setups. We schedule automated QC to happen between 10:30 and 10:40 for the various instruments. However, if QC happens earlier (or is delayed) the manual option is available to avoid having automated QC trigger when an user is present and the data for the day has already been sent.</p>
+<p>To allow automated QC to discern whether QC has already been sent earlier manually, hitting “Run Code Chunk” on staff.qmd will also produce a Flag.CSV file after completion, that is stored within the InstrumentQC folder. If this file is present, automated QC will skip processing data steps. This results in just a momemtary blip of the console window. We then set a FlagRemoval task (the second one in the code chunk) that at 1 PM every afternoon checks the InstrumentQC folder, and if the Flag.csv file is present, removes it. This resets the cycle, allowing automation to proceed the next day as normal.</p>
+<p>To replicate this for your system, open the “Examples_FlagRemoval.qmd”. Copy and paste the code into a new .R script called “FlagRemoval” (also present in the .gitignore file to allow for difference in file.path between instruments). Then return to the TaskSchedules.qmd file, modify the second “FlagRemoval” task to match the new FlagRemoval.R scripts filepath and desired run time, and then create the task.</p>
+<p>One thing to remember, regardless of using manual or automated approach, is that the Instrument.R script will first retrieve data from GitHub, then process the data, then send the updated data to GitHub. Consequently, we need to stagger the time between instruments to avoid having the Git commit fails because it doesn’t recognize the GitHub repository that has had changes since it pulled the data but hasn’t finished returning the new data for it’s instrument. In our case, we have the Aurora 3L automated processing run at 10:30, and every subsequent instrument run two minutes later which avoids this issue entirely.</p>
+<p>We also are experimenting with a third automated task (RepoPull) that brings in the larger changes involving the Website early in the morning to cut down on console window time around 10 AM. However, we are finding if the computer was shut down or restarted by the last user of the night, this task may not execute.</p>
+<p>To set this up on your own system, similarly to when you set FlagRemoval, use the “Examples_RepoPull.qmd” file, create a new “RepoPull.R” script, adjusting the file.paths respectively, navigate back and edit the TaskSchedules.qmd file to reflect these changes, and then run taskscheduler_create to create this third task.</p>
+<p>Finally, after a task is run successfully, the instrument computer may produce a .Log file. These can be useful to validate that everything is running as expected. If however the names match on different computers, they may mess with the git commits similiar to if automated QC were run across all instruments at the same time, so I typically add them to the .gitignore file and only view them locally when doing manual QC or troubleshooting.</p>
 </section>
-<section id="rendering-the-dashboard" class="level1">
-<h1>Rendering the Dashboard</h1>
-<p>Regardless whether you implemtent the manual, automated or hybrid approach, you will end up with the updated QC data from each instrument present on the GitHub repository. These changes are tracked by git as part of version control. We previously discussed the individual instrument pages designated by their .qmd files, but we need to discuss the home/summary index.qmd page that combines all the data sources.</p>
-<p>Briefly, it shows the indicator blocks for the individual instruments (color-coded pass, caution, fail). The second column shows the results of the daily QC for the day (with tabsets for each instrument). And finally a six-month QC for all instruments is visible in the third column.</p>
-<p>Additionally, the navbar and footer elements are specified within the _quarto.yaml file allowing for customization/rearranging/renaming as desired. In our dashboard there are additional tabs that reference Data to get the data as .csv or .pdf by the individual users, and a Help page for general information about the dashboard.</p>
-<p>To assemble the dashboard with the updated data, one can either pull in the data to the local computer, and then render the project to assemble the website and individual dashboard pages into a single unit. All the changes to the files would then be committed, with the data passed to GitHub repository.</p>
-<p>On the GitHub repository side, one would customize the repostitory to use GitHub pages, set to display contents of the docs folder (containing the rendered html pages). Upon pushing the updates, GitHub would then process them and display them as a website.</p>
-</section>
-<section id="future-directions---github-actions" class="level1">
-<h1>Future Directions - Github Actions</h1>
-<p>Rendering locally takes computer time and computer space. Additionally, it means each instrument needs to bring in edited versions of the website locally every morning with their initial pull. We are currently working to set up a GitHub actions that would ensure the website portion remains only within the GitHub repository (not rendered or copied locally to each instrument taking up additional memory) but additionally render at a given time reducing the requirement to manually render and push the updated dashboard. This occurs thanks to cloud access available to GitHub repositories that are public, with a certain ammount of free server time allocated to each.</p>
-<p>The reason not currently available, is that it is more complicated technically and I am busy writing. But more broadly, the cloud instance needs to install R and R packages needed to run everything each and every time. And the Luciernaga package is still MB heavy due to it being in testing phase and having a lot of .fcs files in it’s extdata folder. Consequently, an area that has promise, but not yet implemented, stay tuned.</p>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Both in the previous and current article, you have now modified the .R scripts and processed the existing QC data present on the individual computers. You have also now successfully got the data to transfer to the respective Instrument Archive data folders that are accessible with new daily updates from GitHub. Congratulations, you have made tremendous progress.</p>
+<p>In the next chapter, you will start learning how to modify the .qmd files to create individual webpages for each instruments QC data, and then how to combine them into an actual website.</p>
 
 
 </section>
@@ -678,11 +723,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./InstrumentLayout.html" class="pagination-link" aria-label="Building a Instrument Webpage">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Building a Instrument Webpage</span>
+      <a href="./repositoryelements.html" class="pagination-link" aria-label="Setting File Paths">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Setting File Paths</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./InstrumentLayout.html" class="pagination-link" aria-label="Building the Website">
+        <span class="nav-page-text">Building the Website</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
