@@ -29,19 +29,17 @@ This manual sending of data approach is useful if you have fewer instruments and
 
 # Setting Up Automated Transfer
 
-Another option is to set up an automated transfer of the QC data for each instrument to the GitHub repository at a specific time of the day. This is possible by utilizing the Windows Task Scheduler (the system that schedules your computer updates, etc.) using the TaskScheduleR R package.
+Another option is to set up an automated transfer of the QC data for each instrument to the GitHub repository at a specific time of the day. This is possible by utilizing the Windows Task Scheduler (the system that schedules your computer updates, etc.) via the TaskScheduleR R package. What this looks like in practice is at the designated time, a black terminal/console window will pop up on the computer screen for around a minute, run the code in the Instrument.R file, push the data to GitHub and then close the terminal window.
+
+One of the considerations with using this approach is deciding at what time of the day you want the automated script to run and process newly acquired QC data. For our institution, QC on all instruments is historically wrapped up most days by 10:30 AM, which is when we schedule the automated tasks to begin for the first instrument. This way, we ensure the websites and dashboards have the most recent data rather than the displayed data being delayed a day due to the automated script running after QC for the day was acquired. 
+
+One issue with the automated approach is the sudden appearance black terminal window pop up that pops up at the designated time to run the code.This doesn't affect anything on the cytometer while acquiring, but it can startle an user who is not expecting it to appear. In our experience, when an user is on the instrument at the time the console window appears, they will either panic and immediately close the black terminal window, or after it appears to not be doing anything for 10 seconds get annoyed and close it down. This results in incomplete processing of the data, with the data not being sent to server, requiring staff intervention. 
+
+In our context, since we are trying to have the data be current and can't just set the automated processing to occur during the middle of the night, we set it between when QC is being acquired and when users usually first book. Emailing/training users to not close the terminal has had mixed results on community buy-in. We are also working on a way to provide the computer privilidges to the TaskManagethis requires community buy-in and requires continuous intervention. 
 
 To get started, open the "TaskSchedules.qmd" file for example code. Load the respective required packages with the library function, and navigate to an individual instruments block of code. Modify it for your own instrument by adding the file.paths you identified to where new QC data is stored, and the location of your forked InstrumentQC repository that contains the individual Instrument.R scripts. 
 
 Within the code block, there are set-up blocks for three automated task: "QC_Instrument_Morning", "FlagRemoval" and RepoPull. We will discuss each of these in turn, but let's focus on setting the QC_Instrument_Morning. 
-
-First decide a time of the day you want the automated script to run and process newly acquired QC data. For our institution, QC on all instruments is historically wrapped up most days by 10:30 AM, which is when we schedule the automated tasks to begin for the first instrument. 
-
-
-
-Consequently, we scedule automated transfer of the QC data to begin at 10:30 AM. When it works, we get all the data transferred from all instruments without any extra effort at the designated time daily, making updating of the dashboard simple. 
-
-Unfortunately, task scheduler opens a black terminal window pop up when it is actively running. This doesn't affect anything on the cytometer acquisition, but it can startle anyone who doesn't expect it. In our experience, when an user is on the instrument at the time, they will either panic and immediately close the black terminal window, or after not closing for 10 seconds get annoyed and close it down. At which point, no data will be automatically transferred to the GitHub repository for that day barring manual staff intervention. Emails to users and warning note on insturment computer help reduce the occasions this above scenario occurs, but user community awareness and buy in is still required. Alternately, schedule during non-operation hours, and have the dashboard data be delayed from real time.
 
 To begin, we will open the TaskSchedules.qmd file within InstrumentQC. You will first call library for the TaskScheduleR package. Then you will verify the file.path to the instrument R script is correctly updated. You will then modify the first chunk of code to desired task schedule name, and set the time. Then run that code chunk. Finally check using the command to verify the task. If you want to remove a scheduled task, run the third set commands including the previous task schedule name and if confirmation received, the previously scheduled task is now removed. 
 
