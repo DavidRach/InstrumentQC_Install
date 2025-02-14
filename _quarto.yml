@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs/
 website:
-  title: "InstrumentQC"
+  title: "InstrumentQC: How did you do this?"
   site-path: "/InstrumentQC_Install/"
   page-navigation: true
   navbar:
@@ -10,6 +10,8 @@ website:
     - text: "Home"
       href: index.qmd
     right:
+    - text: "Go Back to InstrumentQC"
+      href: https://umgccfcss.github.io/InstrumentQC/
     - icon: github
       href: https://github.com/DavidRach/InstrumentQC_Install
       aria-label: GitHub
@@ -27,12 +29,12 @@ website:
       - text: "Installing R packages"
         href: rpackages.qmd
     - section: "File Paths and R Scripts"
-      href: filepaths.qmd
+      href: repositoryelements.qmd
       contents:
       - text: "Pieces of a Bigger Picture"
-        href: filepaths.qmd
-      - text: "Setting File Paths"
         href: repositoryelements.qmd
+      - text: "Setting File Paths"
+        href: filepaths.qmd
       - text: "Data Transfer"
         href: Automation.qmd
     - section: "Building the Website"
