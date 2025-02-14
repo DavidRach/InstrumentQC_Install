@@ -9,7 +9,7 @@ Having placed significant effort into this pet-project, I would love if others i
 
 To get started, navigate to the walk-through explanation website by [clicking here](https://davidrach.github.io/InstrumentQC_Install/)
 
-If you get stuck, or parts of the documentation are unclear, please reach out by opening a[discussion](https://github.com/DavidRach/InstrumentQC_Install/discussions) and I will try my best to help you troubleshoot. What makes free-and-open source software great (and in my opinion,fun to work with) is seeing how the small collective contributions of users improve the projects over time. 
+If you get stuck, or parts of the documentation are unclear, please reach out by opening a [discussion](https://github.com/DavidRach/InstrumentQC_Install/discussions) and I will try my best to help you troubleshoot. What makes free-and-open source software great (and in my opinion,fun to work with) is seeing how the small collective contributions of users improve the projects over time. 
 
 Best-
 David
