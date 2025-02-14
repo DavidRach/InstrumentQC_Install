@@ -2,13 +2,9 @@
 toc: true
 ---
 
-# Dashboard Overview
+# Individual Instrument Dashboard
 
 Having processed your Instrument QC data for that instrument, when you check the data/instrument/archive folder you will now find both archive data .csv files corresponding to the data for both Gain and MFI tracking. We are now ready to discuss how the dashboard elements are coded and assemble to produce the individual webpages.
-
-For our overall dashboard layout, the home/summary page is specified by the code contained within the index.qmd file. It's main purpose is to serve as a landing page that rapidly loads in (since it doesn't have any interactive elements). 
-
-Then, each instrument has its own interactive webpage for exploring its data (taking longer to load as the data exploration is fully interactive). Each instruments webpage is specified by code contained within the individual instrument .qmd files (Aurora3L.qmd, Aurora4L.qmd, Aurora5L.qmd, AuroraCS.qmd). These share similar code layouts, but mainly differ in that 1) the file paths reference different archive data folders corresponding to their respective instruments; and 2) given each instrument has different laser-configurations, those with UV and Yellow-Green Lasers will have more plot elements than the others.
 
 For this walk-though, we will be examining the the Aurora5L.qmd file from the original repository.
 
@@ -185,7 +181,7 @@ After all the Gain plots are plotted, we encounter the third column "## RCV {.ta
 
 The individual instrument .qmd file is setup to retrieve the instrument specific archive data and filter for a desired time range. Once this is done, the individual column names in the .csv are identified and split on the basis of characters in their names into smaller list (typically by laser). This process is then repeated for each measurement type (MFI, Gain, RCV). For the assembly of the actual dashboard itself, the ordering of the measurement type columns is denoted by the ## as encountered, with the tab-sets within each of these also displayed by the order encountered. By rearranging the order, modifications to the individual instrument dashboard pages can be customized. 
 
-If you have multiple instruments, you would modify each instruments .qmd file in a similar way to ensure the correct archive data folder is being referenced, and then customize which plots you want displayed when and where. 
+If you have multiple instruments, you would modify each instruments .qmd file in a similar way to ensure the correct archive data folder is being referenced, and then customize which plots you want displayed when and where. We will discuss this more in the following section. 
 
 
 
