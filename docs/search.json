@@ -114,38 +114,125 @@
     ]
   },
   {
-    "objectID": "FutureDirections.html",
-    "href": "FutureDirections.html",
-    "title": "Conclusion",
+    "objectID": "MakingChanges.html",
+    "href": "MakingChanges.html",
+    "title": "Making Modifications",
     "section": "",
-    "text": "Conclusion\nCongratulations, you have reached the end of this brief walkthrough of how we created our website/dashboards. We hope this has been helful and wish you success on your own modifications and tinkering.\nBelow are a miscellaneous collection of advanced topics and future directions that are not essential, but we have been working on integrating into our website, and some may want to incorporate as well.\nBest- David\n\n\nFuture Directions - Github Actions\nRendering locally takes computer time and computer space. Additionally, it means each instrument needs to bring in edited versions of the website locally every morning with their initial pull. We are currently working to set up a GitHub actions that would ensure the website portion remains only within the GitHub repository (not rendered or copied locally to each instrument taking up additional memory) but additionally render at a given time reducing the requirement to manually render and push the updated dashboard. This occurs thanks to cloud access available to GitHub repositories that are public, with a certain ammount of free server time allocated to each.\nThe reason not currently available, is that it is more complicated technically and I am busy writing. But more broadly, the cloud instance needs to install R and R packages needed to run everything each and every time. And the Luciernaga package is still MB heavy due to it being in testing phase and having a lot of .fcs files in it’s extdata folder. Consequently, an area that has promise, but not yet implemented, stay tuned. For now, we have set an additional taskschedule that runs on a local computer at 11 AM, triggers quarto render, and passes the resulting website to GitHub.",
-    "crumbs": [
-      "Home",
-      "Advanced Topics"
-    ]
-  },
-  {
-    "objectID": "Automation.html",
-    "href": "Automation.html",
-    "title": "Setting up Manual Transfer",
-    "section": "",
-    "text": "Previously, we identified and set the file.paths to the location where the .fcs (and .csv) files are stored after daily QC. We also identified the file.paths to the respective instrument and archive folders within your InstrumentQC folder. Afterwards, we modified the Instrument.R file to reflect these paths, and successfully copied over and processed the existing data into an Archive.csv file.\nWe will now move on to discuss how to set up manual and automated options to facilitate this process as part of a daily routine.We will also discuss the steps involved in the export of the processed data to the GitHub repository for use in creating the website, and how to orchestrate this when you have multiple instruments sending QC data.\n\nSetting up Manual Transfer\nWithin your forked InstrumentQC folder, you can find an “Examples_staff.qmd” file. This is a .qmd file, that contains within the individual chunks code specific to each instrument that get used when setting up a staff.qmd file for use in manually transferring data from individual instruments.\nStart by first duplicating the “Examples_staff.qmd” and rename it as “staff.qmd”. This file name is ignored by Git (through its inclusion in the .gitignore file) allowing for slightly different versions of this file on each instrument to exist without the different file.paths causing version control issues.\nNow that you have the staff.qmd file, go ahead and open it. You will encounter a large code chunk containing several lines of code. On the upper-right hand side, you will see a green play button that says “Run Current Chunk”.\nWhen this is clicked, the code-block will run, provide the correct file paths and trigger Rscript you have modified to process the newly acquired QC data and sending it to GitHub.\nAs long as your file.paths were correctly set up, the only thing staff needs to manually do in the morning to generate the processed data is the following steps:\n\nOpen Rstudio.\nMake sure they are in the InstrumentQC project folder\nOpen the staff.qmd file\nHit the Run Code Chunk button\nAnd that’s it.\n\nThis manual sending of data approach is useful if you have fewer instruments and are already present at the instrument at the time of QC, as the extra minute to hit “Run Code Chunk” doesn’t add that much an inconvenience. Drawbacks are if you forget, the website when rendered will not contain the data for that day, and you will need to go back to the instrument and send the data.\n\n\nSetting Up Automated Transfer\nAnother option is to set up an automated transfer of the QC data for each instrument to the GitHub repository at a specific time of the day. This is possible by utilizing the Windows Task Scheduler (the system that schedules your computer updates, etc.) via the TaskScheduleR R package. What this looks like in practice is at the designated time, a black terminal/console window will pop up on the computer screen for around a minute, run the code in the Instrument.R file, push the data to GitHub and then close the terminal window.\nOne of the considerations with using this approach is deciding at what time of the day you want the automated script to run and process newly acquired QC data. For our institution, QC on all instruments is historically wrapped up most days by 10:30 AM, which is when we schedule the automated tasks to begin for the first instrument. This way, we ensure the websites and dashboards have the most recent data rather than the displayed data being delayed a day due to the automated script running after QC for the day was acquired.\nSome of the issues with the automated approach is the sudden appearance black terminal window pop up that pops up at the designated time to run the code.This doesn’t affect anything on the cytometer while acquiring, but it can startle an user who is not expecting it to appear. In our experience, when an user is on the instrument at the time the console window appears, they will either panic and immediately close the black terminal window, or after it appears to not be doing anything for 10 seconds get annoyed and close it down. This results in incomplete processing of the data, with the data not being sent to server, requiring staff intervention.\nIn our context, since our goal is for the website data to be current (and therefore can’t just set the automated processing to occur during the middle of the night), we set automation for the small window between when morning QC is typically acquired and when users usually first book. We additional have trained/emailed/reminded users to not close the terminal but with mixed results.\nCurrently, we are working on figuring out a way to provide computer privileges necessary to run Task Manager without opening the console window, or when the computer is logged out, but that remains a work in progress at the moment.\nTo get started, open the “TaskSchedules.qmd” file for example code. Load the respective required packages with the library function, and navigate to an individual instruments block of code. Modify the file.paths to those you previously identified for your own instrument to find where the new QC data is stored, and the location of your forked InstrumentQC repository that contains the individual Instrument.R scripts.\nNext, looking at the code block, we can see there is setup code for three automated tassk: “QC_Instrument_Morning”, “FlagRemoval” and RepoPull. We will discuss each of these in turn, starting with setting the task schedule for QC_Instrument_Morning.\nWe can see it’s using TaskManagerR’s taskscheduler_create function. Set the taskname to indicate the name of your instrument and that the task is QC related. Then for rscript provide the file.path to the Instrument.R script. Leave the start date as is, but adjust to the desired time for the automated processing to occur. Once you have modified these fields, hit enter to schedule the task.\nWe can check to see if the task is scheduled by entering the taskscheduler_ls() function into our console and searching for the taskname we set. Additionally, you can give the same taskname to taskscheduler_delete() if you decide you don’t want to run that task at that time anymore.\n\n\nA Hybrid Approach\nAt UMGCC FCSS, we use both the automated and manual transfer setups. We schedule automated QC to happen between 10:30 and 10:40 for the various instruments. However, if QC happens earlier (or is delayed) the manual option is available to avoid having automated QC trigger when an user is present and the data for the day has already been sent.\nTo allow automated QC to discern whether QC has already been sent earlier manually, hitting “Run Code Chunk” on staff.qmd will also produce a Flag.CSV file after completion, that is stored within the InstrumentQC folder. If this file is present, automated QC will skip processing data steps. This results in just a momemtary blip of the console window. We then set a FlagRemoval task (the second one in the code chunk) that at 1 PM every afternoon checks the InstrumentQC folder, and if the Flag.csv file is present, removes it. This resets the cycle, allowing automation to proceed the next day as normal.\nTo replicate this for your system, open the “Examples_FlagRemoval.qmd”. Copy and paste the code into a new .R script called “FlagRemoval” (also present in the .gitignore file to allow for difference in file.path between instruments). Then return to the TaskSchedules.qmd file, modify the second “FlagRemoval” task to match the new FlagRemoval.R scripts filepath and desired run time, and then create the task.\nOne thing to remember, regardless of using manual or automated approach, is that the Instrument.R script will first retrieve data from GitHub, then process the data, then send the updated data to GitHub. Consequently, we need to stagger the time between instruments to avoid having the Git commit fails because it doesn’t recognize the GitHub repository that has had changes since it pulled the data but hasn’t finished returning the new data for it’s instrument. In our case, we have the Aurora 3L automated processing run at 10:30, and every subsequent instrument run two minutes later which avoids this issue entirely.\nWe also are experimenting with a third automated task (RepoPull) that brings in the larger changes involving the Website early in the morning to cut down on console window time around 10 AM. However, we are finding if the computer was shut down or restarted by the last user of the night, this task may not execute.\nTo set this up on your own system, similarly to when you set FlagRemoval, use the “Examples_RepoPull.qmd” file, create a new “RepoPull.R” script, adjusting the file.paths respectively, navigate back and edit the TaskSchedules.qmd file to reflect these changes, and then run taskscheduler_create to create this third task.\nFinally, after a task is run successfully, the instrument computer may produce a .Log file. These can be useful to validate that everything is running as expected. If however the names match on different computers, they may mess with the git commits similiar to if automated QC were run across all instruments at the same time, so I typically add them to the .gitignore file and only view them locally when doing manual QC or troubleshooting.\n\n\nConclusion\nBoth in the previous and current article, you have now modified the .R scripts and processed the existing QC data present on the individual computers. You have also now successfully got the data to transfer to the respective Instrument Archive data folders that are accessible with new daily updates from GitHub. Congratulations, you have made tremendous progress.\nIn the next chapter, you will start learning how to modify the .qmd files to create individual webpages for each instruments QC data, and then how to combine them into an actual website.",
+    "text": "Still working on this one, sorry - David\n\nMaking Modifications\nstart with the easiest file.path, we need to find the location you saved the InstrumentQC project to when you downloaded it from Github via Rstudio (recall the browse button to see where it was saved).\nWithin the InstrumentQC folder, the first level contains the individual R scripts and .qmd files for each instrument, as well as additional files needed for the automation, and dashboard assembly. Below this level, there is a data folder containing folders for the individual instruments. Below this level, are folders containing the archive data folders where processed data is stored after processing and updated with new data daily.\nOn first install, modify the names of the folders for your individual instruments, and navigate into the archive folders for the renamed instruments and delete the forked version of the data. These archive data files will be replaced by those of your own instrument after the initial processing.\nNext, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.\nNow, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed).\nOnce complete, you should see the processed data is now present within the Archive folder.\nOpen up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.\nOnce done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being.\n\n\nProcessing Existing Data\nAlright, let’s see if you set the file.paths correctly and process the existing data into an Archive .csv file!\n… Drumroll …",
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Data Transfer"
+      "Making Changes"
     ]
   },
   {
-    "objectID": "WebsiteCreation.html",
-    "href": "WebsiteCreation.html",
-    "title": "Rendering the Dashboard",
+    "objectID": "InstrumentLayout.html",
+    "href": "InstrumentLayout.html",
+    "title": "Dashboard Overview",
     "section": "",
-    "text": "Rendering the Dashboard\nRegardless whether you implemtent the manual, automated or hybrid approach, you will end up with the updated QC data from each instrument present on the GitHub repository. These changes are tracked by git as part of version control. We previously discussed the individual instrument pages designated by their .qmd files, but we need to discuss the home/summary index.qmd page that combines all the data sources.\nBriefly, it shows the indicator blocks for the individual instruments (color-coded pass, caution, fail). The second column shows the results of the daily QC for the day (with tabsets for each instrument). And finally a six-month QC for all instruments is visible in the third column.\nAdditionally, the navbar and footer elements are specified within the _quarto.yaml file allowing for customization/rearranging/renaming as desired. In our dashboard there are additional tabs that reference Data to get the data as .csv or .pdf by the individual users, and a Help page for general information about the dashboard.\nTo assemble the dashboard with the updated data, one can either pull in the data to the local computer, and then render the project to assemble the website and individual dashboard pages into a single unit. All the changes to the files would then be committed, with the data passed to GitHub repository.\nOn the GitHub repository side, one would customize the repostitory to use GitHub pages, set to display contents of the docs folder (containing the rendered html pages). Upon pushing the updates, GitHub would then process them and display them as a website.",
+    "text": "Having processed your Instrument QC data for that instrument, when you check the data/instrument/archive folder you will now find both archive data .csv files corresponding to the data for both Gain and MFI tracking. We are now ready to discuss how the dashboard elements are coded and assemble to produce the individual webpages.\nFor our overall dashboard layout, the home/summary page is specified by the code contained within the index.qmd file. It’s main purpose is to serve as a landing page that rapidly loads in (since it doesn’t have any interactive elements).\nThen, each instrument has its own interactive webpage for exploring its data (taking longer to load as the data exploration is fully interactive). Each instruments webpage is specified by code contained within the individual instrument .qmd files (Aurora3L.qmd, Aurora4L.qmd, Aurora5L.qmd, AuroraCS.qmd). These share similar code layouts, but mainly differ in that 1) the file paths reference different archive data folders corresponding to their respective instruments; and 2) given each instrument has different laser-configurations, those with UV and Yellow-Green Lasers will have more plot elements than the others.\nFor this walk-though, we will be examining the the Aurora5L.qmd file from the original repository.",
     "crumbs": [
       "Home",
-      "Building the Website",
-      "Assembling the Pieces"
+      "Building the Website"
+    ]
+  },
+  {
+    "objectID": "InstrumentLayout.html#retrieving-data",
+    "href": "InstrumentLayout.html#retrieving-data",
+    "title": "Dashboard Overview",
+    "section": "Retrieving Data",
+    "text": "Retrieving Data\nHaving set up the file.path (MainFolder) and specified the particular instrument folder (“5L” in this case) the next two code blocks retrieve the data in the Gain and MFI .csv files, and then filter the data for the last twelve months. If you wanted to modify the time period shown, you would edit the code block at this point to increase/decrease the range.\n\nMFI_5L &lt;- Luciernaga:::CurrentData(x=\"5L\", MainFolder=MainFolder, type = \"MFI\")\nGain_5L &lt;- Luciernaga:::CurrentData(x=\"5L\", MainFolder=MainFolder, type = \"Gain\")\n\n\nWindowOfInterest &lt;- Sys.time() - months(12)\n\nMFI_5L &lt;- MFI_5L %&gt;% filter(DateTime &gt;= WindowOfInterest)\nGain_5L &lt;- Gain_5L %&gt;% filter(DateTime &gt;= WindowOfInterest)\n\nThe following code block references the .csv file containing Field-Service Engineer Visits, which are depicted as red vertical dashed lines in the .pdf version of the plots that can be exported.\n\nData &lt;- read.csv(\"AuroraMaintenance.csv\", check.names=FALSE)\n\nData &lt;- Data %&gt;% filter(!str_detect(reason, \"lean\"))\n\nRepair5L &lt;- Data %&gt;% filter(instrument %in% \"5L\")",
+    "crumbs": [
+      "Home",
+      "Building the Website"
+    ]
+  },
+  {
+    "objectID": "InstrumentLayout.html#processing-the-data",
+    "href": "InstrumentLayout.html#processing-the-data",
+    "title": "Dashboard Overview",
+    "section": "Processing the Data",
+    "text": "Processing the Data\nThe next three code chunks are rather large, each representing three types of data that will make up the three columns seen on each instruments page (MFI, Gain, RCV). We will work through the first code chunk, which is MFI.\n\nx &lt;- MFI_5L\nx &lt;- x %&gt;% dplyr::filter(Timepoint %in% c(\"Before\", \"After\"))\nTheColumns &lt;- x %&gt;% select(where(~is.numeric(.)||is.integer(.))) %&gt;% colnames()\nTheColumns &lt;- setdiff(TheColumns, \"TIME\")\nTheIntermediate &lt;- TheColumns[!str_detect(TheColumns, \"Gain\")]\nTheColumnNames &lt;- TheIntermediate[str_detect(TheIntermediate, \"-A\")]\n  \nUltraVioletGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^UV\")]\nVioletGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^V\")]\nBlueGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^B\")]\nYellowGreenGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^YG\")]\nRedGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^R\")]\n\nScatterGains &lt;- TheIntermediate[str_detect(TheIntermediate, \"SC-\")]\nScatterGains &lt;- Luciernaga:::ScalePriority(ScatterGains)\nLaserGains &lt;- TheIntermediate[str_detect(TheIntermediate, \"Laser\")]\nLaserGains &lt;- Luciernaga:::ColorPriority(LaserGains)\nScalingGains &lt;- TheIntermediate[str_detect(TheIntermediate, \"Scaling\")]\nScalingGains &lt;- Luciernaga:::ColorPriority(ScalingGains)\nOtherGains &lt;- c(ScatterGains, LaserGains, ScalingGains)\n\nThe retrieved data for MFI goes through a couple processing steps to retrieve the column names present within the .csv file. From there it removes those that show Gain as they will be plotted along with RCV separately. Once this is done, it filters the column names by presence of string characters in their names to separate the list of colnames into shorter list based on laser, scatter, etc.\nAt this point, each of the above element is simply smaller list of column names, that will then be plotted and visualized together. This happens in the portion of the larger code chunk shown below, with the smaller list being provided to the MeasurementType arguments.\n\nUltraVioletPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=UltraVioletGains,\n                      plotType = \"comparison\", returntype = \"plots\",\n                      Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                      RepairVisits=Repair5L)\n\nVioletPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=VioletGains,\n                      plotType = \"comparison\", returntype = \"plots\",\n                      Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                      RepairVisits=Repair5L)\n\nBluePlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=BlueGains,\n                      plotType = \"comparison\", returntype = \"plots\",\n                      Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                      RepairVisits=Repair5L)\n\nYellowGreenPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=YellowGreenGains,\n                      plotType = \"comparison\", returntype = \"plots\",\n                      Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                      RepairVisits=Repair5L)\n\nRedPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=RedGains,\n                     plotType = \"comparison\", returntype = \"plots\",\n                     Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                     RepairVisits=Repair5L)\n\nScatterPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=ScatterGains,\n                     plotType = \"comparison\", returntype = \"plots\",\n                     Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \" \",\n                     RepairVisits=Repair5L)\n\nLaserPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=LaserGains,\n                     plotType = \"comparison\", returntype = \"plots\",\n                     Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \" \",\n                     RepairVisits=Repair5L)\n\nOnce this is done, each of the elements above contains a list of plots corresponding to the column names that were provided in the smaller list. These will be referenced later when building the dashboard in the desired layout.\nThis process is then repeated again in two large code chunks for both Gain and RCV, with some small differences in how the column names are separated into smaller list, and how the individual ggplots are generated.\nStarting on line 205 of Aurora5L.qmd we have the following code-chunk:\n\nPDFPlots &lt;- c(UltraVioletPlotsMFI, VioletPlotsMFI, BluePlotsMFI, YellowGreenPlotsMFI, RedPlotsMFI, LaserPlotsMFI, ScatterPlotsMFI, UltraVioletPlotsGain, VioletPlotsGain, BluePlotsGain, YellowGreenPlotsGain, RedPlotsGain, ScatterPlotsGain, LaserDelayPlotsGain, LaserPowerPlotsGain,  ScalingPlotsGain, UltraVioletPlotsRCV, VioletPlotsRCV, BluePlotsRCV, YellowGreenPlotsRCV, RedPlotsRCV, ScatterPlotsRCV)\n\nFilename &lt;- paste0(\"QCPlots_5L\")\n\nPDF &lt;- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype=\"pdf\", outfolder=MainFolder, thecolumns=1)\n\nThis code chunk above assembled all the plots we generated in the section above, and saves them as the .pdf for the individual instrument that can be seen under the data tab of the dashboard website.",
+    "crumbs": [
+      "Home",
+      "Building the Website"
+    ]
+  },
+  {
+    "objectID": "InstrumentLayout.html#visualizing-the-data",
+    "href": "InstrumentLayout.html#visualizing-the-data",
+    "title": "Dashboard Overview",
+    "section": "Visualizing the Data",
+    "text": "Visualizing the Data\n\nMFI\nNow that the instrument data has been assembled into plots for the individual measurement types and lasers, it is time to display the plots in a way that produces the instrument page visible on the original dashboard website.\nAs mentioned at the beginning of this page, the orientation of this dashboard is set to columns. Consequently, on line 218 you will see the following “## MFI {.tabset}”. The two # designate the first column. All plots visualized until the next ## (“## Gain {.tabset}” in our case at line 345) will consequently be present within this first column.\nIf we desired to change the ordering MFI column last rather and first, we would move everything from “## MFI {.tabset}” until “## Gain {.tabset}” and shift to desired order position.\nThe presence of “{.tabset}” designates that within this colum (denoted by the ##), there will be multiple tab options to switch between. The first is seen in the following code-chunk:\n\nggplotly(UltraVioletPlotsMFI[[1]])\nggplotly(UltraVioletPlotsMFI[[2]])\n# etc...\n\nThe tab name visible on the website is denoted by the title: argument. Within the code block itself, the individual plots are made interactive using the plotly function ggplotly, calling the specific detector plot sequentially.\nThis is then repeated on the next tabs for Violet, Blue, Yellow-Green and Red detectors. Then Scatter, LaserPower, LaserDelay, LaserScatter plots are visualized in their respective tabs.\nFinally, marking the end of the first column we find a card element “{.card title=”MFI”}” that appears within the tabset at the end but contains no plots to serve as a reference of what the first column plots are showing.\n\n\nGain and rCV\nAbove we walked through the process of displaying the MFI plots generated in the first section within tabsets for individual lasers. At line 345, we encounter “## Gain {.tabset}” which designates the second column of the dashboard, containing tabs for the Gain plots by laser. The overall layout is similar to what we encountered, differing here and there based on additional plots present within it’s respective archive .csv but not found in the bead csv MFI derrived from.\nAfter all the Gain plots are plotted, we encounter the third column “## RCV {.tabset}” at line 472, continuing until the end.",
+    "crumbs": [
+      "Home",
+      "Building the Website"
+    ]
+  },
+  {
+    "objectID": "InstrumentLayout.html#summary",
+    "href": "InstrumentLayout.html#summary",
+    "title": "Dashboard Overview",
+    "section": "Summary",
+    "text": "Summary\nThe individual instrument .qmd file is setup to retrieve the instrument specific archive data and filter for a desired time range. Once this is done, the individual column names in the .csv are identified and split on the basis of characters in their names into smaller list (typically by laser). This process is then repeated for each measurement type (MFI, Gain, RCV). For the assembly of the actual dashboard itself, the ordering of the measurement type columns is denoted by the ## as encountered, with the tab-sets within each of these also displayed by the order encountered. By rearranging the order, modifications to the individual instrument dashboard pages can be customized.\nIf you have multiple instruments, you would modify each instruments .qmd file in a similar way to ensure the correct archive data folder is being referenced, and then customize which plots you want displayed when and where.",
+    "crumbs": [
+      "Home",
+      "Building the Website"
+    ]
+  },
+  {
+    "objectID": "repositoryelements.html",
+    "href": "repositoryelements.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "In the previous section, we installed the required software, set up the Git permissions for the individual local computers needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository, and made sure the required R packages were installed.\nIn this section, we will now start to modify existing R code originally configured for the the UMGCC flow core computers and adapt it for your setup. This involves first understanding the individual components that are present within the InstrumentQC repository and their purpose. Afterwards, we will identify and change file.paths within the individual .R scripts and .qmd files to find the newly acquired QC .fcs files (and DailyQC report .csv files for Cytek instruments) in their respective folders on your local computers.",
+    "crumbs": [
+      "Home",
+      "File Paths and R Scripts"
+    ]
+  },
+  {
+    "objectID": "repositoryelements.html#qmd-files",
+    "href": "repositoryelements.html#qmd-files",
+    "title": "Introduction",
+    "section": "qmd files",
+    "text": "qmd files\nWithin the files currently visible, we have individual files that are named after invidual instruments (Aurora3L, Aurora4L, Aurora5L, AuroraCS, LSRII, Aria, Canto). Those that have a .qmd ending contain both text and code segments that together produce a website page. For example, when the Aurora5L.qmd document gets processed into .html, it forms the following webpage. By contrast, when the LSRII.qmd document gets processed into .html, it forms its own webpage.\nEach Instrument.qmd file, by combining and rearranging individual building code block elements within, allows for extensive modification to account for for the differences for the various instruments (number of lasers, detector configuration and parameters) that can be seen on their respective webpages. We will examine these .qmd files and their individual elements at greater depth in the Instrument Layout section.",
+    "crumbs": [
+      "Home",
+      "File Paths and R Scripts"
+    ]
+  },
+  {
+    "objectID": "repositoryelements.html#r-files",
+    "href": "repositoryelements.html#r-files",
+    "title": "Introduction",
+    "section": "R files",
+    "text": "R files\nContinuing scrolling down, we can identify another repeating element set of files (TheScript_3L, TheScript_4L, TheScript_5L, TheScript_CS) that end in .R.\nThese are .R files, and they contain only R code. In this context, they work as scripts, containing sets of instructions to find the correct storage folder, identify any new data, process it, and save it to individual instruments Archive data folder. Our first modification of file.paths will occur within these Script files.",
+    "crumbs": [
+      "Home",
+      "File Paths and R Scripts"
+    ]
+  },
+  {
+    "objectID": "repositoryelements.html#individual-instrument-folders",
+    "href": "repositoryelements.html#individual-instrument-folders",
+    "title": "Introduction",
+    "section": "Individual Instrument Folders",
+    "text": "Individual Instrument Folders\nWe will touch on the other files present within this initial view later on. Before moving to adjust the file paths, go ahead and double click on the data folder. Within this folder, you can see individual folders corresponding to the individual instruments, as well as some of the .pdf and .csv files. Go ahead and double click on the 5L folder.\nAt this point, you see nothing but an Archive folder. If however, you were to look in the middle of the processing step, you would see a bunch of .csv and .fcs files also present, since this folder is where the individual computer copies all identified newly acquired files before they are processed. Once they are successfully processed, their data gets copied to the .csv files found within the Archive folder. Once this has been done successfully, the copies of the unprocessed data located in this folder get deleted, leaving only the Archive folder with the processed data present.",
+    "crumbs": [
+      "Home",
+      "File Paths and R Scripts"
+    ]
+  },
+  {
+    "objectID": "repositoryelements.html#further-considerations",
+    "href": "repositoryelements.html#further-considerations",
+    "title": "Introduction",
+    "section": "Further considerations",
+    "text": "Further considerations\nNow that you have an initial idea of the contents of the repository, you can start to prepare a to-do list for changes that you will need to carry out for adapting the existing project to your own instruments.\nIf you have only a single cytometer, you will only need a single Instrument.R, Instrument.qmd and Instrument folder to process and store the data, and ultimately generate a single tab webpage.\nIf you have 8 instruments, you would need to add those three elements for each one of them, modifying the names accordingly.\nAnd for each instrument, the file.path arguments will need to direct the computer to find the newly acquired QC data in the correct folder location on those computers, and then pass it to the corresponding Instrument folder so that it can be processed.\nIf this sounds confusing, do not worry, we will go through these indivual elements in the process of adjusting the file.paths.",
+    "crumbs": [
+      "Home",
+      "File Paths and R Scripts"
     ]
   },
   {
@@ -209,113 +296,38 @@
     ]
   },
   {
-    "objectID": "repositoryelements.html",
-    "href": "repositoryelements.html",
-    "title": "Introduction",
+    "objectID": "WebsiteCreation.html",
+    "href": "WebsiteCreation.html",
+    "title": "Rendering the Dashboard",
     "section": "",
-    "text": "In the previous section, we installed the required software, set up the Git permissions for the individual local computers needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository, and made sure the required R packages were installed.\nIn this section, we will now start to modify existing R code originally configured for the the UMGCC flow core computers and adapt it for your setup. This involves first understanding the individual components that are present within the InstrumentQC repository and their purpose. Afterwards, we will identify and change file.paths within the individual .R scripts and .qmd files to find the newly acquired QC .fcs files (and DailyQC report .csv files for Cytek instruments) in their respective folders on your local computers.",
+    "text": "Still Working On This Section, sorry! - David\n\nRendering the Dashboard\nRegardless whether you implemtent the manual, automated or hybrid approach, you will end up with the updated QC data from each instrument present on the GitHub repository. These changes are tracked by git as part of version control. We previously discussed the individual instrument pages designated by their .qmd files, but we need to discuss the home/summary index.qmd page that combines all the data sources.\nBriefly, it shows the indicator blocks for the individual instruments (color-coded pass, caution, fail). The second column shows the results of the daily QC for the day (with tabsets for each instrument). And finally a six-month QC for all instruments is visible in the third column.\nAdditionally, the navbar and footer elements are specified within the _quarto.yaml file allowing for customization/rearranging/renaming as desired. In our dashboard there are additional tabs that reference Data to get the data as .csv or .pdf by the individual users, and a Help page for general information about the dashboard.\nTo assemble the dashboard with the updated data, one can either pull in the data to the local computer, and then render the project to assemble the website and individual dashboard pages into a single unit. All the changes to the files would then be committed, with the data passed to GitHub repository.\nOn the GitHub repository side, one would customize the repostitory to use GitHub pages, set to display contents of the docs folder (containing the rendered html pages). Upon pushing the updates, GitHub would then process them and display them as a website.",
     "crumbs": [
       "Home",
-      "File Paths and R Scripts"
+      "Building the Website",
+      "Assembling the Pieces"
     ]
   },
   {
-    "objectID": "repositoryelements.html#qmd-files",
-    "href": "repositoryelements.html#qmd-files",
-    "title": "Introduction",
-    "section": "qmd files",
-    "text": "qmd files\nWithin the files currently visible, we have individual files that are named after invidual instruments (Aurora3L, Aurora4L, Aurora5L, AuroraCS, LSRII, Aria, Canto). Those that have a .qmd ending contain both text and code segments that together produce a website page. For example, when the Aurora5L.qmd document gets processed into .html, it forms the following webpage. By contrast, when the LSRII.qmd document gets processed into .html, it forms its own webpage.\nEach Instrument.qmd file, by combining and rearranging individual building code block elements within, allows for extensive modification to account for for the differences for the various instruments (number of lasers, detector configuration and parameters) that can be seen on their respective webpages. We will examine these .qmd files and their individual elements at greater depth in the Instrument Layout section.",
-    "crumbs": [
-      "Home",
-      "File Paths and R Scripts"
-    ]
-  },
-  {
-    "objectID": "repositoryelements.html#r-files",
-    "href": "repositoryelements.html#r-files",
-    "title": "Introduction",
-    "section": "R files",
-    "text": "R files\nContinuing scrolling down, we can identify another repeating element set of files (TheScript_3L, TheScript_4L, TheScript_5L, TheScript_CS) that end in .R.\nThese are .R files, and they contain only R code. In this context, they work as scripts, containing sets of instructions to find the correct storage folder, identify any new data, process it, and save it to individual instruments Archive data folder. Our first modification of file.paths will occur within these Script files.",
-    "crumbs": [
-      "Home",
-      "File Paths and R Scripts"
-    ]
-  },
-  {
-    "objectID": "repositoryelements.html#individual-instrument-folders",
-    "href": "repositoryelements.html#individual-instrument-folders",
-    "title": "Introduction",
-    "section": "Individual Instrument Folders",
-    "text": "Individual Instrument Folders\nWe will touch on the other files present within this initial view later on. Before moving to adjust the file paths, go ahead and double click on the data folder. Within this folder, you can see individual folders corresponding to the individual instruments, as well as some of the .pdf and .csv files. Go ahead and double click on the 5L folder.\nAt this point, you see nothing but an Archive folder. If however, you were to look in the middle of the processing step, you would see a bunch of .csv and .fcs files also present, since this folder is where the individual computer copies all identified newly acquired files before they are processed. Once they are successfully processed, their data gets copied to the .csv files found within the Archive folder. Once this has been done successfully, the copies of the unprocessed data located in this folder get deleted, leaving only the Archive folder with the processed data present.",
-    "crumbs": [
-      "Home",
-      "File Paths and R Scripts"
-    ]
-  },
-  {
-    "objectID": "repositoryelements.html#further-considerations",
-    "href": "repositoryelements.html#further-considerations",
-    "title": "Introduction",
-    "section": "Further considerations",
-    "text": "Further considerations\nNow that you have an initial idea of the contents of the repository, you can start to prepare a to-do list for changes that you will need to carry out for adapting the existing project to your own instruments.\nIf you have only a single cytometer, you will only need a single Instrument.R, Instrument.qmd and Instrument folder to process and store the data, and ultimately generate a single tab webpage.\nIf you have 8 instruments, you would need to add those three elements for each one of them, modifying the names accordingly.\nAnd for each instrument, the file.path arguments will need to direct the computer to find the newly acquired QC data in the correct folder location on those computers, and then pass it to the corresponding Instrument folder so that it can be processed.\nIf this sounds confusing, do not worry, we will go through these indivual elements in the process of adjusting the file.paths.",
-    "crumbs": [
-      "Home",
-      "File Paths and R Scripts"
-    ]
-  },
-  {
-    "objectID": "InstrumentLayout.html",
-    "href": "InstrumentLayout.html",
-    "title": "Dashboard Overview",
+    "objectID": "Automation.html",
+    "href": "Automation.html",
+    "title": "Setting up Manual Transfer",
     "section": "",
-    "text": "Having processed your Instrument QC data for that instrument, when you check the data/instrument/archive folder you will now find both archive data .csv files corresponding to the data for both Gain and MFI tracking. We are now ready to discuss how the dashboard elements are coded and assemble to produce the individual webpages.\nFor our overall dashboard layout, the home/summary page is specified by the code contained within the index.qmd file. It’s main purpose is to serve as a landing page that rapidly loads in (since it doesn’t have any interactive elements).\nThen, each instrument has its own interactive webpage for exploring its data (taking longer to load as the data exploration is fully interactive). Each instruments webpage is specified by code contained within the individual instrument .qmd files (Aurora3L.qmd, Aurora4L.qmd, Aurora5L.qmd, AuroraCS.qmd). These share similar code layouts, but mainly differ in that 1) the file paths reference different archive data folders corresponding to their respective instruments; and 2) given each instrument has different laser-configurations, those with UV and Yellow-Green Lasers will have more plot elements than the others.\nFor this walk-though, we will be examining the the Aurora5L.qmd file from the original repository.",
+    "text": "Previously, we identified and set the file.paths to the location where the .fcs (and .csv) files are stored after daily QC. We also identified the file.paths to the respective instrument and archive folders within your InstrumentQC folder. Afterwards, we modified the Instrument.R file to reflect these paths, and successfully copied over and processed the existing data into an Archive.csv file.\nWe will now move on to discuss how to set up manual and automated options to facilitate this process as part of a daily routine.We will also discuss the steps involved in the export of the processed data to the GitHub repository for use in creating the website, and how to orchestrate this when you have multiple instruments sending QC data.\n\nSetting up Manual Transfer\nWithin your forked InstrumentQC folder, you can find an “Examples_staff.qmd” file. This is a .qmd file, that contains within the individual chunks code specific to each instrument that get used when setting up a staff.qmd file for use in manually transferring data from individual instruments.\nStart by first duplicating the “Examples_staff.qmd” and rename it as “staff.qmd”. This file name is ignored by Git (through its inclusion in the .gitignore file) allowing for slightly different versions of this file on each instrument to exist without the different file.paths causing version control issues.\nNow that you have the staff.qmd file, go ahead and open it. You will encounter a large code chunk containing several lines of code. On the upper-right hand side, you will see a green play button that says “Run Current Chunk”.\nWhen this is clicked, the code-block will run, provide the correct file paths and trigger Rscript you have modified to process the newly acquired QC data and sending it to GitHub.\nAs long as your file.paths were correctly set up, the only thing staff needs to manually do in the morning to generate the processed data is the following steps:\n\nOpen Rstudio.\nMake sure they are in the InstrumentQC project folder\nOpen the staff.qmd file\nHit the Run Code Chunk button\nAnd that’s it.\n\nThis manual sending of data approach is useful if you have fewer instruments and are already present at the instrument at the time of QC, as the extra minute to hit “Run Code Chunk” doesn’t add that much an inconvenience. Drawbacks are if you forget, the website when rendered will not contain the data for that day, and you will need to go back to the instrument and send the data.\n\n\nSetting Up Automated Transfer\nAnother option is to set up an automated transfer of the QC data for each instrument to the GitHub repository at a specific time of the day. This is possible by utilizing the Windows Task Scheduler (the system that schedules your computer updates, etc.) via the TaskScheduleR R package. What this looks like in practice is at the designated time, a black terminal/console window will pop up on the computer screen for around a minute, run the code in the Instrument.R file, push the data to GitHub and then close the terminal window.\nOne of the considerations with using this approach is deciding at what time of the day you want the automated script to run and process newly acquired QC data. For our institution, QC on all instruments is historically wrapped up most days by 10:30 AM, which is when we schedule the automated tasks to begin for the first instrument. This way, we ensure the websites and dashboards have the most recent data rather than the displayed data being delayed a day due to the automated script running after QC for the day was acquired.\nSome of the issues with the automated approach is the sudden appearance black terminal window pop up that pops up at the designated time to run the code.This doesn’t affect anything on the cytometer while acquiring, but it can startle an user who is not expecting it to appear. In our experience, when an user is on the instrument at the time the console window appears, they will either panic and immediately close the black terminal window, or after it appears to not be doing anything for 10 seconds get annoyed and close it down. This results in incomplete processing of the data, with the data not being sent to server, requiring staff intervention.\nIn our context, since our goal is for the website data to be current (and therefore can’t just set the automated processing to occur during the middle of the night), we set automation for the small window between when morning QC is typically acquired and when users usually first book. We additional have trained/emailed/reminded users to not close the terminal but with mixed results.\nCurrently, we are working on figuring out a way to provide computer privileges necessary to run Task Manager without opening the console window, or when the computer is logged out, but that remains a work in progress at the moment.\nTo get started, open the “TaskSchedules.qmd” file for example code. Load the respective required packages with the library function, and navigate to an individual instruments block of code. Modify the file.paths to those you previously identified for your own instrument to find where the new QC data is stored, and the location of your forked InstrumentQC repository that contains the individual Instrument.R scripts.\nNext, looking at the code block, we can see there is setup code for three automated tassk: “QC_Instrument_Morning”, “FlagRemoval” and RepoPull. We will discuss each of these in turn, starting with setting the task schedule for QC_Instrument_Morning.\nWe can see it’s using TaskManagerR’s taskscheduler_create function. Set the taskname to indicate the name of your instrument and that the task is QC related. Then for rscript provide the file.path to the Instrument.R script. Leave the start date as is, but adjust to the desired time for the automated processing to occur. Once you have modified these fields, hit enter to schedule the task.\nWe can check to see if the task is scheduled by entering the taskscheduler_ls() function into our console and searching for the taskname we set. Additionally, you can give the same taskname to taskscheduler_delete() if you decide you don’t want to run that task at that time anymore.\n\n\nA Hybrid Approach\nAt UMGCC FCSS, we use both the automated and manual transfer setups. We schedule automated QC to happen between 10:30 and 10:40 for the various instruments. However, if QC happens earlier (or is delayed) the manual option is available to avoid having automated QC trigger when an user is present and the data for the day has already been sent.\nTo allow automated QC to discern whether QC has already been sent earlier manually, hitting “Run Code Chunk” on staff.qmd will also produce a Flag.CSV file after completion, that is stored within the InstrumentQC folder. If this file is present, automated QC will skip processing data steps. This results in just a momemtary blip of the console window. We then set a FlagRemoval task (the second one in the code chunk) that at 1 PM every afternoon checks the InstrumentQC folder, and if the Flag.csv file is present, removes it. This resets the cycle, allowing automation to proceed the next day as normal.\nTo replicate this for your system, open the “Examples_FlagRemoval.qmd”. Copy and paste the code into a new .R script called “FlagRemoval” (also present in the .gitignore file to allow for difference in file.path between instruments). Then return to the TaskSchedules.qmd file, modify the second “FlagRemoval” task to match the new FlagRemoval.R scripts filepath and desired run time, and then create the task.\nOne thing to remember, regardless of using manual or automated approach, is that the Instrument.R script will first retrieve data from GitHub, then process the data, then send the updated data to GitHub. Consequently, we need to stagger the time between instruments to avoid having the Git commit fails because it doesn’t recognize the GitHub repository that has had changes since it pulled the data but hasn’t finished returning the new data for it’s instrument. In our case, we have the Aurora 3L automated processing run at 10:30, and every subsequent instrument run two minutes later which avoids this issue entirely.\nWe also are experimenting with a third automated task (RepoPull) that brings in the larger changes involving the Website early in the morning to cut down on console window time around 10 AM. However, we are finding if the computer was shut down or restarted by the last user of the night, this task may not execute.\nTo set this up on your own system, similarly to when you set FlagRemoval, use the “Examples_RepoPull.qmd” file, create a new “RepoPull.R” script, adjusting the file.paths respectively, navigate back and edit the TaskSchedules.qmd file to reflect these changes, and then run taskscheduler_create to create this third task.\nFinally, after a task is run successfully, the instrument computer may produce a .Log file. These can be useful to validate that everything is running as expected. If however the names match on different computers, they may mess with the git commits similiar to if automated QC were run across all instruments at the same time, so I typically add them to the .gitignore file and only view them locally when doing manual QC or troubleshooting.\n\n\nConclusion\nBoth in the previous and current article, you have now modified the .R scripts and processed the existing QC data present on the individual computers. You have also now successfully got the data to transfer to the respective Instrument Archive data folders that are accessible with new daily updates from GitHub. Congratulations, you have made tremendous progress.\nIn the next chapter, you will start learning how to modify the .qmd files to create individual webpages for each instruments QC data, and then how to combine them into an actual website.",
     "crumbs": [
       "Home",
-      "Building the Website"
+      "File Paths and R Scripts",
+      "Data Transfer"
     ]
   },
   {
-    "objectID": "InstrumentLayout.html#retrieving-data",
-    "href": "InstrumentLayout.html#retrieving-data",
-    "title": "Dashboard Overview",
-    "section": "Retrieving Data",
-    "text": "Retrieving Data\nHaving set up the file.path (MainFolder) and specified the particular instrument folder (“5L” in this case) the next two code blocks retrieve the data in the Gain and MFI .csv files, and then filter the data for the last twelve months. If you wanted to modify the time period shown, you would edit the code block at this point to increase/decrease the range.\n\nMFI_5L &lt;- Luciernaga:::CurrentData(x=\"5L\", MainFolder=MainFolder, type = \"MFI\")\nGain_5L &lt;- Luciernaga:::CurrentData(x=\"5L\", MainFolder=MainFolder, type = \"Gain\")\n\n\nWindowOfInterest &lt;- Sys.time() - months(12)\n\nMFI_5L &lt;- MFI_5L %&gt;% filter(DateTime &gt;= WindowOfInterest)\nGain_5L &lt;- Gain_5L %&gt;% filter(DateTime &gt;= WindowOfInterest)\n\nThe following code block references the .csv file containing Field-Service Engineer Visits, which are depicted as red vertical dashed lines in the .pdf version of the plots that can be exported.\n\nData &lt;- read.csv(\"AuroraMaintenance.csv\", check.names=FALSE)\n\nData &lt;- Data %&gt;% filter(!str_detect(reason, \"lean\"))\n\nRepair5L &lt;- Data %&gt;% filter(instrument %in% \"5L\")",
+    "objectID": "FutureDirections.html",
+    "href": "FutureDirections.html",
+    "title": "Conclusion",
+    "section": "",
+    "text": "Still Working On This Section, sorry! - David\n\nConclusion\nCongratulations, you have reached the end of this brief walkthrough of how we created our website/dashboards. We hope this has been helful and wish you success on your own modifications and tinkering.\nBelow are a miscellaneous collection of advanced topics and future directions that are not essential, but we have been working on integrating into our website, and some may want to incorporate as well.\nBest- David\n\n\nFuture Directions - Github Actions\nRendering locally takes computer time and computer space. Additionally, it means each instrument needs to bring in edited versions of the website locally every morning with their initial pull. We are currently working to set up a GitHub actions that would ensure the website portion remains only within the GitHub repository (not rendered or copied locally to each instrument taking up additional memory) but additionally render at a given time reducing the requirement to manually render and push the updated dashboard. This occurs thanks to cloud access available to GitHub repositories that are public, with a certain ammount of free server time allocated to each.\nThe reason not currently available, is that it is more complicated technically and I am busy writing. But more broadly, the cloud instance needs to install R and R packages needed to run everything each and every time. And the Luciernaga package is still MB heavy due to it being in testing phase and having a lot of .fcs files in it’s extdata folder. Consequently, an area that has promise, but not yet implemented, stay tuned. For now, we have set an additional taskschedule that runs on a local computer at 11 AM, triggers quarto render, and passes the resulting website to GitHub.",
     "crumbs": [
       "Home",
-      "Building the Website"
-    ]
-  },
-  {
-    "objectID": "InstrumentLayout.html#processing-the-data",
-    "href": "InstrumentLayout.html#processing-the-data",
-    "title": "Dashboard Overview",
-    "section": "Processing the Data",
-    "text": "Processing the Data\nThe next three code chunks are rather large, each representing three types of data that will make up the three columns seen on each instruments page (MFI, Gain, RCV). We will work through the first code chunk, which is MFI.\n\nx &lt;- MFI_5L\nx &lt;- x %&gt;% dplyr::filter(Timepoint %in% c(\"Before\", \"After\"))\nTheColumns &lt;- x %&gt;% select(where(~is.numeric(.)||is.integer(.))) %&gt;% colnames()\nTheColumns &lt;- setdiff(TheColumns, \"TIME\")\nTheIntermediate &lt;- TheColumns[!str_detect(TheColumns, \"Gain\")]\nTheColumnNames &lt;- TheIntermediate[str_detect(TheIntermediate, \"-A\")]\n  \nUltraVioletGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^UV\")]\nVioletGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^V\")]\nBlueGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^B\")]\nYellowGreenGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^YG\")]\nRedGains &lt;- TheColumnNames[str_detect(TheColumnNames, \"^R\")]\n\nScatterGains &lt;- TheIntermediate[str_detect(TheIntermediate, \"SC-\")]\nScatterGains &lt;- Luciernaga:::ScalePriority(ScatterGains)\nLaserGains &lt;- TheIntermediate[str_detect(TheIntermediate, \"Laser\")]\nLaserGains &lt;- Luciernaga:::ColorPriority(LaserGains)\nScalingGains &lt;- TheIntermediate[str_detect(TheIntermediate, \"Scaling\")]\nScalingGains &lt;- Luciernaga:::ColorPriority(ScalingGains)\nOtherGains &lt;- c(ScatterGains, LaserGains, ScalingGains)\n\nThe retrieved data for MFI goes through a couple processing steps to retrieve the column names present within the .csv file. From there it removes those that show Gain as they will be plotted along with RCV separately. Once this is done, it filters the column names by presence of string characters in their names to separate the list of colnames into shorter list based on laser, scatter, etc.\nAt this point, each of the above element is simply smaller list of column names, that will then be plotted and visualized together. This happens in the portion of the larger code chunk shown below, with the smaller list being provided to the MeasurementType arguments.\n\nUltraVioletPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=UltraVioletGains,\n                      plotType = \"comparison\", returntype = \"plots\",\n                      Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                      RepairVisits=Repair5L)\n\nVioletPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=VioletGains,\n                      plotType = \"comparison\", returntype = \"plots\",\n                      Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                      RepairVisits=Repair5L)\n\nBluePlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=BlueGains,\n                      plotType = \"comparison\", returntype = \"plots\",\n                      Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                      RepairVisits=Repair5L)\n\nYellowGreenPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=YellowGreenGains,\n                      plotType = \"comparison\", returntype = \"plots\",\n                      Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                      RepairVisits=Repair5L)\n\nRedPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=RedGains,\n                     plotType = \"comparison\", returntype = \"plots\",\n                     Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \"MFI\",\n                     RepairVisits=Repair5L)\n\nScatterPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=ScatterGains,\n                     plotType = \"comparison\", returntype = \"plots\",\n                     Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \" \",\n                     RepairVisits=Repair5L)\n\nLaserPlotsMFI &lt;- QC_Plots(x=x, FailedFlag=TRUE, MeasurementType=LaserGains,\n                     plotType = \"comparison\", returntype = \"plots\",\n                     Metadata=\"Timepoint\", strict = TRUE, YAxisLabel = \" \",\n                     RepairVisits=Repair5L)\n\nOnce this is done, each of the elements above contains a list of plots corresponding to the column names that were provided in the smaller list. These will be referenced later when building the dashboard in the desired layout.\nThis process is then repeated again in two large code chunks for both Gain and RCV, with some small differences in how the column names are separated into smaller list, and how the individual ggplots are generated.\nStarting on line 205 of Aurora5L.qmd we have the following code-chunk:\n\nPDFPlots &lt;- c(UltraVioletPlotsMFI, VioletPlotsMFI, BluePlotsMFI, YellowGreenPlotsMFI, RedPlotsMFI, LaserPlotsMFI, ScatterPlotsMFI, UltraVioletPlotsGain, VioletPlotsGain, BluePlotsGain, YellowGreenPlotsGain, RedPlotsGain, ScatterPlotsGain, LaserDelayPlotsGain, LaserPowerPlotsGain,  ScalingPlotsGain, UltraVioletPlotsRCV, VioletPlotsRCV, BluePlotsRCV, YellowGreenPlotsRCV, RedPlotsRCV, ScatterPlotsRCV)\n\nFilename &lt;- paste0(\"QCPlots_5L\")\n\nPDF &lt;- Utility_Patchwork(x=PDFPlots, filename=Filename, returntype=\"pdf\", outfolder=MainFolder, thecolumns=1)\n\nThis code chunk above assembled all the plots we generated in the section above, and saves them as the .pdf for the individual instrument that can be seen under the data tab of the dashboard website.",
-    "crumbs": [
-      "Home",
-      "Building the Website"
-    ]
-  },
-  {
-    "objectID": "InstrumentLayout.html#visualizing-the-data",
-    "href": "InstrumentLayout.html#visualizing-the-data",
-    "title": "Dashboard Overview",
-    "section": "Visualizing the Data",
-    "text": "Visualizing the Data\n\nMFI\nNow that the instrument data has been assembled into plots for the individual measurement types and lasers, it is time to display the plots in a way that produces the instrument page visible on the original dashboard website.\nAs mentioned at the beginning of this page, the orientation of this dashboard is set to columns. Consequently, on line 218 you will see the following “## MFI {.tabset}”. The two # designate the first column. All plots visualized until the next ## (“## Gain {.tabset}” in our case at line 345) will consequently be present within this first column.\nIf we desired to change the ordering MFI column last rather and first, we would move everything from “## MFI {.tabset}” until “## Gain {.tabset}” and shift to desired order position.\nThe presence of “{.tabset}” designates that within this colum (denoted by the ##), there will be multiple tab options to switch between. The first is seen in the following code-chunk:\n\nggplotly(UltraVioletPlotsMFI[[1]])\nggplotly(UltraVioletPlotsMFI[[2]])\n# etc...\n\nThe tab name visible on the website is denoted by the title: argument. Within the code block itself, the individual plots are made interactive using the plotly function ggplotly, calling the specific detector plot sequentially.\nThis is then repeated on the next tabs for Violet, Blue, Yellow-Green and Red detectors. Then Scatter, LaserPower, LaserDelay, LaserScatter plots are visualized in their respective tabs.\nFinally, marking the end of the first column we find a card element “{.card title=”MFI”}” that appears within the tabset at the end but contains no plots to serve as a reference of what the first column plots are showing.\n\n\nGain and rCV\nAbove we walked through the process of displaying the MFI plots generated in the first section within tabsets for individual lasers. At line 345, we encounter “## Gain {.tabset}” which designates the second column of the dashboard, containing tabs for the Gain plots by laser. The overall layout is similar to what we encountered, differing here and there based on additional plots present within it’s respective archive .csv but not found in the bead csv MFI derrived from.\nAfter all the Gain plots are plotted, we encounter the third column “## RCV {.tabset}” at line 472, continuing until the end.",
-    "crumbs": [
-      "Home",
-      "Building the Website"
-    ]
-  },
-  {
-    "objectID": "InstrumentLayout.html#summary",
-    "href": "InstrumentLayout.html#summary",
-    "title": "Dashboard Overview",
-    "section": "Summary",
-    "text": "Summary\nThe individual instrument .qmd file is setup to retrieve the instrument specific archive data and filter for a desired time range. Once this is done, the individual column names in the .csv are identified and split on the basis of characters in their names into smaller list (typically by laser). This process is then repeated for each measurement type (MFI, Gain, RCV). For the assembly of the actual dashboard itself, the ordering of the measurement type columns is denoted by the ## as encountered, with the tab-sets within each of these also displayed by the order encountered. By rearranging the order, modifications to the individual instrument dashboard pages can be customized.\nIf you have multiple instruments, you would modify each instruments .qmd file in a similar way to ensure the correct archive data folder is being referenced, and then customize which plots you want displayed when and where.",
-    "crumbs": [
-      "Home",
-      "Building the Website"
+      "Advanced Topics"
     ]
   },
   {
@@ -334,7 +346,7 @@
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
@@ -346,7 +358,7 @@
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
@@ -358,7 +370,7 @@
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
@@ -370,7 +382,7 @@
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
@@ -382,7 +394,7 @@
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
@@ -394,7 +406,7 @@
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
@@ -406,19 +418,19 @@
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
-    "objectID": "filepaths.html#daily-qc-files",
-    "href": "filepaths.html#daily-qc-files",
+    "objectID": "filepaths.html#daily-qc-.csv-files",
+    "href": "filepaths.html#daily-qc-.csv-files",
     "title": "File Paths",
-    "section": "Daily QC Files",
-    "text": "Daily QC Files\nLet’s navigate into the folder “Setup”\n\n\n\n\n\nThe file.path for this location would resemble the following:\n\nSetupFolderPath &lt;- file.path(PathToTheFolderOfInterest, \"Setup\")\nSetupFolderPath\n\n[1] \"C:/CytekbioExport/Setup\"\n\n\nIt is within this folder that the DailyQC reports are stored as .csv files. Opening them, we can see they contain a lot of the same data we can see in the Daily report. Explanation of the individual elements is beyond the scope of this current tutorial, but the majority of this data gets extracted and utilized for the dashboard in various ways for the Gain and RCV plots.\nUnfortunately, these .csv does not follow a “tidy” format (having gaps in spaces and rows rather than equally filled rectangular space). Consequently, a bunch of functions in the Luciernaga R package are used to process the data behind the scenes until it is returned in a “tidy” format that R can work with (these can later be downloaded from the Data tab on the dashboard).\nThis file.path (SetupFolderPath) is the one we will need to provide to the Instrument.R file so that it knows where to find the new DailyQC.csv files to allow them to be copied to the respective InstrumentQC Instrument Folder for further processing. Make a note of this file path before continuing.",
+    "section": "Daily QC .csv Files",
+    "text": "Daily QC .csv Files\nLet’s navigate into the folder “Setup”\n\n\n\n\n\nThe file.path for this location would resemble the following:\n\nSetupFolderPath &lt;- file.path(PathToTheFolderOfInterest, \"Setup\")\nSetupFolderPath\n\n[1] \"C:/CytekbioExport/Setup\"\n\n\nIt is within this folder that the DailyQC reports are stored as .csv files. Opening them, we can see they contain a lot of the same data we can see in the Daily report. Explanation of the individual elements is beyond the scope of this current tutorial, but the majority of this data gets extracted and utilized for the dashboard in various ways for the Gain and RCV plots.\nUnfortunately, these .csv does not follow a “tidy” format (having gaps in spaces and rows rather than equally filled rectangular space). Consequently, a bunch of functions in the Luciernaga R package are used to process the data behind the scenes until it is returned in a “tidy” format that R can work with (these can later be downloaded from the Data tab on the dashboard).\nThis file.path (SetupFolderPath) is the one we will need to provide to the Instrument.R file so that it knows where to find the new DailyQC.csv files to allow them to be copied to the respective InstrumentQC Instrument Folder for further processing. Make a note of this file path before continuing.",
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
@@ -426,23 +438,23 @@
     "href": "filepaths.html#spectroflo-qc-fcs-files",
     "title": "File Paths",
     "section": "SpectroFlo QC FCS Files",
-    "text": "SpectroFlo QC FCS Files\nIf we are relying on the .fcs files acquired during the process of DailyQC, we would navigate from this folder down one additional level.\n\nQCFCSFilePath &lt;- file.path(SetupFolderPath, \"DailyQC\")\nQCFCSFilePath\n\n[1] \"C:/CytekbioExport/Setup/DailyQC\"\n\n\nIt is here where we find the DailyQCDataSample .fcs files.\n\n\n\n\n\n\n\n\n\n\nWe would consequently provide this file.path to the Rscript to provision the files needed to calculate the MFI parameters.",
+    "text": "SpectroFlo QC FCS Files\nIn SpectroFlo, Daily QC produces a single .fcs file that can be processed to monitor changes in MFI. These .fcs files can be found within the Setup folder inside the DailyQC folder.\n\n\n\n\n\n\n\n\n\n\nTherefore, to use them, we would need to modify the file.path to include this additional folder when modifying the Instrument.R script to find the .fcs files.\n\nQCFCSFilePath &lt;- file.path(SetupFolderPath, \"DailyQC\")\nQCFCSFilePath\n\n[1] \"C:/CytekbioExport/Setup/DailyQC\"",
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   },
   {
-    "objectID": "filepaths.html#bead-fcs-files-system",
-    "href": "filepaths.html#bead-fcs-files-system",
+    "objectID": "filepaths.html#other-qccst-bead-fcs-files",
+    "href": "filepaths.html#other-qccst-bead-fcs-files",
     "title": "File Paths",
-    "section": "Bead FCS Files (System)",
-    "text": "Bead FCS Files (System)\nAt our institution, we separately using the the same QC beads used for Daily QC a 3000 bead before and after .fcs sample to compare the changes in MFI after the QC has adjusted. Within SpectroFlo, these are acquired under the Admin account, organized within an experiment corresponding to the month. As a result, these are stored with the other .fcs files acquired by all users that exist within SpectroFlo folder while they wait to be exported as zipped folders.\nBecause this can take up quite a bit of memory space in context of a core facility, for our particular SpectroFlo setup, these folders are found under an external hard-drive.\nWe would consequently start exploring the folders (and setting up a file.path) like this:\n\nExternal &lt;- file.path(\"D:\")\nExternal\n\n[1] \"D:\"\n\n\n\n\n\n\n\n\nFCSFiles &lt;- file.path(External, \"Aurora 5 FCS_Files\")\nFCSFiles\n\n[1] \"D:/Aurora 5 FCS_Files\"\n\n\n\n\n\n\n\n\nExperiments &lt;- file.path(FCSFiles, \"Experiments\")\nExperiments\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments\"\n\n\n\n\n\n\n\n\nAdmin &lt;- file.path(Experiments, \"Admin\")\nAdmin\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments/Admin\"\n\n\n And finally, the important thing is to note the structure that each experiment file name takes. In our case for this instrument, the folders are set to QC_2024-11. When we are having the Rscript find the new QC files for the given day, it calls the function System.time to return the date and time. These are broken into month and day.\n\nSys.time()\n\n[1] \"2025-02-13 21:01:09 EST\"\n\n\nConsequently, at the level of this folder, it would look for a folder named “QC_2024-” with the corresponding month provided by Sys.time call. R recognizes character strings exactly in this case, so if you had a name mismatch (ex. “QC 2024-” or “QC_2024_”) it would fail to find the correct folder and search the contents within. So this is an area to be aware of and adjust the code accordingly for how you structure the name.",
+    "section": "Other QC/CST Bead FCS Files",
+    "text": "Other QC/CST Bead FCS Files\nFor our institution, separate from the SpectroFlo DailyQC .fcs files, we acquire 3000 events of the same QC beads before and after running DailyQC to provide additional information about the changes in MFI resulting from DailyQC.\nThese are acquired within a SpectroFlo under either the Admin or Core account, in a single experiment for a given month, which the before and after .fcs files organized as individual tubes. Consequently, these .fcs files are stored in the same folder where other users experiments and data are also stored before they are exported as zipped folders. At our core, due to lack of memory space on the C: drive, these folders can be found on a large external hard drive.\nConsequently, if we want to provide these files to R for processing, we need to adjust the file.path, and provide a mechanism to identify the folder based on the given month/day.\nLet’s start looking in the External Hard Drive and build out the file.path:\n\nExternal &lt;- file.path(\"D:\")\nExternal\n\n[1] \"D:\"\n\n\n\n\n\n\n\n\nFCSFiles &lt;- file.path(External, \"Aurora 5 FCS_Files\")\nFCSFiles\n\n[1] \"D:/Aurora 5 FCS_Files\"\n\n\n\n\n\n\n\n\nExperiments &lt;- file.path(FCSFiles, \"Experiments\")\nExperiments\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments\"\n\n\nAt this point, we are in the experiments folder and can see the folders for all the respective users. Since the Admin account was used for this instrument for the acquisition of the before/after QC .fcs files, let’s navigate into this folder:\n\n\n\n\n\n\nAdmin &lt;- file.path(Experiments, \"Admin\")\nAdmin\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments/Admin\"\n\n\n\n\n\n\n\nAs you can see, these folders correspond to the individual experiment file names. We take care in making sure they are named consistently to allow for the Instrument.R script to recognize the correct folder containing that months data from the file name.\nFor example, let’s say its currently November of 2024. The Instrument.R script will need to identify this folder and check inside for newly acquired .fcs files for the given day. Within the code, the function System.time gets called to return the date and time.\n\nCurrentTime &lt;- Sys.time()\nCurrentTime\n\n[1] \"2025-02-13 21:39:03 EST\"\n\n\nFrom this information, we can break down the return value into Month, Date, and Time. In a simplified example, this can be used to generate the folder name, that can then be added to the file.path allowing the Rscript to find the correct folder for that given month.\n\nYear &lt;- lubridate::year(CurrentTime)\nMonth &lt;- lubridate::month(CurrentTime)\nDay &lt;- lubridate::day(CurrentTime)\n\nThisFolder &lt;- paste0(\"QC_\", Year, \"-0\", Month)\nThisFolder\n\n[1] \"QC_2025-02\"\n\n\n\nFindTodaysBeforeAfterFCSFilesHere &lt;- file.path(Admin, ThisFolder)\nFindTodaysBeforeAfterFCSFilesHere\n\n[1] \"D:/Aurora 5 FCS_Files/Experiments/Admin/QC_2025-02\"\n\n\nWhile simplified (actual code handles exceptions) you can see how a misnamed experiment name could break the Instrument.R script from finding the correct folder, let’s say for example the scrupt was looking for “QC_2024-04” but instead the experiment is saved as “QC 2020 04”. It would look for that folder, not find anything, and therefore, not copy any fcs files over to the InstrumentQC Instrument folder for processing.\nThis is a good thing to be aware of generally, and adjust the code as necessary to match the structure of your experiment folder names.",
     "crumbs": [
       "Home",
       "File Paths and R Scripts",
-      "Setting File Paths"
+      "Finding File Paths"
     ]
   }
 ]

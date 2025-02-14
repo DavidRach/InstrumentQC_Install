@@ -1,0 +1,31 @@
+---
+toc: TRUE
+---
+
+Still working on this one, sorry - David
+
+# Making Modifications
+
+start with the easiest file.path, we need to find the location you saved the InstrumentQC project to when you downloaded it from Github via Rstudio (recall the browse button to see where it was saved).
+
+Within the InstrumentQC folder, the first level contains the individual R scripts and .qmd files for each instrument, as well as additional files needed for the automation, and dashboard assembly. Below this level, there is a data folder containing folders for the individual instruments. Below this level, are folders containing the archive data folders where processed data is stored after processing and updated with new data daily. 
+
+On first install, modify the names of the folders for your individual instruments, and navigate into the archive folders for the renamed instruments and delete the forked version of the data. These archive data files will be replaced by those of your own instrument after the initial processing. 
+
+Next, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.
+
+Now, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed).
+
+Once complete, you should see the processed data is now present within the Archive folder.
+
+Open up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.
+
+Once done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being.
+
+# Processing Existing Data
+
+Alright, let's see if you set the file.paths correctly and process the existing data into an Archive .csv file!
+
+... Drumroll ...
+
+

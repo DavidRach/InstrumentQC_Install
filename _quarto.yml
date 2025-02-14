@@ -33,8 +33,10 @@ website:
       contents:
       - text: "Pieces of a Bigger Picture"
         href: repositoryelements.qmd
-      - text: "Setting File Paths"
+      - text: "Finding File Paths"
         href: filepaths.qmd
+      - text: "Making Changes"
+        href: MakingChanges.qmd
       - text: "Data Transfer"
         href: Automation.qmd
     - section: "Building the Website"

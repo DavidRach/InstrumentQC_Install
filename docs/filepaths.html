@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Automation.html" rel="next">
+<link href="./MakingChanges.html" rel="next">
 <link href="./repositoryelements.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -149,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./repositoryelements.html">File Paths and R Scripts</a></li><li class="breadcrumb-item"><a href="./filepaths.html">Setting File Paths</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./repositoryelements.html">File Paths and R Scripts</a></li><li class="breadcrumb-item"><a href="./filepaths.html">Finding File Paths</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -216,7 +216,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./filepaths.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Setting File Paths</span></a>
+ <span class="menu-text">Finding File Paths</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./MakingChanges.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Making Changes</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -291,11 +297,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#providing-spectroflo-folder-file.paths" id="toc-providing-spectroflo-folder-file.paths" class="nav-link" data-scroll-target="#providing-spectroflo-folder-file.paths">Providing SpectroFlo folder file.paths</a>
   <ul class="collapse">
   <li><a href="#overall-folder-structure" id="toc-overall-folder-structure" class="nav-link" data-scroll-target="#overall-folder-structure">Overall Folder Structure</a></li>
-  <li><a href="#daily-qc-files" id="toc-daily-qc-files" class="nav-link" data-scroll-target="#daily-qc-files">Daily QC Files</a></li>
+  <li><a href="#daily-qc-.csv-files" id="toc-daily-qc-.csv-files" class="nav-link" data-scroll-target="#daily-qc-.csv-files">Daily QC .csv Files</a></li>
   <li><a href="#spectroflo-qc-fcs-files" id="toc-spectroflo-qc-fcs-files" class="nav-link" data-scroll-target="#spectroflo-qc-fcs-files">SpectroFlo QC FCS Files</a></li>
-  <li><a href="#bead-fcs-files-system" id="toc-bead-fcs-files-system" class="nav-link" data-scroll-target="#bead-fcs-files-system">Bead FCS Files (System)</a></li>
+  <li><a href="#other-qccst-bead-fcs-files" id="toc-other-qccst-bead-fcs-files" class="nav-link" data-scroll-target="#other-qccst-bead-fcs-files">Other QC/CST Bead FCS Files</a></li>
   </ul></li>
-  <li><a href="#making-the-modifications" id="toc-making-the-modifications" class="nav-link" data-scroll-target="#making-the-modifications">Making the Modifications</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-up</a></li>
   </ul>
 </nav>
     </div>
@@ -455,8 +461,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can see in this case that we have folders for Experiments, FCSFiles and Setup. We additionally see files corresponding to the ApplicationLog, SetupEngineLog, AppLoginLog and ExperimentUnmixingLog that track various activity previously carried out in SpectroFlo.</p>
 </section>
-<section id="daily-qc-files" class="level2">
-<h2 class="anchored" data-anchor-id="daily-qc-files">Daily QC Files</h2>
+<section id="daily-qc-.csv-files" class="level2">
+<h2 class="anchored" data-anchor-id="daily-qc-.csv-files">Daily QC .csv Files</h2>
 <p>Let’s navigate into the folder “Setup”</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -477,15 +483,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="spectroflo-qc-fcs-files" class="level2">
 <h2 class="anchored" data-anchor-id="spectroflo-qc-fcs-files">SpectroFlo QC FCS Files</h2>
-<p>If we are relying on the .fcs files acquired during the process of DailyQC, we would navigate from this folder down one additional level.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(SetupFolderPath, <span class="st">"DailyQC"</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/CytekbioExport/Setup/DailyQC"</code></pre>
-</div>
-</div>
-<p>It is here where we find the DailyQCDataSample .fcs files.</p>
+<p>In SpectroFlo, Daily QC produces a single .fcs file that can be processed to monitor changes in MFI. These .fcs files can be found within the Setup folder inside the DailyQC folder.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/05_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
@@ -496,13 +494,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/06_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>We would consequently provide this file.path to the Rscript to provision the files needed to calculate the MFI parameters.</p>
+<p>Therefore, to use them, we would need to modify the file.path to include this additional folder when modifying the Instrument.R script to find the .fcs files.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(SetupFolderPath, <span class="st">"DailyQC"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/CytekbioExport/Setup/DailyQC"</code></pre>
+</div>
+</div>
 </section>
-<section id="bead-fcs-files-system" class="level2">
-<h2 class="anchored" data-anchor-id="bead-fcs-files-system">Bead FCS Files (System)</h2>
-<p>At our institution, we separately using the the same QC beads used for Daily QC a 3000 bead before and after .fcs sample to compare the changes in MFI after the QC has adjusted. Within SpectroFlo, these are acquired under the Admin account, organized within an experiment corresponding to the month. As a result, these are stored with the other .fcs files acquired by all users that exist within SpectroFlo folder while they wait to be exported as zipped folders.</p>
-<p>Because this can take up quite a bit of memory space in context of a core facility, for our particular SpectroFlo setup, these folders are found under an external hard-drive.</p>
-<p>We would consequently start exploring the folders (and setting up a file.path) like this:</p>
+<section id="other-qccst-bead-fcs-files" class="level2">
+<h2 class="anchored" data-anchor-id="other-qccst-bead-fcs-files">Other QC/CST Bead FCS Files</h2>
+<p>For our institution, separate from the SpectroFlo DailyQC .fcs files, we acquire 3000 events of the same QC beads before and after running DailyQC to provide additional information about the changes in MFI resulting from DailyQC.</p>
+<p>These are acquired within a SpectroFlo under either the Admin or Core account, in a single experiment for a given month, which the before and after .fcs files organized as individual tubes. Consequently, these .fcs files are stored in the same folder where other users experiments and data are also stored before they are exported as zipped folders. At our core, due to lack of memory space on the C: drive, these folders can be found on a large external hard drive.</p>
+<p>Consequently, if we want to provide these files to R for processing, we need to adjust the file.path, and provide a mechanism to identify the folder based on the given month/day.</p>
+<p>Let’s start looking in the External Hard Drive and build out the file.path:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>External <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"D:"</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>External</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -534,6 +540,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "D:/Aurora 5 FCS_Files/Experiments"</code></pre>
 </div>
 </div>
+<p>At this point, we are in the experiments folder and can see the folders for all the respective users. Since the Admin account was used for this instrument for the acquisition of the before/after QC .fcs files, let’s navigate into this folder:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/03_BeadsFile.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
@@ -546,26 +553,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "D:/Aurora 5 FCS_Files/Experiments/Admin"</code></pre>
 </div>
 </div>
-<p><img src="images/04_BeadsFile.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> And finally, the important thing is to note the structure that each experiment file name takes. In our case for this instrument, the folders are set to QC_2024-11. When we are having the Rscript find the new QC files for the given day, it calls the function System.time to return the date and time. These are broken into month and day.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/04_BeadsFile.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>As you can see, these folders correspond to the individual experiment file names. We take care in making sure they are named consistently to allow for the Instrument.R script to recognize the correct folder containing that months data from the file name.</p>
+<p>For example, let’s say its currently November of 2024. The Instrument.R script will need to identify this folder and check inside for newly acquired .fcs files for the given day. Within the code, the function System.time gets called to return the date and time.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>CurrentTime <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>CurrentTime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-02-13 21:01:09 EST"</code></pre>
+<pre><code>[1] "2025-02-13 21:39:03 EST"</code></pre>
 </div>
 </div>
-<p>Consequently, at the level of this folder, it would look for a folder named “QC_2024-” with the corresponding month provided by Sys.time call. R recognizes character strings exactly in this case, so if you had a name mismatch (ex. “QC 2024-” or “QC_2024_”) it would fail to find the correct folder and search the contents within. So this is an area to be aware of and adjust the code accordingly for how you structure the name.</p>
+<p>From this information, we can break down the return value into Month, Date, and Time. In a simplified example, this can be used to generate the folder name, that can then be added to the file.path allowing the Rscript to find the correct folder for that given month.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>Year <span class="ot">&lt;-</span> lubridate<span class="sc">::</span><span class="fu">year</span>(CurrentTime)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>Month <span class="ot">&lt;-</span> lubridate<span class="sc">::</span><span class="fu">month</span>(CurrentTime)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>Day <span class="ot">&lt;-</span> lubridate<span class="sc">::</span><span class="fu">day</span>(CurrentTime)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>ThisFolder <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"QC_"</span>, Year, <span class="st">"-0"</span>, Month)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>ThisFolder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "QC_2025-02"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>FindTodaysBeforeAfterFCSFilesHere <span class="ot">&lt;-</span> <span class="fu">file.path</span>(Admin, ThisFolder)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>FindTodaysBeforeAfterFCSFilesHere</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "D:/Aurora 5 FCS_Files/Experiments/Admin/QC_2025-02"</code></pre>
+</div>
+</div>
+<p>While simplified (actual code handles exceptions) you can see how a misnamed experiment name could break the Instrument.R script from finding the correct folder, let’s say for example the scrupt was looking for “QC_2024-04” but instead the experiment is saved as “QC 2020 04”. It would look for that folder, not find anything, and therefore, not copy any fcs files over to the InstrumentQC Instrument folder for processing.</p>
+<p>This is a good thing to be aware of generally, and adjust the code as necessary to match the structure of your experiment folder names.</p>
 </section>
 </section>
-<section id="making-the-modifications" class="level1">
-<h1>Making the Modifications</h1>
-<p>start with the easiest file.path, we need to find the location you saved the InstrumentQC project to when you downloaded it from Github via Rstudio (recall the browse button to see where it was saved).</p>
-<p>Within the InstrumentQC folder, the first level contains the individual R scripts and .qmd files for each instrument, as well as additional files needed for the automation, and dashboard assembly. Below this level, there is a data folder containing folders for the individual instruments. Below this level, are folders containing the archive data folders where processed data is stored after processing and updated with new data daily.</p>
-<p>On first install, modify the names of the folders for your individual instruments, and navigate into the archive folders for the renamed instruments and delete the forked version of the data. These archive data files will be replaced by those of your own instrument after the initial processing.</p>
-<p>Next, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.</p>
-<p>Now, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed).</p>
-<p>Once complete, you should see the processed data is now present within the Archive folder.</p>
-<p>Open up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.</p>
-<p>Once done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being.</p>
+<section id="wrap-up" class="level1">
+<h1>Wrap-up</h1>
+<p>We have now discussed file.paths extensively, and have identified the main filepaths to important folders we will need to have to modify the various Instrument.R, Instrument.qmd, and eventually the automated task schedules. We will edit the main ones in the next article, and hopefully process your existing data into an Archive .csv file that you can start using.</p>
 
 
 </section>
@@ -998,8 +1025,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Automation.html" class="pagination-link" aria-label="Data Transfer">
-        <span class="nav-page-text">Data Transfer</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./MakingChanges.html" class="pagination-link" aria-label="Making Changes">
+        <span class="nav-page-text">Making Changes</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

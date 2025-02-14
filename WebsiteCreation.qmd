@@ -2,6 +2,8 @@
 toc: true
 ---
 
+Still Working On This Section, sorry! - David
+
 # Rendering the Dashboard
 
 Regardless whether you implemtent the manual, automated or hybrid approach, you will end up with the updated QC data from each instrument present on the GitHub repository. These changes are tracked by git as part of version control. We previously discussed the individual instrument pages designated by their .qmd files, but we need to discuss the home/summary index.qmd page that combines all the data sources. 

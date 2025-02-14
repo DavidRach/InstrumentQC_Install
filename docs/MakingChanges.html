@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>repositoryelements – InstrumentQC: How did you do this?</title>
+<title>makingchanges – InstrumentQC: How did you do this?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./filepaths.html" rel="next">
-<link href="./rpackages.html" rel="prev">
+<link href="./Automation.html" rel="next">
+<link href="./filepaths.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./repositoryelements.html">File Paths and R Scripts</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./repositoryelements.html">File Paths and R Scripts</a></li><li class="breadcrumb-item"><a href="./MakingChanges.html">Making Changes</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -166,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./repositoryelements.html" class="sidebar-item-text sidebar-link active">
+            <a href="./repositoryelements.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">File Paths and R Scripts</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -175,7 +175,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repositoryelements.html" class="sidebar-item-text sidebar-link active">
+  <a href="./repositoryelements.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pieces of a Bigger Picture</span></a>
   </div>
 </li>
@@ -187,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./MakingChanges.html" class="sidebar-item-text sidebar-link">
+  <a href="./MakingChanges.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Making Changes</span></a>
   </div>
 </li>
@@ -249,14 +249,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#repository-elements" id="toc-repository-elements" class="nav-link" data-scroll-target="#repository-elements">Repository elements</a>
-  <ul class="collapse">
-  <li><a href="#qmd-files" id="toc-qmd-files" class="nav-link" data-scroll-target="#qmd-files">qmd files</a></li>
-  <li><a href="#r-files" id="toc-r-files" class="nav-link" data-scroll-target="#r-files">R files</a></li>
-  <li><a href="#individual-instrument-folders" id="toc-individual-instrument-folders" class="nav-link" data-scroll-target="#individual-instrument-folders">Individual Instrument Folders</a></li>
-  <li><a href="#further-considerations" id="toc-further-considerations" class="nav-link" data-scroll-target="#further-considerations">Further considerations</a></li>
-  </ul></li>
+  <li><a href="#making-modifications" id="toc-making-modifications" class="nav-link active" data-scroll-target="#making-modifications">Making Modifications</a></li>
+  <li><a href="#processing-existing-data" id="toc-processing-existing-data" class="nav-link" data-scroll-target="#processing-existing-data">Processing Existing Data</a></li>
   </ul>
 </nav>
     </div>
@@ -266,44 +260,24 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>In the previous section, we installed the required software, set up the Git permissions for the individual local computers needed for Rstudio and GitHub to communicate and pass along updated files stored locally to your remote repository, and made sure the required R packages were installed.</p>
-<p>In this section, we will now start to modify existing R code originally configured for the the UMGCC flow core computers and adapt it for your setup. This involves first understanding the individual components that are present within the InstrumentQC repository and their purpose. Afterwards, we will identify and change file.paths within the individual .R scripts and .qmd files to find the newly acquired QC .fcs files (and DailyQC report .csv files for Cytek instruments) in their respective folders on your local computers.</p>
+<p>Still working on this one, sorry - David</p>
+<section id="making-modifications" class="level1">
+<h1>Making Modifications</h1>
+<p>start with the easiest file.path, we need to find the location you saved the InstrumentQC project to when you downloaded it from Github via Rstudio (recall the browse button to see where it was saved).</p>
+<p>Within the InstrumentQC folder, the first level contains the individual R scripts and .qmd files for each instrument, as well as additional files needed for the automation, and dashboard assembly. Below this level, there is a data folder containing folders for the individual instruments. Below this level, are folders containing the archive data folders where processed data is stored after processing and updated with new data daily.</p>
+<p>On first install, modify the names of the folders for your individual instruments, and navigate into the archive folders for the renamed instruments and delete the forked version of the data. These archive data files will be replaced by those of your own instrument after the initial processing.</p>
+<p>Next, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.</p>
+<p>Now, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed).</p>
+<p>Once complete, you should see the processed data is now present within the Archive folder.</p>
+<p>Open up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.</p>
+<p>Once done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being.</p>
 </section>
-<section id="repository-elements" class="level1">
-<h1>Repository elements</h1>
-<p>Before we start finding file.paths and modifying lines of code, let’s examine the files immediately visible when we first open the forked InstrumentQC repository folder. To do this navigate in FileExplorer to the location you saved the forked repository (we suggested Documents). When you find it, double click to open the folder, and arrange by name. When viewed alphabetically, we see something resembling the following</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/01_Structure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<section id="qmd-files" class="level2">
-<h2 class="anchored" data-anchor-id="qmd-files">qmd files</h2>
-<p>Within the files currently visible, we have individual files that are named after invidual instruments (Aurora3L, Aurora4L, Aurora5L, AuroraCS, LSRII, Aria, Canto). Those that have a .qmd ending contain both text and code segments that together produce a website page. For example, when the Aurora5L.qmd document gets processed into .html, it forms the <a href="https://umgccfcss.github.io/InstrumentQC/Aurora5L.html">following</a> webpage. By contrast, when the LSRII.qmd document gets processed into .html, it forms its own <a href="https://umgccfcss.github.io/InstrumentQC/LSRII.html">webpage</a>.</p>
-<p>Each Instrument.qmd file, by combining and rearranging individual building code block elements within, allows for extensive modification to account for for the differences for the various instruments (number of lasers, detector configuration and parameters) that can be seen on their respective webpages. We will examine these .qmd files and their individual elements at greater depth in the <a href="./InstrumentLayout.html">Instrument Layout</a> section.</p>
-</section>
-<section id="r-files" class="level2">
-<h2 class="anchored" data-anchor-id="r-files">R files</h2>
-<p>Continuing scrolling down, we can identify another repeating element set of files (TheScript_3L, TheScript_4L, TheScript_5L, TheScript_CS) that end in .R.</p>
-<p>These are .R files, and they contain only R code. In this context, they work as scripts, containing sets of instructions to find the correct storage folder, identify any new data, process it, and save it to individual instruments Archive data folder. Our first modification of file.paths will occur within these Script files.</p>
-</section>
-<section id="individual-instrument-folders" class="level2">
-<h2 class="anchored" data-anchor-id="individual-instrument-folders">Individual Instrument Folders</h2>
-<p>We will touch on the other files present within this initial view later on. Before moving to adjust the file paths, go ahead and double click on the data folder. Within this folder, you can see individual folders corresponding to the individual instruments, as well as some of the .pdf and .csv files. Go ahead and double click on the 5L folder.</p>
-<p>At this point, you see nothing but an Archive folder. If however, you were to look in the middle of the processing step, you would see a bunch of .csv and .fcs files also present, since this folder is where the individual computer copies all identified newly acquired files before they are processed. Once they are successfully processed, their data gets copied to the .csv files found within the Archive folder. Once this has been done successfully, the copies of the unprocessed data located in this folder get deleted, leaving only the Archive folder with the processed data present.</p>
-</section>
-<section id="further-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="further-considerations">Further considerations</h2>
-<p>Now that you have an initial idea of the contents of the repository, you can start to prepare a to-do list for changes that you will need to carry out for adapting the existing project to your own instruments.</p>
-<p>If you have only a single cytometer, you will only need a single Instrument.R, Instrument.qmd and Instrument folder to process and store the data, and ultimately generate a single tab webpage.</p>
-<p>If you have 8 instruments, you would need to add those three elements for each one of them, modifying the names accordingly.</p>
-<p>And for each instrument, the file.path arguments will need to direct the computer to find the newly acquired QC data in the correct folder location on those computers, and then pass it to the corresponding Instrument folder so that it can be processed.</p>
-<p>If this sounds confusing, do not worry, we will go through these indivual elements in the process of adjusting the file.paths.</p>
+<section id="processing-existing-data" class="level1">
+<h1>Processing Existing Data</h1>
+<p>Alright, let’s see if you set the file.paths correctly and process the existing data into an Archive .csv file!</p>
+<p>… Drumroll …</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -729,13 +703,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rpackages.html" class="pagination-link" aria-label="Installing R packages">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Installing R packages</span>
+      <a href="./filepaths.html" class="pagination-link" aria-label="Finding File Paths">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Finding File Paths</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./filepaths.html" class="pagination-link" aria-label="Finding File Paths">
-        <span class="nav-page-text">Finding File Paths</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Automation.html" class="pagination-link" aria-label="Data Transfer">
+        <span class="nav-page-text">Data Transfer</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

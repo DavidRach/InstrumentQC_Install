@@ -147,7 +147,7 @@ Let's go ahead and double click and see what is inside the folder:
 
 We can see in this case that we have folders for Experiments, FCSFiles and Setup. We additionally see files corresponding to the ApplicationLog, SetupEngineLog, AppLoginLog and ExperimentUnmixingLog that track various activity previously carried out in SpectroFlo.
 
-## Daily QC Files
+## Daily QC .csv Files
 Let's navigate into the folder "Setup"
 
 ![](images/04_FilePaths.png){fig-align="center" width="600"}
@@ -167,28 +167,28 @@ This file.path (SetupFolderPath) is the one we will need to provide to the Instr
 
 ## SpectroFlo QC FCS Files
 
-If we are relying on the .fcs files acquired during the process of DailyQC, we would navigate from this folder down one additional level.
+In SpectroFlo, Daily QC produces a single .fcs file that can be processed to monitor changes in MFI. These .fcs files can be found within the Setup folder inside the DailyQC folder.
+
+![](images/05_FilePaths.png){fig-align="center" width="600"}
+
+![](images/06_FilePaths.png){fig-align="center" width="600"}
+
+Therefore, to use them, we would need to modify the file.path to include this additional folder when modifying the Instrument.R script to find the .fcs files. 
 
 ```{r}
 QCFCSFilePath <- file.path(SetupFolderPath, "DailyQC")
 QCFCSFilePath
 ```
 
-It is here where we find the DailyQCDataSample .fcs files. 
+## Other QC/CST Bead FCS Files
 
-![](images/05_FilePaths.png){fig-align="center" width="600"}
+For our institution, separate from the SpectroFlo DailyQC .fcs files, we acquire 3000 events of the same QC beads before and after running DailyQC to provide additional information about the changes in MFI resulting from DailyQC.  
 
-![](images/06_FilePaths.png){fig-align="center" width="600"}
+These are acquired within a SpectroFlo under either the Admin or Core account, in a single experiment for a given month, which the before and after .fcs files organized as individual tubes. Consequently, these .fcs files are stored in the same folder where other users experiments and data are also stored before they are exported as zipped folders. At our core, due to lack of memory space on the C: drive, these folders can be found on a large external hard drive.  
 
-We would consequently provide this file.path to the Rscript to provision the files needed to calculate the MFI parameters.
+Consequently, if we want to provide these files to R for processing, we need to adjust the file.path, and provide a mechanism to identify the folder based on the given month/day. 
 
-## Bead FCS Files (System)
-
-At our institution, we separately using the the same QC beads used for Daily QC a 3000 bead before and after .fcs sample to compare the changes in MFI after the QC has adjusted. Within SpectroFlo, these are acquired under the Admin account, organized within an experiment corresponding to the month. As a result, these are stored with the other .fcs files acquired by all users that exist within SpectroFlo folder while they wait to be exported as zipped folders. 
-
-Because this can take up quite a bit of memory space in context of a core facility, for our particular SpectroFlo setup, these folders are found under an external hard-drive. 
-
-We would consequently start exploring the folders (and setting up a file.path) like this:
+Let's start looking in the External Hard Drive and build out the file.path:
 
 ```{r}
 External <- file.path("D:")
@@ -209,6 +209,8 @@ Experiments <- file.path(FCSFiles, "Experiments")
 Experiments
 ```
 
+At this point, we are in the experiments folder and can see the folders for all the respective users. Since the Admin account was used for this instrument for the acquisition of the before/after QC .fcs files, let's navigate into this folder:
+
 ![](images/03_BeadsFile.png){fig-align="center" width="600"}
 
 ```{r}
@@ -217,35 +219,36 @@ Admin
 ```
 
 ![](images/04_BeadsFile.png){fig-align="center" width="600"}
-And finally, the important thing is to note the structure that each experiment file name takes. In our case for this instrument, the folders are set to QC_2024-11. When we are having the Rscript find the new QC files for the given day, it calls the function System.time to return the date and time. These are broken into month and day. 
+
+As you can see, these folders correspond to the individual experiment file names. We take care in making sure they are named consistently to allow for the Instrument.R script to recognize the correct folder containing that months data from the file name.
+
+For example, let's say its currently November of 2024. The Instrument.R script will need to identify this folder and check inside for newly acquired .fcs files for the given day. Within the code,  the function System.time gets called to return the date and time. 
 
 ```{r}
-Sys.time()
+CurrentTime <- Sys.time()
+CurrentTime
 ```
-Consequently, at the level of this folder, it would look for a folder named "QC_2024-" with the corresponding month provided by Sys.time call. R recognizes character strings exactly in this case, so if you had a name mismatch (ex. "QC 2024-" or "QC_2024_") it would fail to find the correct folder and search the contents within. So this is an area to be aware of and adjust the code accordingly for how you structure the name. 
 
+From this information, we can break down the return value into Month, Date, and Time. In a simplified example, this can be used to generate the folder name, that can then be added to the file.path allowing the Rscript to find the correct folder for that given month. 
 
-# Making the Modifications
+```{r}
+Year <- lubridate::year(CurrentTime)
+Month <- lubridate::month(CurrentTime)
+Day <- lubridate::day(CurrentTime)
 
-start with the easiest file.path, we need to find the location you saved the InstrumentQC project to when you downloaded it from Github via Rstudio (recall the browse button to see where it was saved).
+ThisFolder <- paste0("QC_", Year, "-0", Month)
+ThisFolder
+```
 
-Within the InstrumentQC folder, the first level contains the individual R scripts and .qmd files for each instrument, as well as additional files needed for the automation, and dashboard assembly. Below this level, there is a data folder containing folders for the individual instruments. Below this level, are folders containing the archive data folders where processed data is stored after processing and updated with new data daily. 
+```{r}
+FindTodaysBeforeAfterFCSFilesHere <- file.path(Admin, ThisFolder)
+FindTodaysBeforeAfterFCSFilesHere
+```
 
-On first install, modify the names of the folders for your individual instruments, and navigate into the archive folders for the renamed instruments and delete the forked version of the data. These archive data files will be replaced by those of your own instrument after the initial processing. 
+While simplified (actual code handles exceptions) you can see how a misnamed experiment name could break the Instrument.R script from finding the correct folder, let's say for example the scrupt was looking for "QC_2024-04"  but instead the experiment is saved as "QC 2020 04". It would look for that folder, not find anything, and therefore, not copy any fcs files over to the InstrumentQC Instrument folder for processing. 
 
-Next, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.
+This is a good thing to be aware of generally, and adjust the code as necessary to match the structure of your experiment folder names.
 
-Now, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed).
+# Wrap-up
 
-Once complete, you should see the processed data is now present within the Archive folder.
-
-Open up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.
-
-Once done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being.
-
-
-
-
-
-
-
+We have now discussed file.paths extensively, and have identified the main filepaths to important folders we will need to have to modify the various Instrument.R, Instrument.qmd, and eventually the automated task schedules. We will edit the main ones in the next article, and hopefully process your existing data into an Archive .csv file that you can start using. 
