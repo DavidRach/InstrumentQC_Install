@@ -4,7 +4,7 @@ Having reached this webpage, you likely discovered the [InstrumentQC](https://um
 
 Having placed significant effort into this pet-project, I would love if others in the cytometery community could also benefit. Since assembling everything from scratch requires some familiarity with both R and Git, I am writing up this detailed explanation of the process behind setting up and customizing the dashboards to give the average cytometry aficionado a fighting-chance. 
 
-If you get stuck, or parts of the documentation are unclear, please reach out by opening an [issue](https://github.com/DavidRach/InstrumentQC_Install/issues) and I will try my best to help you troubleshoot. What makes free-and-open source software great (and in my opinion,fun to work with) is seeing how the small collective contributions of users improve the projects over time. 
+If you get stuck, or parts of the documentation are unclear, please reach out by opening an [issue](https://github.com/DavidRach/InstrumentQC_Install/issues) and I will try my best to help you troubleshoot. What makes free-and-open source software great (and in my opinion, fun to work with) is seeing how the small collective contributions of users improve the projects over time. 
 
 Best-
 David

@@ -279,12 +279,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#file-paths" id="toc-file-paths" class="nav-link active" data-scroll-target="#file-paths">File Paths</a>
   <ul class="collapse">
-  <li><a href="#identifying-file-path" id="toc-identifying-file-path" class="nav-link" data-scroll-target="#identifying-file-path">Identifying File Path</a></li>
-  <li><a href="#local" id="toc-local" class="nav-link" data-scroll-target="#local">Local</a></li>
-  <li><a href="#finding-required-file-paths" id="toc-finding-required-file-paths" class="nav-link" data-scroll-target="#finding-required-file-paths">Finding Required File Paths</a></li>
+  <li><a href="#elements-of-a-file.path." id="toc-elements-of-a-file.path." class="nav-link" data-scroll-target="#elements-of-a-file.path.">Elements of a File.Path.</a></li>
+  </ul></li>
+  <li><a href="#instrumentqc-folder-filepaths" id="toc-instrumentqc-folder-filepaths" class="nav-link" data-scroll-target="#instrumentqc-folder-filepaths">InstrumentQC Folder FilePaths</a>
+  <ul class="collapse">
+  <li><a href="#finding-the-instrument-.r-and-.qmd-filepaths" id="toc-finding-the-instrument-.r-and-.qmd-filepaths" class="nav-link" data-scroll-target="#finding-the-instrument-.r-and-.qmd-filepaths">Finding the Instrument .R and .qmd filepaths</a></li>
+  <li><a href="#finding-the-instrument-folder" id="toc-finding-the-instrument-folder" class="nav-link" data-scroll-target="#finding-the-instrument-folder">Finding the Instrument Folder</a></li>
+  <li><a href="#finding-the-archived-data" id="toc-finding-the-archived-data" class="nav-link" data-scroll-target="#finding-the-archived-data">Finding the Archived Data</a></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
+  </ul></li>
+  <li><a href="#providing-spectroflo-folder-file.paths" id="toc-providing-spectroflo-folder-file.paths" class="nav-link" data-scroll-target="#providing-spectroflo-folder-file.paths">Providing SpectroFlo folder file.paths</a>
+  <ul class="collapse">
+  <li><a href="#overall-folder-structure" id="toc-overall-folder-structure" class="nav-link" data-scroll-target="#overall-folder-structure">Overall Folder Structure</a></li>
   <li><a href="#daily-qc-files" id="toc-daily-qc-files" class="nav-link" data-scroll-target="#daily-qc-files">Daily QC Files</a></li>
+  <li><a href="#spectroflo-qc-fcs-files" id="toc-spectroflo-qc-fcs-files" class="nav-link" data-scroll-target="#spectroflo-qc-fcs-files">SpectroFlo QC FCS Files</a></li>
   <li><a href="#bead-fcs-files-system" id="toc-bead-fcs-files-system" class="nav-link" data-scroll-target="#bead-fcs-files-system">Bead FCS Files (System)</a></li>
-  <li><a href="#bead-fcs-files-system-1" id="toc-bead-fcs-files-system-1" class="nav-link" data-scroll-target="#bead-fcs-files-system-1">Bead FCS Files (System)</a></li>
   </ul></li>
   <li><a href="#making-the-modifications" id="toc-making-the-modifications" class="nav-link" data-scroll-target="#making-the-modifications">Making the Modifications</a></li>
   </ul>
@@ -298,89 +307,182 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="file-paths" class="level1">
 <h1>File Paths</h1>
-<p>As mentioned in the introduction, within the .R and .qmd files are lines of code containing file.paths. These serve as addresses used by the software to find folders containing the necessary daily QC files on your individual computer. Since installation of SpectroFlo (and its associated files) will differ on your computer compared to ours, you will need to ensure to update these file paths so that your computer can retrieve the daily QC files from the correct folder when prompted to do so by the executed R scripts.</p>
-<section id="identifying-file-path" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-file-path">Identifying File Path</h2>
-<p>For this section, we will focus on data, as it is where new QC files get copied to, processed and stored, and subsequently used in assembly of the dashboard website.</p>
+<p>As mentioned in the introduction, within the .R and .qmd files are lines of code corresponding to file.paths. These act like addresses that the code uses to find the correct folders that contain daily QC .fcs and .csv files on your individual computer. Since where SpectroFlo (and its associated files) is on your computer may be different from that of our instruments computers, you will need to update these file paths to allow your computer to retrieve the daily QC files from the correct folder when the R scripts are run.</p>
+<section id="elements-of-a-file.path." class="level2">
+<h2 class="anchored" data-anchor-id="elements-of-a-file.path.">Elements of a File.Path.</h2>
+<p>Let’s start by working with the example of our InstrumentQC repository. On our Windows computer, it is located in our Documents folder. This folder itself is located within an individual users folder located on the computers “C:” drive.</p>
+<p>Consequently, when we provide the file.path to R, we need to provide all these parent folders When we provide a file.path to R, we need to account for all these parent folders when assembling a filepath.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>InstrumentQC_Path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"Users"</span>, <span class="st">"JohnDoe"</span>, <span class="st">"Documents"</span>, <span class="st">"InstrumentQC"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>InstrumentQC_Path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/JohnDoe/Documents/InstrumentQC"</code></pre>
+</div>
+</div>
 </section>
-<section id="local" class="level2">
-<h2 class="anchored" data-anchor-id="local">Local</h2>
+</section>
+<section id="instrumentqc-folder-filepaths" class="level1">
+<h1>InstrumentQC Folder FilePaths</h1>
+<section id="finding-the-instrument-.r-and-.qmd-filepaths" class="level2">
+<h2 class="anchored" data-anchor-id="finding-the-instrument-.r-and-.qmd-filepaths">Finding the Instrument .R and .qmd filepaths</h2>
+<p>Now, let’s examine the contents of this folder:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/01_Local.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
+<p>As we mentioned in <a href="repositoryelements.qmd$`Repository elements`">Pieces of a Bigger Picture</a>, this folder contains the Instrument.R files that run the code that processes the newly acquired QC data, as well as the Instrument.qmd files that create the individual instrument webpages. Consequently, in <a href="./Automation.html">Data Transfer</a> section when we need to edit the file paths to these scripts, we would provide a file.path that resembles the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ThisIsTheRFileYouAreLookingFor <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"Users"</span>, <span class="st">"JohnDoe"</span>, <span class="st">"Documents"</span>, <span class="st">"InstrumentQC"</span>, <span class="st">"TheScript_3L.R"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ThisIsTheRFileYouAreLookingFor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/JohnDoe/Documents/InstrumentQC/TheScript_3L.R"</code></pre>
+</div>
+</div>
+<p>Alternatively, we can reuse the file.path that we had just corresponding to the InstrumentQC folder location stored in the InstrumentQC_Path we ran in the last example, and use it to shorten the number of folders we need to type:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>EquivalentFindTheRFileHere <span class="ot">&lt;-</span> <span class="fu">file.path</span>(InstrumentQC_Path, <span class="st">"TheScript_3L.R"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>EquivalentFindTheRFileHere</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/JohnDoe/Documents/InstrumentQC/TheScript_3L.R"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ThisIsTheRFileYouAreLookingFor <span class="sc">==</span> EquivalentFindTheRFileHere</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="finding-the-instrument-folder" class="level2">
+<h2 class="anchored" data-anchor-id="finding-the-instrument-folder">Finding the Instrument Folder</h2>
+<p>If you are building a website containing multiple instruments, you will be needing the file.path locations to each instruments data folder to be able to retrieve the data for plotting. Let’s go ahead and double click on data and see the contents.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/02_Local.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
+<p>As you can see, here are the individual folders.</p>
+<p>Within the Instrument.qmd files, there is a file.path expression that resembles the following code chunk:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>MainFolder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(InstrumentQC_Path, <span class="st">"data"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>TheList <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"5L"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Updating Data</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(<span class="at">.x=</span>TheList, <span class="at">MainFolder=</span>MainFolder, <span class="at">.f=</span>Luciernaga<span class="sc">:::</span>DailyQCParse)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(<span class="at">.x=</span>TheList, <span class="at">.f=</span>Luciernaga<span class="sc">:::</span>QCBeadParse, <span class="at">MainFolder=</span>MainFolder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this case, the file.path for InstrumentQC_Path first gets extended to include the data folder in the variable MainFolder. Then, the instrument folder for the instrument of listed gets designated by the variable TheList. Consequently, when MainFolder and TheList are passed to the DailyQCParse and QCBeadParse functions (that process the individual .fcs and .csv files) they know which insturment folder to copy the newly acquired data to (vs.&nbsp;the other instrument folders)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>CopyFilesHereForTheAurora5L <span class="ot">&lt;-</span> <span class="fu">file.path</span>(MainFolder, TheList[[<span class="dv">1</span>]])</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>CopyFilesHereForTheAurora5L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/JohnDoe/Documents/InstrumentQC/data/5L"</code></pre>
+</div>
+</div>
+<p>If we go ahead and click on the individual instrument folder, we see that it is currently empty outside of the Archive folder.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/03_Local.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
+<p>If we were to check it in the middle of the processing of the newly acquired QC data, we would see the newly acquired .fcs and .csv files copied to this folder waiting to be processed and added to the .csv files that we can find within the Archive folder. After successfully being added to the archive, these copied files are deleted, leaving the folder empty.</p>
+</section>
+<section id="finding-the-archived-data" class="level2">
+<h2 class="anchored" data-anchor-id="finding-the-archived-data">Finding the Archived Data</h2>
+<p>Checking within Archive, we can see two folders:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/05_Local.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
+<p>For Cytek Instruments, data derriving from the DailyQC.csv files is processed and stored as the ArchivedData.csv. For data derrived from processed before/after QC bead .fcs files, these are stored in the BeadData.csv. For the BD instruments, everything is currently derrived from CST bead .fcs files, consequently stored in the HolisticData.csv file.</p>
+<p>It is from these instrument specific archive .csv files that all the plots found in the individual instrument webpages get generated, so knowing the file.paths to these individual .csv files in important to have ready to swap in!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>TheArchiveGainAndRCVData <span class="ot">&lt;-</span> <span class="fu">file.path</span>(CopyFilesHereForTheAurora5L, <span class="st">"Archive"</span>, <span class="st">"ArchivedData5L.csv"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>TheArchiveGainAndRCVData </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/JohnDoe/Documents/InstrumentQC/data/5L/Archive/ArchivedData5L.csv"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>TheArchiveMFIData <span class="ot">&lt;-</span> <span class="fu">file.path</span>(CopyFilesHereForTheAurora5L, <span class="st">"Archive"</span>, <span class="st">"BeadData5L.csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>TheArchiveMFIData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/JohnDoe/Documents/InstrumentQC/data/5L/Archive/BeadData5L.csv"</code></pre>
+</div>
+</div>
 </section>
-<section id="finding-required-file-paths" class="level2">
-<h2 class="anchored" data-anchor-id="finding-required-file-paths">Finding Required File Paths</h2>
-<p>Let’s now start by locating your SpectroFlo associated folders you will need to have the file.paths for when modifying the R scripts. On our computer, when the instruments were set up, these were present within the local C: drive folder</p>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<p>To recap, for all instruments, you will need to have the file.path to the InstrumentQC folder. For the individual instruments, you will need to provide to their Instrument.R processing script the path to the Instrument folder where the newly acquired data will be transferred to before processing. And finally, when modifying the Instrument.qmd files to generate plots of the archive data, you will need the file.paths for the individual Archive.csv files for their respective data types.</p>
+</section>
+</section>
+<section id="providing-spectroflo-folder-file.paths" class="level1">
+<h1>Providing SpectroFlo folder file.paths</h1>
+<p>Now that we have an initial understanding of file.paths, it is time to go find the file.paths to where the newly acquired QC data is being stored. Once we have identified these file.paths, we can provide them to the Instrument.R script to allow it to copy these files to the location designated by the Instrument Folder file path we identified above.</p>
+<p>We will for now focus on finding the locating the SpectroFlo .fcs and .csv files. The process of finding the .fcs files acquired on our BD instruments is similar, but generally, we are storing those .fcs files in a specific folder of our own creation (rather than the software storing in a designated location).</p>
+<section id="overall-folder-structure" class="level2">
+<h2 class="anchored" data-anchor-id="overall-folder-structure">Overall Folder Structure</h2>
+<p>The SpectroFlo-associated folders that contain QC data can be found in “CytekbioExport” folder. Depending on your individual installation selections, the location of this folder may vary. For most of our instruments, it can be found in the “C:” drive.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/01_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>You can notice there are two SpectroFlo associated folders present here, Cytekbio and Cytekbioexport. When we retrieve a file.path, we would right click the &gt; symbol. Then we would select the copy address as text option</p>
-<p><img src="images/02_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> When we paste, we get something like this: <code>C:\Cytekbio</code>. The &nbsp;designates a hierarchy of folders descending down to the target folder or file. When working in R, we can reference this by taking the individual folder names and linking them with the file.path function. For this example, it would look something like the following for <code>C:\Cytekbio</code> :</p>
+<p>If you are ever uncertain about a folder location, right click the &gt; symbol and select copy address as text. Paste the location into your terminal and copy the relevant folder names into your file.path() argument.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/02_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+<p>When we paste in this manner, we get something like this: <code>C:\Cytekbio</code>. For file.paths, both “/” and “"” designate a descending hierarchy going from parent folders to the folder/file of interest. Unfortunately, which is used depends on what operating system your computer is running on (Windows, Mac or Linux).</p>
+<p>One of the reasons I recommend building your filepaths with file.path() is that it is operating system agnostic. Additionally, R makes you switch Windows right-click copy file.paths from <code>\</code> be switched to <code>/</code> before it will recognize them. onsequently, building with the file.path() function is easier in the long run than remembering if its the / or &nbsp;slash that causes issues with R in Windows.</p>
+<p>So to build the file.path to Cytekbio Export, we would write something like the following:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>PathToTheFolderOfInterest <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"CytekbioExport"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>PathToTheFolderOfInterest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>PathToTheFolderOfInterest <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"CytekbioExport"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>PathToTheFolderOfInterest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "C:/CytekbioExport"</code></pre>
 </div>
 </div>
-<p>One of the reasons file.path only needs the folder names is <code>\</code> vs <code>/</code> will vary depending on what operating system your computer is running on (Windows, Mac or Linux). Additionally, R requires Windows paths that when we right-click copy are shown as <code>\</code> be switched to <code>/</code>. Using file.path is easier in the long run than needing to remember which is permitted and which one is not.</p>
-<p>Additionally, extra elements can be appended to the file.path by simply including the existing path variable, and then adding the next folder in between ““. For example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>NextFolderDown <span class="ot">&lt;-</span> <span class="fu">file.path</span>(PathToTheFolderOfInterest, <span class="st">"Experiments"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>NextFolderDown</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/CytekbioExport/Experiments"</code></pre>
+<p>Let’s go ahead and double click and see what is inside the folder:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/03_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
 </div>
-</div>
-<p>We can see that this is the next folder under, so let’s double click and find the file structure.</p>
-<p><img src="images/03_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> We can see in this case that we have folders for Experiments, FCSFiles and Setup. Additionally there are files for individual dates for SetupEngineLog, AppLoginLog and ExperimentUnmixingLog that track activity previously carried out in SpectroFlo. We will navigate to the next folder “Setup”</p>
+<p>We can see in this case that we have folders for Experiments, FCSFiles and Setup. We additionally see files corresponding to the ApplicationLog, SetupEngineLog, AppLoginLog and ExperimentUnmixingLog that track various activity previously carried out in SpectroFlo.</p>
 </section>
 <section id="daily-qc-files" class="level2">
 <h2 class="anchored" data-anchor-id="daily-qc-files">Daily QC Files</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>SetupFolderPath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(NextFolderDown, <span class="st">"Setup"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>SetupFolderPath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/CytekbioExport/Experiments/Setup"</code></pre>
-</div>
-</div>
+<p>Let’s navigate into the folder “Setup”</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/04_FilePaths.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
 </figure>
 </div>
-<p>It is within this folder that the DailyQC reports are stored as .csv files. Opening one, we can see their overall structure resembles something like this. The individual elements are beyond the scope of this tutorial, but the data from the majority gets extracted out and utilized for the dashboard.</p>
-<p>Unfortunately, the .csv does not follow a “tidy” format (having gaps in spaces and rows rather than equally filled rectangular space). Consequently, a bunch of functions are used to process the data behind the scenes until it is returned in a “tidy” format that R can work with (these can later be downloaded from the Data tab on the dashboard).</p>
-<p>It’s this path (SetupFolderPath) that we will need to provide to the Rscript so that it can locate new DailyQC .csv files and copy them over to the InstrumentQC folder. Make a note of this path before we continue.</p>
+<p>The file.path for this location would resemble the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>SetupFolderPath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(PathToTheFolderOfInterest, <span class="st">"Setup"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>SetupFolderPath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/CytekbioExport/Setup"</code></pre>
+</div>
+</div>
+<p>It is within this folder that the DailyQC reports are stored as .csv files. Opening them, we can see they contain a lot of the same data we can see in the Daily report. Explanation of the individual elements is beyond the scope of this current tutorial, but the majority of this data gets extracted and utilized for the dashboard in various ways for the Gain and RCV plots.</p>
+<p>Unfortunately, these .csv does not follow a “tidy” format (having gaps in spaces and rows rather than equally filled rectangular space). Consequently, a bunch of functions in the <a href="https://github.com/DavidRach/Luciernaga">Luciernaga</a> R package are used to process the data behind the scenes until it is returned in a “tidy” format that R can work with (these can later be downloaded from the Data tab on the dashboard).</p>
+<p>This file.path (SetupFolderPath) is the one we will need to provide to the Instrument.R file so that it knows where to find the new DailyQC.csv files to allow them to be copied to the respective InstrumentQC Instrument Folder for further processing. Make a note of this file path before continuing.</p>
 </section>
-<section id="bead-fcs-files-system" class="level2">
-<h2 class="anchored" data-anchor-id="bead-fcs-files-system">Bead FCS Files (System)</h2>
+<section id="spectroflo-qc-fcs-files" class="level2">
+<h2 class="anchored" data-anchor-id="spectroflo-qc-fcs-files">SpectroFlo QC FCS Files</h2>
 <p>If we are relying on the .fcs files acquired during the process of DailyQC, we would navigate from this folder down one additional level.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(SetupFolderPath, <span class="st">"DailyQC"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(SetupFolderPath, <span class="st">"DailyQC"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>QCFCSFilePath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/CytekbioExport/Experiments/Setup/DailyQC"</code></pre>
+<pre><code>[1] "C:/CytekbioExport/Setup/DailyQC"</code></pre>
 </div>
 </div>
 <p>It is here where we find the DailyQCDataSample .fcs files.</p>
@@ -396,14 +498,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We would consequently provide this file.path to the Rscript to provision the files needed to calculate the MFI parameters.</p>
 </section>
-<section id="bead-fcs-files-system-1" class="level2">
-<h2 class="anchored" data-anchor-id="bead-fcs-files-system-1">Bead FCS Files (System)</h2>
+<section id="bead-fcs-files-system" class="level2">
+<h2 class="anchored" data-anchor-id="bead-fcs-files-system">Bead FCS Files (System)</h2>
 <p>At our institution, we separately using the the same QC beads used for Daily QC a 3000 bead before and after .fcs sample to compare the changes in MFI after the QC has adjusted. Within SpectroFlo, these are acquired under the Admin account, organized within an experiment corresponding to the month. As a result, these are stored with the other .fcs files acquired by all users that exist within SpectroFlo folder while they wait to be exported as zipped folders.</p>
 <p>Because this can take up quite a bit of memory space in context of a core facility, for our particular SpectroFlo setup, these folders are found under an external hard-drive.</p>
 <p>We would consequently start exploring the folders (and setting up a file.path) like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>External <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"D:"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>External</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>External <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"D:"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>External</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "D:"</code></pre>
 </div>
@@ -414,8 +516,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>FCSFiles <span class="ot">&lt;-</span> <span class="fu">file.path</span>(External, <span class="st">"Aurora 5 FCS_Files"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>FCSFiles</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>FCSFiles <span class="ot">&lt;-</span> <span class="fu">file.path</span>(External, <span class="st">"Aurora 5 FCS_Files"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>FCSFiles</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "D:/Aurora 5 FCS_Files"</code></pre>
 </div>
@@ -426,8 +528,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Experiments <span class="ot">&lt;-</span> <span class="fu">file.path</span>(FCSFiles, <span class="st">"Experiments"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Experiments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Experiments <span class="ot">&lt;-</span> <span class="fu">file.path</span>(FCSFiles, <span class="st">"Experiments"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Experiments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "D:/Aurora 5 FCS_Files/Experiments"</code></pre>
 </div>
@@ -438,17 +540,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Admin <span class="ot">&lt;-</span> <span class="fu">file.path</span>(Experiments, <span class="st">"Admin"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Admin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Admin <span class="ot">&lt;-</span> <span class="fu">file.path</span>(Experiments, <span class="st">"Admin"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>Admin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "D:/Aurora 5 FCS_Files/Experiments/Admin"</code></pre>
 </div>
 </div>
 <p><img src="images/04_BeadsFile.png" class="img-fluid quarto-figure quarto-figure-center" width="600"> And finally, the important thing is to note the structure that each experiment file name takes. In our case for this instrument, the folders are set to QC_2024-11. When we are having the Rscript find the new QC files for the given day, it calls the function System.time to return the date and time. These are broken into month and day.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-02-13 19:30:14 EST"</code></pre>
+<pre><code>[1] "2025-02-13 21:01:09 EST"</code></pre>
 </div>
 </div>
 <p>Consequently, at the level of this folder, it would look for a folder named “QC_2024-” with the corresponding month provided by Sys.time call. R recognizes character strings exactly in this case, so if you had a name mismatch (ex. “QC 2024-” or “QC_2024_”) it would fail to find the correct folder and search the contents within. So this is an area to be aware of and adjust the code accordingly for how you structure the name.</p>
