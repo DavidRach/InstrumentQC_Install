@@ -9,6 +9,8 @@ website:
     left: 
     - text: "Home"
       href: index.qmd
+    - text: "Getting Started"
+      href: Installation.qmd
     right:
     - text: "Go Back to InstrumentQC"
       href: https://umgccfcss.github.io/InstrumentQC/

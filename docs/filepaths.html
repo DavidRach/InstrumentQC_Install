@@ -127,6 +127,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./Installation.html" aria-current="page"> 
+<span class="menu-text">Getting Started</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -564,7 +568,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>CurrentTime <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>CurrentTime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-02-13 22:52:15 EST"</code></pre>
+<pre><code>[1] "2025-02-15 18:40:21 EST"</code></pre>
 </div>
 </div>
 <p>From this information, we can break down the return value into Month, Date, and Time. In a simplified example, this can be used to generate the folder name, that can then be added to the file.path allowing the Rscript to find the correct folder for that given month.</p>
