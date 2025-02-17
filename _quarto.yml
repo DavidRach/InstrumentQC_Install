@@ -4,6 +4,8 @@ project:
 website:
   title: "InstrumentQC: How did you do this?"
   site-path: "/InstrumentQC_Install/"
+  google-analytics:
+    tracking-id: "G-3032PQK30Y"
   page-navigation: true
   navbar:
     left: 
