@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -253,7 +287,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#making-modifications" id="toc-making-modifications" class="nav-link active" data-scroll-target="#making-modifications">Making Modifications</a></li>
+  <li><a href="#making-modifications" id="toc-making-modifications" class="nav-link active" data-scroll-target="#making-modifications">Making Modifications</a>
+  <ul class="collapse">
+  <li><a href="#instrument.r-script-edits" id="toc-instrument.r-script-edits" class="nav-link" data-scroll-target="#instrument.r-script-edits">Instrument.R script edits</a></li>
+  <li><a href="#instrument.qmd-edits" id="toc-instrument.qmd-edits" class="nav-link" data-scroll-target="#instrument.qmd-edits">Instrument.qmd edits</a></li>
+  </ul></li>
   <li><a href="#processing-existing-data" id="toc-processing-existing-data" class="nav-link" data-scroll-target="#processing-existing-data">Processing Existing Data</a></li>
   </ul>
 </nav>
@@ -264,22 +302,89 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>Still working on this one, sorry - David</p>
+<p>Still working on this one, the main ideas are below - David</p>
 <section id="making-modifications" class="level1">
 <h1>Making Modifications</h1>
-<p>start with the easiest file.path, we need to find the location you saved the InstrumentQC project to when you downloaded it from Github via Rstudio (recall the browse button to see where it was saved).</p>
-<p>Within the InstrumentQC folder, the first level contains the individual R scripts and .qmd files for each instrument, as well as additional files needed for the automation, and dashboard assembly. Below this level, there is a data folder containing folders for the individual instruments. Below this level, are folders containing the archive data folders where processed data is stored after processing and updated with new data daily.</p>
-<p>On first install, modify the names of the folders for your individual instruments, and navigate into the archive folders for the renamed instruments and delete the forked version of the data. These archive data files will be replaced by those of your own instrument after the initial processing.</p>
-<p>Next, you will need to modify the existing Rscript to match the following names, and to point at the Cytekbio Setup folder containing the DailyQC files and to the folder containing the bead .fcs files used as part of the MFI monitoring. Make sure these are correct.</p>
-<p>Now, on the upper right hand side, hit the Source option. This should trigger the processing of the entire R script needed to process the past data. If it fails, you will need to troubleshoot whether the file.path your provided is the correct one (most likely error) or an R package dependency is missing (in which case it would need to be installed).</p>
-<p>Once complete, you should see the processed data is now present within the Archive folder.</p>
-<p>Open up the equivalent .qmd file for your given instrument. This file is what will build the dashboard for the equivalent instrument page on the website. Make sure to similarly modify the file.paths at the top of the file so they match your Archive folder for that project. Once done, hit render button and wait, troubleshooting as needed. Both R script and .qmd will be specific and search for the data within those folders, so we anticipate less issues.</p>
-<p>Once done, either a browser window will open showing the data for the instrument, or you will need to go to InstrumentQC, docs folder and open the index.html file to see a local rendered version of the file. Once you are here, congratulations, the basic install for your instrument has been carried out successfully. Repeat for the other instruments for the time being.</p>
+<p>Alright, now that you have an understanding of the individual components (Instrument.R files that process the data, Instrument.qmd files that make the website, and the Instrument folders data is transferred to) and have located the necessary file.paths, it is time to start making the necessary modifications to existing files.</p>
+<p>First off, from your mental planning, make the process simple. If you have an instrument with similar laser configuation/manufacturer to those we have in our initial repository (Aurora 3, 4 and 5 Lasers, BDFACS CantoII, BD LSRII, BDFACs Aria II) make sure you retained their respective files and folders. This means you will only need to adjust file names and file paths (rather than having to remove interactive plotting elements later on for lasers an instrument doesn’t have).</p>
+<p>Let’s say you are setting up for an Aurora 5 Laser (UV-V-B-YG-R) located in your core. Go ahead and open up the respective files (TheScript_5L.R, Aurora5L.qmd).</p>
+<section id="instrument.r-script-edits" class="level2">
+<h2 class="anchored" data-anchor-id="instrument.r-script-edits">Instrument.R script edits</h2>
+<p>Starting with TheScript_5L.R file, at roughly line 12, you will see the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup in Correct Directory</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Linux <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"/home"</span>, <span class="st">"david"</span>, <span class="st">"Documents"</span>, <span class="st">"InstrumentQC"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Windows <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"Users"</span>, <span class="st">"Aurora"</span>, <span class="st">"Documents"</span>, <span class="st">"InstrumentQC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You will need to modify the Windows line to the identified file.path that corresponds to the forked Instrument QC folder location on that computer.</p>
+<p>Next up, around roughly line 35, you will see the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Locating Archive Folder</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Instrument <span class="ot">&lt;-</span> <span class="st">"5L"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>MainFolder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(WorkingDirectory, <span class="st">"data"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>WorkingFolder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(WorkingDirectory, <span class="st">"data"</span>, Instrument)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>StorageFolder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(WorkingFolder, <span class="st">"Archive"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this case, since you are setting up for a 5L instrument, you can keep this designation. If this wasn’t the case (or you named the Instrument Folder differently) you would need to modify the Instrument line to the correct name. You can see that it is being used in a file.path building argument resulting in the StorageFolder location.</p>
+<p>Next up, at roughly line 74, you will see the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>SetupFolder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"CytekbioExport"</span>, <span class="st">"Setup"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>TheSetupFiles <span class="ot">&lt;-</span> <span class="fu">list.files</span>(SetupFolder, <span class="at">pattern=</span><span class="st">"DailyQC"</span>, <span class="at">full.names=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If your CytekbioExport folder is located in a different location, put in the correct file.path for this location!</p>
+<p>Next up, if you are retrieving .fcs files collected separately from Daily QC, you will need to modify the code roughly at line 93:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MFI Starting Locations</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>FCSFolder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"D:"</span>, <span class="st">"Aurora 5_FCS Files"</span>, <span class="st">"Experiments"</span>, <span class="st">"Admin"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>MonthStyle <span class="ot">&lt;-</span> <span class="fu">format</span>(Today, <span class="st">"%Y-%m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Adjust the file path to the correct storage location (and user folder if not Admin).</p>
+<p>Next up, a repeat for the CytekbioExport folder at roughly line 112:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">length</span>(PotentialAppsDays) <span class="sc">==</span> <span class="dv">0</span>){</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    SetupFolder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"C:"</span>, <span class="st">"CytekbioExport"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    TheSetupFiles <span class="ot">&lt;-</span> <span class="fu">list.files</span>(SetupFolder, <span class="at">pattern=</span><span class="st">"Application"</span>, <span class="at">full.names=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Update the Setup Folder file path if needed.</p>
+<p>And that should be it for the TheScript_5L.R file on this computer. If you have multiple instruments, move to their respective computers, open up their respective TheScript_Instrument.R files and repeat the file.path edits to match the file.paths on their respective computers.</p>
+</section>
+<section id="instrument.qmd-edits" class="level2">
+<h2 class="anchored" data-anchor-id="instrument.qmd-edits">Instrument.qmd edits</h2>
+<p>Alright, now onto the Instrument.qmd files (Aurora5L.qmd in this example):</p>
+<p>First edit can be found at roughly line 17:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Computer <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>MainFolder <span class="ot">&lt;-</span> <span class="fu">file.path</span>(Computer, <span class="st">"data"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>TheList <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"5L"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Updating Data</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(<span class="at">.x=</span>TheList, <span class="at">MainFolder=</span>MainFolder, <span class="at">.f=</span>Luciernaga<span class="sc">:::</span>DailyQCParse)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(<span class="at">.x=</span>TheList, <span class="at">.f=</span>Luciernaga<span class="sc">:::</span>QCBeadParse, <span class="at">MainFolder=</span>MainFolder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Make sure TheList is set to the correct name for the instrument folder (ie, 5L or whatever the case may be).</p>
+<p>Same thing for a couple lines down, make sure the names match that of the instrument folder:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>MFI_5L <span class="ot">&lt;-</span> Luciernaga<span class="sc">:::</span><span class="fu">CurrentData</span>(<span class="at">x=</span><span class="st">"5L"</span>, <span class="at">MainFolder=</span>MainFolder, <span class="at">type =</span> <span class="st">"MFI"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Gain_5L <span class="ot">&lt;-</span> Luciernaga<span class="sc">:::</span><span class="fu">CurrentData</span>(<span class="at">x=</span><span class="st">"5L"</span>, <span class="at">MainFolder=</span>MainFolder, <span class="at">type =</span> <span class="st">"Gain"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>TheDate <span class="ot">&lt;-</span> MFI_5L <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(DATE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And if you have a Maintenance.CSV, this line too should match the instrument name:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"AuroraMaintenance.csv"</span>, <span class="at">check.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> Data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(reason, <span class="st">"lean"</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Repair5L <span class="ot">&lt;-</span> Data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(instrument <span class="sc">%in%</span> <span class="st">"5L"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And I believe that is it for now on these files (let me know if I missed one that ends up causing a failed run).</p>
+</section>
 </section>
 <section id="processing-existing-data" class="level1">
 <h1>Processing Existing Data</h1>
-<p>Alright, let’s see if you set the file.paths correctly and process the existing data into an Archive .csv file!</p>
-<p>… Drumroll …</p>
+<p>Now that you have edited all the file.paths, it is time for the moment of truth. Open the TheScript_Instrument.R file. In RStudio, there should be a button at the top that is called source. If not, highlight the entire document of code and hit Ctrl+Enter, which will send the code to the console to begin execution.</p>
+<p>If all goes smoothly, the script will find all the existing data within their current folders, copy them over, and begin the process of processing them. Once finished, the processed data will be present within the Instruments Archive folder. Go ahead and check to see if it is the case. If so, congrats! You did it!</p>
+<p>If not, you will likely have either encountered an error message at some point, and the time for troubleshooting the error message begins. If you didn’t get any error messages, it is most likely an issue of the wrong file.path. Try to problem solve a bit, and if still can’t get it to work, open an issue and I will be more than glad to help you troubleshoot what might be occuring.</p>
 
 
 </section>
